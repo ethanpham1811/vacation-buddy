@@ -1,14 +1,15 @@
-import { NavBar } from '@/components'
+import { Map, NavBar } from '@/components'
 
-export default function Home({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
-  const location = searchParams.location
+export default async function Home({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+  const { latitude, longitude } = searchParams
 
   return (
-    <main className="flex min-h-screen flex-col bg-red-100">
+    <main className="flex min-h-screen flex-col">
+      {/* Top Navigation */}
       <NavBar />
 
-      {/* map */}
-      {/* <Map /> */}
+      {/* Map */}
+      <Map />
     </main>
   )
 }

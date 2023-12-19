@@ -13,10 +13,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children, search }: { children: React.ReactNode; search: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        {children}
-        {/* <div>{search}</div> */}
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   )
 }
