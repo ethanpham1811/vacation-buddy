@@ -1,7 +1,8 @@
 'use client'
-import { Marker } from '@/components'
+import { LocateMe } from '@/components'
 import { DEFAULT_ZOOM } from '@/constants/enum'
-import { TCoors, TPlace } from '@/constants/types'
+import { TPlace } from '@/constants/types'
+import { locateMe } from '@/services/utilities'
 import { useQueryState } from 'next-usequerystate'
 import { useEffect, useRef, useState } from 'react'
 import MapGL, { MapRef } from 'react-map-gl'
@@ -13,43 +14,47 @@ import MapGL, { MapRef } from 'react-map-gl'
  */
 function RdMap() {
   const mapRef = useRef<MapRef | null>(null)
-  const [latitude, setLatitude] = useQueryState('latitude')
-  const [longitude, setLongitude] = useQueryState('longitude')
+  const [latitude] = useQueryState('latitude')
+  const [longitude] = useQueryState('longitude')
   const [places, setPlaces] = useState<TPlace[]>([])
-  const [viewport, setViewport] = useState<TCoors | null>(null)
+  const [mapLoad, setMapLoad] = useState(false)
 
   /**
    * if searchParams "latitude" & "longitude" are set => move map with flyTo
    * if no searchParams => use user's current location
    */
   useEffect(() => {
+    if (!mapRef.current) return
+
     if (latitude && longitude) {
-      mapRef.current?.flyTo({
-        center: [parseFloat(longitude), parseFloat(latitude)],
-        zoom: DEFAULT_ZOOM,
-        speed: 2
-      })
+      flyTo(parseFloat(longitude), parseFloat(latitude))
     } else {
-      navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
-        setViewport({ latitude, longitude })
-      })
+      locateMe(flyTo)
     }
-  }, [latitude, longitude])
+  }, [latitude, longitude, mapLoad])
+
+  /* move map's viewport to designated coords */
+  function flyTo(lng: number, lat: number) {
+    mapRef.current?.flyTo({
+      center: [lng, lat],
+      zoom: DEFAULT_ZOOM,
+      speed: 2
+    })
+  }
 
   return (
-    <div className="h-[100dvh] w-full flex justify-center items-center">
-      {!viewport ? (
-        <div>loading...</div>
-      ) : (
-        <MapGL
-          ref={mapRef}
-          mapboxAccessToken={process.env.NEXT_PUBLIC_MAP_BOX_TOKEN}
-          initialViewState={{ ...viewport, zoom: DEFAULT_ZOOM }}
-          mapStyle="mapbox://styles/mapbox/streets-v9"
-        >
-          <Marker latitude={viewport.latitude} longitude={viewport.longitude} />
-        </MapGL>
-      )}
+    <div className="h-full w-full flex justify-center items-center relative">
+      <MapGL
+        onLoad={() => setMapLoad(true)}
+        ref={mapRef}
+        mapboxAccessToken={process.env.NEXT_PUBLIC_MAP_BOX_TOKEN}
+        mapStyle="mapbox://styles/mapbox/streets-v9"
+      >
+        {/* <Marker latitude={viewport.latitude} longitude={viewport.longitude} /> */}
+      </MapGL>
+
+      {/* floating locate current location button */}
+      <LocateMe />
     </div>
   )
 }

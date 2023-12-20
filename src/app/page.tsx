@@ -4,12 +4,14 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
   const { latitude, longitude } = searchParams
 
   return (
-    <main className="flex min-h-screen flex-col">
+    <main className="flex h-[100dvh] flex-col">
       {/* Top Navigation */}
       <NavBar />
 
       {/* Map */}
-      <Map />
+      <div className="flex-1">
+        <Map />
+      </div>
     </main>
   )
 }
