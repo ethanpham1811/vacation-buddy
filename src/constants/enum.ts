@@ -1,6 +1,9 @@
 import { TViewport } from './types'
 
-export const DEBOUNCE_TIMER = 300
+export const DEBOUNCE_TIMER_AUTOCOMPLETE = 300
+export const DEBOUNCE_TIMER_MOVE_VIEWPORT = 300
+export const MAPBOX_MAP_GL_STYLE = 'mapbox://styles/mapbox/streets-v9'
+export const QUERY_LIMIT = 10
 export const DEFAULT_POINT = {
   lat: 10.99835602,
   lng: 77.01502627

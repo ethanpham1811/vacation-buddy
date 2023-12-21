@@ -13,14 +13,23 @@ import SelectOption from './components/SelectOption'
 function Geocoder() {
   const [_paramLat, setParamLat] = useQueryState('latitude')
   const [_paramLng, setParamLng] = useQueryState('longitude')
-  const [placeList, setPlaceList] = useState([])
+  const [cityList, setCityList] = useState([])
   const [error, setError] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   /* hit /api/cities route to get city list */
   async function onSubmit(query: string, signal?: AbortSignal) {
+    setIsLoading(true)
+
     const res = await fetch(`/api/cities/${query}`, { method: 'GET', signal })
+
+    // on error: return & show error msg
+    if (!res.ok) return setError('Failed to fetch cities list')
+
+    // update city list
     const { data } = await res.json()
-    !res.ok ? setError('Failed to fetch data') : setPlaceList(data)
+    setCityList(data)
+    setIsLoading(false)
   }
 
   /* update search params "latitude" & "longitude" */
@@ -30,11 +39,11 @@ function Geocoder() {
   }
 
   return (
-    <AutoComplete<TPlace> name="city" onSubmit={onSubmit} onSelect={onSelect} width="30dvw">
-      {placeList.length === 0 || error ? (
+    <AutoComplete<TPlace> name="city" onSubmit={onSubmit} onSelect={onSelect} width="30dvw" isLoading={isLoading}>
+      {cityList.length === 0 || error ? (
         <div className="relative cursor-default select-none px-4 py-2 text-gray-700">{error ?? 'Nothing found.'}</div>
       ) : (
-        placeList.map((place: TPlace) => <SelectOption key={place.name} place={place} />)
+        cityList.map((place: TPlace) => <SelectOption key={place.name} place={place} />)
       )}
     </AutoComplete>
   )

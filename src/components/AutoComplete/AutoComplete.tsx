@@ -1,6 +1,6 @@
 'use client'
-import { DEBOUNCE_TIMER } from '@/constants/enum'
-import { BarsArrowDownIcon } from '@/constants/icons'
+import { DEBOUNCE_TIMER_AUTOCOMPLETE } from '@/constants/enum'
+import { BarsArrowDownIcon, GoDotFill } from '@/constants/icons'
 import { Combobox, Transition } from '@headlessui/react'
 import { Fragment, ReactNode, useEffect, useState } from 'react'
 
@@ -10,6 +10,7 @@ type TAutoCompleteProps<T> = {
   children: ReactNode
   width?: string
   name: string
+  isLoading: boolean
 }
 
 /**
@@ -17,7 +18,7 @@ type TAutoCompleteProps<T> = {
  * @param  {Function} onSubmit // callback fn (data request) fire on user typing
  * @param  {Function} onSelect // callback fn fire on selection
  */
-function AutoComplete<T extends { name: string }>({ onSubmit, onSelect, name, children, width = '100%' }: TAutoCompleteProps<T>) {
+function AutoComplete<T extends { name: string }>({ onSubmit, onSelect, name, children, width = '100%', isLoading }: TAutoCompleteProps<T>) {
   const [inputValue, setInputValue] = useState('')
 
   useEffect(() => {
@@ -27,7 +28,7 @@ function AutoComplete<T extends { name: string }>({ onSubmit, onSelect, name, ch
 
     const timeout = setTimeout(() => {
       onSubmit(inputValue, abortCtrl.signal)
-    }, DEBOUNCE_TIMER)
+    }, DEBOUNCE_TIMER_AUTOCOMPLETE)
 
     /**
      * on receiving new input
@@ -35,7 +36,7 @@ function AutoComplete<T extends { name: string }>({ onSubmit, onSelect, name, ch
      * - abort prev request
      */
     return () => {
-      clearTimeout(timeout)
+      timeout && clearTimeout(timeout)
       abortCtrl && abortCtrl.abort()
     }
   }, [inputValue])
@@ -50,18 +51,25 @@ function AutoComplete<T extends { name: string }>({ onSubmit, onSelect, name, ch
             displayValue={(place: T) => place.name}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder={`Search ${name}`}
+            autoComplete="off"
           />
-          <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-            <BarsArrowDownIcon className="h-5 w-5 text-blue-600" aria-hidden="true" />
+          <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-3">
+            {isLoading ? (
+              <GoDotFill size="15" className="text-blue-600 animate-ping" />
+            ) : (
+              <BarsArrowDownIcon className="h-5 w-5 text-blue-600" aria-hidden="true" />
+            )}
           </Combobox.Button>
         </div>
 
         {/* dropdown list */}
-        <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
-          <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-            {children}
-          </Combobox.Options>
-        </Transition>
+        {!isLoading && (
+          <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
+            <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+              {children}
+            </Combobox.Options>
+          </Transition>
+        )}
       </div>
     </Combobox>
   )
