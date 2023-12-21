@@ -21,6 +21,7 @@ type TRdMarkerProps = {
  * - zoom in to show children marker on cluster clicking
  */
 const Cluster = ({ longitude, latitude, pointCount, pointLength, setViewport, viewport, supercluster, cluster, children }: TRdMarkerProps) => {
+  // calculate the width of the circle base on digits
   const width = `${30 + (pointCount / pointLength) * 20}px`
   const height = `${30 + (pointCount / pointLength) * 20}px`
 
@@ -40,7 +41,10 @@ const Cluster = ({ longitude, latitude, pointCount, pointLength, setViewport, vi
   }
   return (
     <Marker longitude={longitude} latitude={latitude} onClick={onClick}>
-      <div className="text-white bg-gray-600 rounded-full p-5 flex justify-center items-center" style={{ width, height }}>
+      <div
+        className="text-white bg-gray-600 rounded-full p-5 flex justify-center items-center cursor-pointer hover:bg-cyan-400"
+        style={{ width, height }}
+      >
         {children}
       </div>
     </Marker>
