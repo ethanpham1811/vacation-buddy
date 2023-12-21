@@ -2,6 +2,7 @@
 import { Skeleton } from '@/components'
 import { TPlace, TPlaceListEventResponse } from '@/constants/types'
 import { Events, eventEmitter } from '@/services/eventEmitter'
+import { useQueryState } from 'next-usequerystate'
 import { useEffect, useState } from 'react'
 import PlaceItem from './PlaceItem'
 
@@ -9,18 +10,28 @@ import PlaceItem from './PlaceItem'
  * Subscribe to LOAD_NEW_PLACES events
  */
 function PlaceList() {
+  const [paramType] = useQueryState('type')
   const [placeList, setPlaceList] = useState<TPlace[] | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
+  /* reset state */
+  useEffect(() => {
+    setError(null)
+    setPlaceList(null)
+    setIsLoading(true)
+  }, [paramType])
+
+  /* subscribe to new places  */
   useEffect(() => {
     eventEmitter.subscribe(Events.LOAD_NEW_PLACES, (payload: unknown) => {
-      setIsLoading(false)
       const { data, error } = payload as TPlaceListEventResponse
 
+      setIsLoading(false)
       error && setError(error)
       data && setPlaceList(data)
     })
+    return () => eventEmitter.unsubscribe(Events.LOAD_NEW_PLACES)
   }, [])
 
   if (isLoading)
