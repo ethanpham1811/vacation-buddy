@@ -22,8 +22,8 @@ function useViewport(mapRef: MutableRefObject<MapRef | null>): TUseViewportRespo
   const [viewport, setViewport] = useState<TViewport>({
     latitude: 10.82293,
     longitude: 106.62975,
-    width: '100dvw',
-    height: '100dvh',
+    width: '100%',
+    height: '100%',
     zoom: DEFAULT_ZOOM
   })
 
