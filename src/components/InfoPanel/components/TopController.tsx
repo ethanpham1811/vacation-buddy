@@ -1,20 +1,37 @@
+import { API_TYPES } from '@/constants/enum'
 import { IoBed, MdAttractions, MdOutlineRestaurant } from '@/constants/icons'
+import { useQueryState } from 'next-usequerystate'
 
 function TopController() {
-  function onClick() {
+  const [paramType, setParamType] = useQueryState('type')
+  const isRestaurant = paramType === API_TYPES.restaurants
+  const isHotel = paramType === API_TYPES.hotels
+  const isAttraction = paramType === API_TYPES.attractions
+
+  function onClick(type: string) {
+    setParamType(type)
     // fetch data
   }
   return (
     <section>
       <ul className="flex gap-4 justify-end">
-        <li className="cursor-pointer rounded-full p-1 group shadow-button" onClick={onClick}>
-          <MdOutlineRestaurant className="group-hover:text-blue-600 text-gray-600" size="25" />
+        <li
+          className={`rounded-full p-1 group shadow-button ${isRestaurant ? 'bg-blue-600 text-white' : 'cursor-pointer '}`}
+          onClick={() => !isRestaurant && onClick(API_TYPES.restaurants)}
+        >
+          <MdOutlineRestaurant className={!isRestaurant ? 'group-hover:text-blue-600' : ''} size="25" />
         </li>
-        <li className="cursor-pointer rounded-full p-1 group shadow-button" onClick={onClick}>
-          <IoBed className="group-hover:text-blue-600 text-gray-600" size="25" />
+        <li
+          className={`rounded-full p-1 group shadow-button ${isHotel ? 'bg-blue-600 text-white' : 'cursor-pointer '}`}
+          onClick={() => !isHotel && onClick(API_TYPES.hotels)}
+        >
+          <IoBed className={!isHotel ? 'group-hover:text-blue-600' : ''} size="25" />
         </li>
-        <li className="cursor-pointer rounded-full p-1 group shadow-button" onClick={onClick}>
-          <MdAttractions className="group-hover:text-blue-600 text-gray-600" size="25" />
+        <li
+          className={`rounded-full p-1 group shadow-button ${isAttraction ? 'bg-blue-600 text-white' : 'cursor-pointer '}`}
+          onClick={() => !isAttraction && onClick(API_TYPES.attractions)}
+        >
+          <MdAttractions className={!isAttraction ? 'group-hover:text-blue-600' : ''} size="25" />
         </li>
       </ul>
     </section>
