@@ -11,6 +11,11 @@ export enum API_TYPES {
   hotels = 'hotels',
   attractions = 'attractions'
 }
+export enum OPEN_STATUS {
+  open = 'Open',
+  closes = 'Closes',
+  closed = 'Closed'
+}
 
 /* others */
 export const BLURRED_DATA_URL =

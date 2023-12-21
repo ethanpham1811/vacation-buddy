@@ -2,6 +2,9 @@ import { API_TYPES } from '@/constants/enum'
 import { IoBed, MdAttractions, MdOutlineRestaurant } from '@/constants/icons'
 import { useQueryState } from 'next-usequerystate'
 
+/**
+ * active state base on search param "type"
+ */
 function TopController() {
   const [paramType, setParamType] = useQueryState('type')
   const isRestaurant = paramType === API_TYPES.restaurants
@@ -10,7 +13,6 @@ function TopController() {
 
   function onClick(type: string) {
     setParamType(type)
-    // fetch data
   }
   return (
     <section>

@@ -2,6 +2,7 @@
 import { DEBOUNCE_TIMER_MOVE_VIEWPORT } from '@/constants/enum'
 import { TPlace } from '@/constants/types'
 import { Events, eventEmitter } from '@/services/eventEmitter'
+import { useQueryState } from 'next-usequerystate'
 import { useCallback, useEffect, useState } from 'react'
 
 type TUsePlaceListResponse = {
@@ -18,6 +19,7 @@ type TUsePlaceListResponse = {
  */
 
 function usePlaceList(bounds: number[]): TUsePlaceListResponse {
+  const [paramType] = useQueryState('type')
   const [places, setPlaces] = useState<TPlace[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -26,7 +28,7 @@ function usePlaceList(bounds: number[]): TUsePlaceListResponse {
   const fetchPlaces = useCallback(
     async (signal: AbortSignal) => {
       setIsLoading(true)
-      const res = await fetch(`/api/places/${'attractions'}`, {
+      const res = await fetch(`/api/places/${paramType}`, {
         method: 'POST',
         body: JSON.stringify({
           trlng,
@@ -53,7 +55,7 @@ function usePlaceList(bounds: number[]): TUsePlaceListResponse {
 
       setIsLoading(false)
     },
-    [trlng]
+    [trlng, paramType]
   )
 
   useEffect(() => {
@@ -72,7 +74,7 @@ function usePlaceList(bounds: number[]): TUsePlaceListResponse {
       timeout && clearTimeout(timeout)
       abortCtrl && abortCtrl.abort()
     }
-  }, [trlng]) // only need 1 of 4 coords to trigger
+  }, [trlng, paramType]) // only need 1 of 4 coords to trigger
 
   return { places, isLoading, error }
 }

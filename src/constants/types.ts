@@ -9,15 +9,17 @@ export type TCoords = {
 export type TPlaceInfo = {
   location_id: string
   name: string
-  thumbnail: string
-  photo: string
-  description: string
+  thumbnail?: string
+  photo?: string
+  description?: string
   website?: string
-  web_url: string
-  address: string
-  phone: string
-  rating: string
-  num_reviews: string
+  web_url?: string
+  address?: string
+  phone?: string
+  rating?: string
+  num_reviews?: string
+  open_now_text?: string
+  price?: string
 }
 export type TPlace = TCoords & TPlaceInfo
 export type TViewport = ViewState & {
@@ -56,16 +58,12 @@ export type TCityAPIResponse = {
 export type TPlacesAPIResponse = {
   latitude: string
   longitude: string
-  location_id: string
-  description: string
-  website: string
   name: string
-  web_url: string
-  address: string
-  phone: string
-  rating: string
-  num_reviews: string
-  photo: {
+  location_id: string
+  description?: string
+  rating?: string
+  num_reviews?: string
+  photo?: {
     images: {
       thumbnail: {
         url: string
@@ -75,6 +73,12 @@ export type TPlacesAPIResponse = {
       }
     }
   }
+  website?: string
+  web_url?: string
+  address?: string
+  phone?: string
+  open_now_text?: string
+  price?: string
 }
 export type TPlaceListEventResponse = {
   data?: TPlace[]

@@ -2,7 +2,7 @@
 import { MdOutlineStar } from '@/constants/icons'
 import { formatNumber } from '@/services/utilities'
 
-function Rating({ rating, num_reviews }: { rating: string; num_reviews: string }) {
+function Rating({ rating, num_reviews }: { rating: string | undefined; num_reviews: string | undefined }) {
   return (
     <div className="flex gap-1 items-center text-sm">
       <label className="flex gap-1">

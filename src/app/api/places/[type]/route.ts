@@ -38,16 +38,30 @@ export async function POST(request: Request, { params: { type } }: TGetPlacesPar
   }
 
   const result = await res.json()
-  const rawList = result?.data
 
+  const rawList = result.data
   /* data mapping */
-  const placeList = rawList.map(
-    (place: TPlacesAPIResponse): TPlace => ({
-      name: place?.name || 'unknown',
-      latitude: parseFloat(place?.latitude),
-      longitude: parseFloat(place?.longitude)
-    })
-  )
+  const placeList = (rawList as TPlacesAPIResponse[])
+    .filter((place: TPlacesAPIResponse) => place?.name)
+    .map(
+      (place: TPlacesAPIResponse): TPlace => ({
+        latitude: parseFloat(place?.latitude),
+        longitude: parseFloat(place?.longitude),
+        location_id: place?.location_id,
+        name: place?.name || 'unknown',
+        thumbnail: place?.photo?.images?.thumbnail?.url,
+        photo: place?.photo?.images?.medium?.url,
+        description: place?.description,
+        website: place?.website,
+        web_url: place?.web_url,
+        address: place?.address,
+        phone: place?.phone,
+        rating: place?.rating,
+        num_reviews: place?.num_reviews,
+        price: place?.price,
+        open_now_text: place?.open_now_text
+      })
+    )
 
   return Response.json({ data: placeList })
 }

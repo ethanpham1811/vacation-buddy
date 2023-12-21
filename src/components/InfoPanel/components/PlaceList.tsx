@@ -3,12 +3,7 @@ import { Skeleton } from '@/components'
 import { TPlace, TPlaceListEventResponse } from '@/constants/types'
 import { Events, eventEmitter } from '@/services/eventEmitter'
 import { useEffect, useState } from 'react'
-import Address from './Address'
-import Description from './Description'
-import ExternalLinks from './ExternalLinks'
-import Phone from './Phone'
-import Photo from './Photo'
-import Rating from './Rating'
+import PlaceItem from './PlaceItem'
 
 /**
  * Subscribe to LOAD_NEW_PLACES events
@@ -40,34 +35,11 @@ function PlaceList() {
   if (error) return <p className="text-red-600 text-center text-sm py-2">{error}</p>
 
   return (
-    <ul className="flex flex-col gap-2 flex-1">
+    <ul className="flex flex-col gap-4 flex-1">
       {placeList &&
-        placeList.map(({ location_id, photo, name, address, description, website, web_url, phone, rating, num_reviews }) => (
-          <div key={location_id} className="group flex flex-col bg-white">
-            {/* photo */}
-            <Photo photo={photo} />
-
-            <div className="rounded-b-md bg-gray-100 p-2 flex flex-col gap-1">
-              {/* title */}
-              <h1 className="font-semibold text-lg">{name}</h1>
-
-              {/* external links */}
-              {(web_url || website) && <ExternalLinks web_url={web_url} website={website} />}
-
-              {/* address */}
-              {address && <Address address={address} />}
-
-              {/* description */}
-              {description && <Description description={description} />}
-
-              {/* phone */}
-              {phone && <Phone phone={phone} />}
-
-              {/* rating count */}
-              {(rating || num_reviews) && <Rating rating={rating} num_reviews={num_reviews} />}
-            </div>
-          </div>
-        ))}
+        placeList.map((place) => {
+          return <PlaceItem key={place.location_id} place={place} />
+        })}
     </ul>
   )
 }
