@@ -20,7 +20,7 @@
 }
 
 .rounded-2xl:not(:hover) ::-webkit-scrollbar-track {
-  background-color: transparent !important;
+  background-color: #dadada !important;
 }
 .rounded-2xl:not(:hover) ::-webkit-scrollbar-thumb {
   background-color: transparent !important;
@@ -38,6 +38,10 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
+}
+
+.link {
+  @apply text-blue-600 dark:text-blue-500 hover:underline;
 }
 
 body {

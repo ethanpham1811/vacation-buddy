@@ -18,15 +18,17 @@
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^4.12.0",
+    "react-lines-ellipsis": "^0.15.4",
     "react-map-gl": "^5.1.5",
     "supercluster": "^7.0.0",
+    "tailwind-merge": "^2.1.0",
     "use-supercluster": "^0.2.0"
-
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-lines-ellipsis": "^0.15.5",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",

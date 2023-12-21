@@ -51,7 +51,8 @@ const config: Config = {
         insta: 'var(--insta-color)'
       },
       boxShadow: {
-        card: '0 0 128px 0 rgba(0,0,0,0.1), 0 32px 64px -48px rgba(0,0,0,0.5)',
+        card: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
+        button: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px',
         innerChatBox: 'inset 0 32px 32px -32px rgb(0 0 0 / 8%), inset 0 -32px 32px -32px rgb(0 0 0 / 8%)',
         message: '0 0 32px rgb(0 0 0 / 8%), 0rem 16px 16px -16px rgb(0 0 0 / 10%)'
       },

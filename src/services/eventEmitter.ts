@@ -6,7 +6,8 @@
 */
 
 export enum Events {
-  SELECT_LOCATION = 'SELECT_LOCATION'
+  SELECT_LOCATION = 'SELECT_LOCATION',
+  LOAD_NEW_PLACES = 'LOAD_NEW_PLACES'
 }
 
 type EventCallback = (data: unknown) => void

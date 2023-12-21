@@ -1,4 +1,4 @@
-import { Map, NavBar } from '@/components'
+import { InfoPanel, Map, NavBar } from '@/components'
 
 export default async function Home({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
   const { latitude, longitude } = searchParams
@@ -8,8 +8,11 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
       {/* Top Navigation */}
       <NavBar />
 
-      {/* Map */}
-      <div className="flex-1">
+      <div className="flex flex-1 items-stretch overflow-y-scroll">
+        {/* Right Panel */}
+        <InfoPanel />
+
+        {/* Map */}
         <Map />
       </div>
     </main>
