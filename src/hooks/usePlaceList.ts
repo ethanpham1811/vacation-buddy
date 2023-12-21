@@ -1,5 +1,5 @@
 'use client'
-import { DEBOUNCE_TIMER_MOVE_VIEWPORT } from '@/constants/enum'
+import { API_TYPES, DEBOUNCE_TIMER_MOVE_VIEWPORT } from '@/constants/enum'
 import { TPlace } from '@/constants/types'
 import { Events, eventEmitter } from '@/services/eventEmitter'
 import { useQueryState } from 'next-usequerystate'
@@ -28,7 +28,7 @@ function usePlaceList(bounds: number[]): TUsePlaceListResponse {
   const fetchPlaces = useCallback(
     async (signal: AbortSignal) => {
       setIsLoading(true)
-      const res = await fetch(`/api/places/${paramType}`, {
+      const res = await fetch(`/api/places/${paramType || API_TYPES.attractions}`, {
         method: 'POST',
         body: JSON.stringify({
           trlng,

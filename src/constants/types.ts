@@ -1,6 +1,8 @@
 /* --------------------------------------------Model Types-------------------------------------------- */
 
+import { IconType } from 'react-icons'
 import { FlyToInterpolator, ViewState } from 'react-map-gl'
+import { API_TYPES } from './enum'
 
 export type TCoords = {
   latitude: number
@@ -51,6 +53,10 @@ export type TSuperCluster = { getClusterExpansionZoom: (id: number) => number }
 /* ---------------------------------------------Props Types--------------------------------------------- */
 /* ----------------------------------------------Form Types---------------------------------------------- */
 /* --------------------------------------------- Data Types---------------------------------------------- */
+export type TTopControllerData = {
+  name: API_TYPES
+  icon: IconType
+}
 /* --------------------------------------------- Query Types---------------------------------------------- */
 export type TCityAPIResponse = {
   detailsV2: { geocode: { latitude: number; longitude: number }; names: { name: string; longOnlyHierarchyTypeaheadV2: string } }
