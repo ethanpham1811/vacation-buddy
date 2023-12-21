@@ -1,7 +1,9 @@
+import { TCoords } from '@/constants/types'
+
 /* locate user current coords */
-export function locateMe(cb: (lat: number, lng: number) => void) {
+export function locateMe(cb: (coords: TCoords) => void) {
   navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
-    cb(longitude, latitude)
+    cb({ longitude, latitude })
   })
 }
 
