@@ -1,4 +1,4 @@
-import { TPlace, TPlacesAPIResponse } from '@/constants/types'
+import { TCityAPIResponse, TPlace } from '@/constants/types'
 
 /**
  * Fetch city data from Rapic api
@@ -20,22 +20,22 @@ export async function GET(request: Request, { params: { query } }: { params: { q
     signal: request.signal
   })
   if (!res.ok) {
-    throw new Error('Failed to fetch places')
+    throw new Error('Failed to fetch cities')
   }
 
   const result = await res.json()
   const rawList = result?.data?.Typeahead_autocomplete?.results
 
   /* data mapping */
-  const placeList = rawList
+  const citiesList = rawList
     ?.filter((item: { detailsV2: { placeType: string } }) => item.detailsV2?.placeType === 'CITY')
     .map(
-      (place: TPlacesAPIResponse): TPlace => ({
+      (place: TCityAPIResponse): TPlace => ({
         name: `${place?.detailsV2?.names?.name}. ${place?.detailsV2?.names?.longOnlyHierarchyTypeaheadV2}` || 'unknown',
         latitude: place?.detailsV2?.geocode?.latitude,
         longitude: place?.detailsV2?.geocode?.longitude
       })
     )
 
-  return Response.json({ data: placeList })
+  return Response.json({ data: citiesList })
 }
