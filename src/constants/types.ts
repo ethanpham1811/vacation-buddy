@@ -29,7 +29,7 @@ export type TViewport = ViewState & {
 }
 export type TMarker = {
   type: 'Feature'
-  properties: TPlaceInfo & {
+  properties: Pick<TPlaceInfo, 'name' | 'thumbnail'> & {
     cluster: false
   }
   geometry: {
@@ -39,7 +39,7 @@ export type TMarker = {
 }
 export type TCluster = TMarker & {
   id: number
-  properties: TPlaceInfo & {
+  properties: Pick<TPlaceInfo, 'name' | 'thumbnail'> & {
     cluster: true
     point_count: number
   }

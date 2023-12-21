@@ -13,21 +13,23 @@ type TUseMarkerListResponse = {
  */
 function useMarkerList(data: TPlace[], bounds: any, zoom: number): TUseMarkerListResponse {
   // convert TPlace to TMarker
-  const points: TMarker[] = data.map(({ name, longitude, latitude }) => ({
-    type: 'Feature',
-    properties: { cluster: false, name },
-    geometry: {
-      type: 'Point',
-      coordinates: [longitude, latitude]
-    }
-  }))
+  const points: TMarker[] = data.map(
+    ({ name, thumbnail, longitude, latitude }): TMarker => ({
+      type: 'Feature',
+      properties: { cluster: false, name, thumbnail },
+      geometry: {
+        type: 'Point',
+        coordinates: [longitude, latitude]
+      }
+    })
+  )
 
   // transform data list to clusters
   const { clusters, supercluster } = useSupercluster({
     points,
     bounds,
     zoom,
-    options: { radius: 35, maxZoom: 20 }
+    options: { radius: 105, maxZoom: 20 }
   })
 
   return { points, clusters, supercluster }
