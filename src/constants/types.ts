@@ -1,7 +1,7 @@
 /* --------------------------------------------Model Types-------------------------------------------- */
 
 import { IconType } from 'react-icons'
-import { FlyToInterpolator, ViewState } from 'react-map-gl'
+import { FlyToInterpolator } from 'react-map-gl'
 import { API_TYPES } from './enum'
 
 export type TCoords = {
@@ -24,10 +24,12 @@ export type TPlaceInfo = {
   price?: string
 }
 export type TPlace = TCoords & TPlaceInfo
-export type TViewport = ViewState & {
+export type TViewport = {
+  longitude?: number
+  latitude?: number
   width?: string
   height?: string
-  zoom?: number
+  zoom?: number | undefined
   transitionInterpolator?: FlyToInterpolator
   transitionDuration?: number | 'auto' | undefined
 }
@@ -59,7 +61,13 @@ export type TTopControllerData = {
 }
 /* --------------------------------------------- Query Types---------------------------------------------- */
 export type TCityAPIResponse = {
-  detailsV2: { geocode: { latitude: number; longitude: number }; names: { name: string; longOnlyHierarchyTypeaheadV2: string } }
+  detailsV2: {
+    geocode: { latitude: number; longitude: number }
+    names: {
+      name: string
+      longOnlyHierarchyTypeaheadV2: string
+    }
+  }
 }
 export type TPlacesAPIResponse = {
   latitude: string

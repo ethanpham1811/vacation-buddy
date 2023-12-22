@@ -18,14 +18,7 @@ type TUseViewportResponse = {
 function useViewport(mapRef: MutableRefObject<MapRef | null>): TUseViewportResponse {
   const [latitude] = useQueryState('latitude')
   const [longitude] = useQueryState('longitude')
-
-  const [viewport, setViewport] = useState<TViewport>({
-    latitude: 10.82293,
-    longitude: 106.62975,
-    width: '100%',
-    height: '100%',
-    zoom: DEFAULT_ZOOM
-  })
+  const [viewport, setViewport] = useState<TViewport>({ zoom: DEFAULT_ZOOM })
 
   /**
    * On receiving new latitude & longitude from SEARCH PARAMS:

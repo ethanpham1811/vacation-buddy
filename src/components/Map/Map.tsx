@@ -1,6 +1,6 @@
 'use client'
 import { Cluster, LocateMe, Pin } from '@/components'
-import { DEFAULT_ZOOM, MAPBOX_MAP_GL_STYLE } from '@/constants/enum'
+import { MAPBOX_MAP_GL_STYLE, MAX_ZOOM, MIN_ZOOM } from '@/constants/enum'
 import { TCluster } from '@/constants/types'
 import { useMarkerList, usePlaceList, useViewport } from '@/hooks'
 import { useDeferredValue, useRef } from 'react'
@@ -30,8 +30,10 @@ function Map() {
     <div className="h-full flex flex-1 justify-center items-center relative">
       <MapGL
         {...viewport}
-        maxZoom={15}
-        minZoom={DEFAULT_ZOOM}
+        width="100%"
+        height="100%"
+        maxZoom={MAX_ZOOM}
+        minZoom={MIN_ZOOM}
         ref={mapRef}
         mapStyle={MAPBOX_MAP_GL_STYLE}
         mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAP_BOX_TOKEN}
