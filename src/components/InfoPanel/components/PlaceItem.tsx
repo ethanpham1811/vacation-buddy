@@ -40,7 +40,7 @@ function PlaceItem({ place }: { place: TPlace }) {
         {phone && <Phone phone={phone} />}
 
         {/* rating count */}
-        {(rating || num_reviews) && <Rating rating={rating} num_reviews={num_reviews} />}
+        {rating && <Rating rating={rating} num_reviews={num_reviews} />}
       </div>
     </div>
   )
