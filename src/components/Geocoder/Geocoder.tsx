@@ -1,6 +1,6 @@
 'use client'
 import { AutoComplete } from '@/components'
-import { TPlace } from '@/constants/types'
+import { TAutoCompleteData, TPlace } from '@/constants/types'
 import { useQueryState } from 'next-usequerystate'
 import { useState } from 'react'
 import SelectOption from './components/SelectOption'
@@ -13,7 +13,7 @@ import SelectOption from './components/SelectOption'
 function Geocoder() {
   const [_paramLat, setParamLat] = useQueryState('latitude')
   const [_paramLng, setParamLng] = useQueryState('longitude')
-  const [cityList, setCityList] = useState([])
+  const [cityList, setCityList] = useState<TAutoCompleteData[]>([])
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -43,7 +43,7 @@ function Geocoder() {
       {cityList.length === 0 || error ? (
         <div className="relative cursor-default select-none px-4 py-2 text-gray-700">{error ?? 'Nothing found.'}</div>
       ) : (
-        cityList.map((place: TPlace) => <SelectOption key={place.name} place={place} />)
+        cityList.map((place: TAutoCompleteData) => <SelectOption key={place.name} place={place} />)
       )}
     </AutoComplete>
   )

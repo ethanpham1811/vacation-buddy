@@ -15,9 +15,9 @@ type TUseMarkerListResponse = {
 function useMarkerList(data: TPlace[], bounds: any, zoom: number | undefined): TUseMarkerListResponse {
   // convert TPlace to TMarker
   const points: TMarker[] = data.map(
-    ({ name, thumbnail, longitude, latitude }): TMarker => ({
+    ({ id, name, thumbnail, longitude, latitude }): TMarker => ({
       type: 'Feature',
-      properties: { cluster: false, name, thumbnail },
+      properties: { id, cluster: false, name, thumbnail },
       geometry: {
         type: 'Point',
         coordinates: [longitude, latitude]

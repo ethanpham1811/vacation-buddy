@@ -9,7 +9,7 @@ export type TCoords = {
   longitude: number
 }
 export type TPlaceInfo = {
-  location_id: string
+  id: string
   name: string
   thumbnail?: string
   photo?: string
@@ -35,7 +35,7 @@ export type TViewport = {
 }
 export type TMarker = {
   type: 'Feature'
-  properties: Pick<TPlaceInfo, 'name' | 'thumbnail'> & {
+  properties: Pick<TPlaceInfo, 'id' | 'name' | 'thumbnail'> & {
     cluster: false
   }
   geometry: {
@@ -51,6 +51,9 @@ export type TCluster = TMarker & {
   }
 }
 export type TSuperCluster = { getClusterExpansionZoom: (id: number) => number }
+export type TAutoCompleteData = TCoords & {
+  name: string
+}
 
 /* ---------------------------------------------Props Types--------------------------------------------- */
 /* ----------------------------------------------Form Types---------------------------------------------- */

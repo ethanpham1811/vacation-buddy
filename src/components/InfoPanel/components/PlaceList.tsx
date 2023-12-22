@@ -37,7 +37,7 @@ function PlaceList() {
   if (isLoading)
     return (
       <ul className="flex flex-col gap-4 flex-1">
-        {[0, 1].map((el, i) => (
+        {[0, 1].map((_, i) => (
           <Skeleton key={`skeleton_${i}`} />
         ))}
       </ul>
@@ -49,7 +49,7 @@ function PlaceList() {
     <ul className="flex flex-col gap-4 flex-1">
       {placeList &&
         placeList.map((place) => {
-          return <PlaceItem key={place.location_id} place={place} />
+          return <PlaceItem key={place.id} place={place} />
         })}
     </ul>
   )

@@ -1,10 +1,10 @@
 'use client'
 
 import { ArrowRightIcon } from '@/constants/icons'
-import { TPlace } from '@/constants/types'
+import { TAutoCompleteData } from '@/constants/types'
 import { Combobox } from '@headlessui/react'
 
-function SelectOption({ place }: { place: TPlace }) {
+function SelectOption({ place }: { place: TAutoCompleteData }) {
   return (
     <Combobox.Option
       className={({ active }) => `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-blue-500 text-white' : 'text-gray-900'}`}
