@@ -50,9 +50,6 @@ function usePlaceList(bounds: number[]): TUsePlaceListResponse {
       const { data } = await res.json()
       setPlaces(data)
 
-      // fire event LOAD_NEW_PLACES to update data in right panel
-      eventEmitter.dispatch(Events.LOAD_NEW_PLACES, { data })
-
       setIsLoading(false)
     },
     [trlng, paramType]

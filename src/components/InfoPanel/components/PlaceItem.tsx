@@ -10,10 +10,10 @@ import Price from './Price'
 import Rating from './Rating'
 
 function PlaceItem({ place }: { place: TPlace }) {
-  const { id, photo, name, web_url, website, address, description, phone, rating, num_reviews, open_now_text, price } = place
+  const { photo, name, web_url, website, address, description, phone, rating, num_reviews, open_now_text, price } = place
 
   return (
-    <div key={id} className="group flex flex-col bg-white shadow-card">
+    <div className="group flex flex-col bg-white shadow-card">
       {/* photo */}
       <Photo photo={photo} name={name} />
 

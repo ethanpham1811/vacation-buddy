@@ -1,6 +1,6 @@
 'use client'
 import { Cluster, LocateMe, Pin } from '@/components'
-import { MAPBOX_MAP_GL_STYLE, MAX_ZOOM, MIN_ZOOM } from '@/constants/enum'
+import { MAPBOX_MAP_GL_STYLE, MIN_ZOOM } from '@/constants/enum'
 import { TCluster } from '@/constants/types'
 import { useMarkerList, usePlaceList, useViewport } from '@/hooks'
 import { useDeferredValue, useRef } from 'react'
@@ -32,7 +32,6 @@ function Map() {
         {...viewport}
         width="100%"
         height="100%"
-        maxZoom={MAX_ZOOM}
         minZoom={MIN_ZOOM}
         ref={mapRef}
         mapStyle={MAPBOX_MAP_GL_STYLE}
