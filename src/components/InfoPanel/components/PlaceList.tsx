@@ -44,6 +44,7 @@ function PlaceList() {
     )
 
   if (error) return <p className="text-red-600 text-center text-sm py-2">{error}</p>
+  if (!placeList || placeList.length === 0) return <p className="text-center text-sm py-2">No place found.</p>
 
   return (
     <ul className="flex flex-col gap-4 flex-1">
