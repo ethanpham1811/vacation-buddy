@@ -12,7 +12,7 @@ import Logo from './components/Logo'
  */
 function NavBar() {
   return (
-    <Disclosure as="nav" className="bg-gray-800 py-2 px-2 lg:px-4">
+    <Disclosure as="nav" className="bg-gray-800 py-2 px-2 lg:px-4 z-[1000]">
       <div className="mx-auto relative flex items-center justify-between">
         {/* logo */}
         <div className="flex items-stretch justify-start">

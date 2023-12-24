@@ -1,10 +1,12 @@
-import { TCoords } from '@/constants/types'
-
 /* locate user current coords */
-export function locateMe(cb: (coords: TCoords) => void) {
-  navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
-    cb({ longitude, latitude })
-  })
+export function locateMe(cb: (lat: number, lng: number) => void) {
+  navigator.geolocation.getCurrentPosition(
+    ({ coords: { longitude: lng, latitude: lat } }) => {
+      cb(lat, lng)
+    },
+    null,
+    { enableHighAccuracy: true }
+  )
 }
 
 /* join conditional styling classes */

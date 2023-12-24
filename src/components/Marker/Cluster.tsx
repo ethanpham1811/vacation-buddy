@@ -1,18 +1,18 @@
 'use client'
-import { TCluster, TSuperCluster, TViewport } from '@/constants/types'
-import { Dispatch, ReactNode, SetStateAction } from 'react'
-import { FlyToInterpolator, Marker } from 'react-map-gl'
+import { DivIcon } from 'leaflet'
+import { ReactNode } from 'react'
+import { Marker } from 'react-leaflet/Marker'
+
+import ReactDom from 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser.development'
 
 type TRdMarkerProps = {
   children: ReactNode
-  longitude: number
-  latitude: number
+  lng: number
+  lat: number
   pointCount: number
-  pointLength: number
-  viewport: TViewport
-  cluster: TCluster
-  supercluster: TSuperCluster
-  setViewport: Dispatch<SetStateAction<TViewport>>
+  dataLength: number
+  zoom: number
+  setMapViewState: (coords: [number, number], zoom: number) => void
 }
 
 /**
@@ -20,34 +20,48 @@ type TRdMarkerProps = {
  * - only show number of children marker inside
  * - zoom in to show children marker on cluster clicking
  */
-const Cluster = ({ longitude, latitude, pointCount, pointLength, setViewport, viewport, supercluster, cluster, children }: TRdMarkerProps) => {
+const Cluster = ({ lng, lat, pointCount, dataLength, zoom, children, setMapViewState }: TRdMarkerProps) => {
   // calculate the width of the circle base on digits
-  const width = `${30 + (pointCount / pointLength) * 20}px`
-  const height = `${30 + (pointCount / pointLength) * 20}px`
+  const width = `${30 + (pointCount / dataLength) * 20}px`
+  const height = `${30 + (pointCount / dataLength) * 20}px`
+
+  const Circle = () => (
+    <div
+      className="text-white bg-gray-600 rounded-full p-5 flex justify-center items-center cursor-pointer hover:bg-cyan-400"
+      style={{ width, height }}
+    >
+      {children}
+    </div>
+  )
+
+  // Convert the React component to a string
+  const customMarker = new DivIcon({
+    html: ReactDom.renderToString(<Circle />),
+    iconSize: [40, 40]
+  })
 
   function onClick() {
-    const expansionZoom = Math.min(supercluster.getClusterExpansionZoom(cluster.id), 20)
+    setMapViewState([lat, lng], zoom)
 
-    setViewport({
-      ...viewport,
-      latitude,
-      longitude,
-      zoom: expansionZoom,
-      transitionInterpolator: new FlyToInterpolator({
-        speed: 2
-      }),
-      transitionDuration: 'auto'
-    })
+    // seTViewState({
+    // longitude: lng,
+    // latitude: lat,
+    // zoom
+    // transitionInterpolator: new FlyToInterpolator({
+    //   speed: 2
+    // }),
+    // transitionDuration: 'auto'
+    // })
   }
+
   return (
-    <Marker longitude={longitude} latitude={latitude} onClick={onClick}>
-      <div
-        className="text-white bg-gray-600 rounded-full p-5 flex justify-center items-center cursor-pointer hover:bg-cyan-400"
-        style={{ width, height }}
-      >
-        {children}
-      </div>
-    </Marker>
+    <Marker
+      position={[lat, lng]}
+      icon={customMarker}
+      eventHandlers={{
+        click: onClick
+      }}
+    />
   )
 }
 

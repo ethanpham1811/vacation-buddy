@@ -1,74 +1,65 @@
 'use client'
-import { Cluster, LocateMe, Pin } from '@/components'
-import { MAPBOX_MAP_GL_STYLE, MIN_ZOOM } from '@/constants/enum'
-import { TCluster } from '@/constants/types'
-import { useMarkerList, usePlaceList, useViewport } from '@/hooks'
-import { useDeferredValue, useRef } from 'react'
-import MapGL, { MapRef, ViewState } from 'react-map-gl'
+import { TBounds, TCluster } from '@/constants/types'
+import { useFlyToInitLocation, useMarkerList, usePlaceList } from '@/hooks'
+
+import { useState } from 'react'
+import { TileLayer } from 'react-leaflet/TileLayer'
+import { useMapEvents } from 'react-leaflet/hooks'
+import { Cluster, Pin } from '..'
 
 /**
- * MapBox Map GL component https://docs.mapbox.com/mapbox-gl-js
- * - uncontrolled viewport
- * - move map center on init with searchParams "latitude" & "longitude" (ref.current.flyTo)
+ * Leaflet Map component https://react-leaflet.js.org/docs
+ * - uncontrolled viewState
+ * - move map center on init with searchParams "lat" & "lng" (ref.current.flyTo)
  */
 function Map() {
-  /* get bounds data [xx,xx,xx,xx] (top left and bottom right coords) */
-  const mapRef = useRef<MapRef>(null)
-  const rawBounds: number[] = mapRef?.current ? mapRef?.current?.getMap().getBounds().toArray().flat() : null
-  const bounds = useDeferredValue(rawBounds)
+  const [bounds, setBounds] = useState<TBounds>()
 
-  /* viewport (lat, lng, zoom) */
-  const { viewport, setViewport } = useViewport(mapRef)
+  const myMap = useMapEvents({
+    moveend: () => {
+      const ne = myMap.getBounds().getNorthEast()
+      const sw = myMap.getBounds().getSouthWest()
+      setBounds([sw.lng, sw.lat, ne.lng, ne.lat])
+    }
+  })
+
+  /* fly to init location with searchParams "lat" & "lng"  */
+  useFlyToInitLocation(myMap)
 
   /* fetch place list with updated bounds */
   const { places, isLoading, error } = usePlaceList(bounds)
 
-  /* transform place list into cluster points */
-  const { points, clusters, supercluster } = useMarkerList(places, bounds, viewport.zoom)
+  /* build cluster with data list & bounds */
+  const { clusters, supercluster } = useMarkerList(places, bounds, myMap?.getZoom(), isLoading)
 
   return (
-    <div className="h-full flex flex-1 justify-center items-center relative">
-      <MapGL
-        {...viewport}
-        width="100%"
-        height="100%"
-        minZoom={MIN_ZOOM}
-        ref={mapRef}
-        mapStyle={MAPBOX_MAP_GL_STYLE}
-        mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAP_BOX_TOKEN}
-        onViewportChange={(viewport: ViewState) => setViewport({ ...viewport })}
-      >
-        {clusters.map((cluster: TCluster) => {
-          const [longitude, latitude] = cluster.geometry.coordinates
-          const { cluster: isCluster, point_count: pointCount, name, thumbnail } = cluster.properties
-
-          /* cluster point (show only number of children nodes) */
-          if (isCluster) {
-            return (
-              <Cluster
-                key={`cluster-${cluster.id}`}
-                latitude={latitude}
-                longitude={longitude}
-                supercluster={supercluster}
-                cluster={cluster}
-                setViewport={setViewport}
-                viewport={viewport}
-                pointCount={pointCount}
-                pointLength={points.length}
-              >
-                {pointCount}
-              </Cluster>
-            )
-          }
-
-          /* child node (place) */
-          return <Pin key={name} latitude={latitude} longitude={longitude} name={name} thumbnail={thumbnail} />
-        })}
-      </MapGL>
-
-      {/* floating locate current location button */}
-      <LocateMe />
-    </div>
+    <>
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      {clusters.map((cluster: TCluster) => {
+        const [lng, lat] = cluster.geometry.coordinates
+        const { cluster: isCluster, point_count, id, cluster_id, name, thumbnail } = cluster.properties
+        const expansionZoom = Math.min(supercluster.getClusterExpansionZoom(cluster.id), 20)
+        if (isCluster) {
+          return (
+            <Cluster
+              setMapViewState={(coords: [number, number], zoom: number) => myMap.setView(coords, zoom)}
+              key={`cluster-${cluster_id}`}
+              lat={lat}
+              lng={lng}
+              pointCount={point_count}
+              dataLength={places.length || 0}
+              zoom={expansionZoom}
+            >
+              {point_count}
+            </Cluster>
+          )
+        }
+        return <Pin key={`place_${id}`} lat={lat} lng={lng} name={name} thumbnail={thumbnail} />
+      })}
+    </>
   )
 }
 
