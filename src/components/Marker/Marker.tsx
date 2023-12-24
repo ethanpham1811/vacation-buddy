@@ -1,17 +1,24 @@
 'use client'
 import { TCoords } from '@/constants/types'
 import { GiPositionMarker } from 'react-icons/gi'
-import { Marker } from 'react-map-gl'
+import { Marker as LeafletMarker } from 'react-leaflet/Marker'
 
 /**
  * Marker
  */
-const RdMarker = ({ longitude, latitude }: TCoords) => {
+const Marker = ({ lng, lat }: TCoords) => {
   return (
-    <Marker longitude={longitude} latitude={latitude}>
+    <LeafletMarker
+      position={[lat, lng]}
+      // eventHandlers={{
+      //   click: () => {
+      //     console.log('marker clicked')
+      //   }
+      // }}
+    >
       <GiPositionMarker size="40" className="text-blue-600" />
-    </Marker>
+    </LeafletMarker>
   )
 }
 
-export default RdMarker
+export default Marker

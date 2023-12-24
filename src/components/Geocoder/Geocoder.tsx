@@ -8,11 +8,11 @@ import SelectOption from './components/SelectOption'
 /**
  * Google places Autocomplete with MapBox api
  * - fetch places data on user typing
- * - update query params "latitude" & "longitude" on selection
+ * - update query params "lat" & "lng" on selection
  */
 function Geocoder() {
-  const [_paramLat, setParamLat] = useQueryState('latitude')
-  const [_paramLng, setParamLng] = useQueryState('longitude')
+  const [_paramLat, setParamLat] = useQueryState('lat')
+  const [_paramLng, setParamLng] = useQueryState('lng')
   const [cityList, setCityList] = useState<TAutoCompleteData[]>([])
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -34,8 +34,8 @@ function Geocoder() {
 
   /* update search params "latitude" & "longitude" */
   function onSelect(place: TPlace) {
-    setParamLat(place.latitude.toString())
-    setParamLng(place.longitude.toString())
+    setParamLat(place.lat.toString())
+    setParamLng(place.lng.toString())
   }
 
   return (

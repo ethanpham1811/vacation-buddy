@@ -1,13 +1,13 @@
 /* --------------------------------------------Model Types-------------------------------------------- */
 
 import { IconType } from 'react-icons'
-import { FlyToInterpolator } from 'react-map-gl'
 import { API_TYPES } from './enum'
 
 export type TCoords = {
-  latitude: number
-  longitude: number
+  lat: number
+  lng: number
 }
+export type TBounds = [number, number, number, number] // swLng swLat neLng neLat
 export type TPlaceInfo = {
   id: string
   name: string
@@ -24,15 +24,7 @@ export type TPlaceInfo = {
   price?: string
 }
 export type TPlace = TCoords & TPlaceInfo
-export type TViewport = {
-  longitude?: number
-  latitude?: number
-  width?: string
-  height?: string
-  zoom?: number | undefined
-  transitionInterpolator?: FlyToInterpolator
-  transitionDuration?: number | 'auto' | undefined
-}
+
 export type TMarker = {
   type: 'Feature'
   properties: Pick<TPlaceInfo, 'id' | 'name' | 'thumbnail'> & {

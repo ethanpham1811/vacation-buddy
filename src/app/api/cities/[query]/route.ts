@@ -22,20 +22,18 @@ export async function GET(request: Request, { params: { query } }: { params: { q
   if (!res.ok) {
     throw new Error('Failed to fetch cities')
   }
-
   const result = await res.json()
-  const rawList = result?.data?.Typeahead_autocomplete?.results
+  const data = result?.data?.Typeahead_autocomplete?.results
 
   /* data mapping */
-  const citiesList: TAutoCompleteData[] = rawList
-    ?.filter((item: { detailsV2: { placeType: string } }) => item.detailsV2?.placeType === 'CITY')
-    .map(
-      (place: TCityAPIResponse): Omit<TPlace, 'id'> => ({
-        name: `${place?.detailsV2?.names?.name}. ${place?.detailsV2?.names?.longOnlyHierarchyTypeaheadV2}` || 'unknown',
-        latitude: place?.detailsV2?.geocode?.latitude,
-        longitude: place?.detailsV2?.geocode?.longitude
-      })
-    )
+  const rawList = data?.filter((item: { detailsV2?: { placeType: string } }) => item.detailsV2?.placeType === 'CITY')
+  const citiesList: TAutoCompleteData[] = (rawList as TCityAPIResponse[]).map(
+    (place: TCityAPIResponse): Omit<TPlace, 'id'> => ({
+      name: `${place?.detailsV2?.names?.name}. ${place?.detailsV2?.names?.longOnlyHierarchyTypeaheadV2}` || 'unknown',
+      lat: place?.detailsV2?.geocode?.latitude,
+      lng: place?.detailsV2?.geocode?.longitude
+    })
+  )
 
   return Response.json({ data: citiesList })
 }

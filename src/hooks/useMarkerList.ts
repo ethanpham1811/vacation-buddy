@@ -1,11 +1,10 @@
 import { DEFAULT_ZOOM } from '@/constants/enum'
-import { TCluster, TMarker, TPlace, TSuperCluster } from '@/constants/types'
-import { Events, eventEmitter } from '@/services/eventEmitter'
-import { useEffect } from 'react'
+import { TBounds, TCluster, TMarker, TPlace, TSuperCluster } from '@/constants/types'
+import { placeListSignal } from '@/signals/placeListSignal'
+import { useEffect, useMemo } from 'react'
 import useSupercluster from 'use-supercluster'
 
 type TUseMarkerListResponse = {
-  points: TMarker[]
   clusters: TCluster[]
   supercluster: TSuperCluster
 }
@@ -15,37 +14,49 @@ type TUseMarkerListResponse = {
  * - "cluster" -> the circle with number represent group of points
  * - "point" -> the individual place in the map (not cluster)
  */
-function useMarkerList(data: TPlace[], bounds: any, zoom: number | undefined): TUseMarkerListResponse {
+
+function useMarkerList(data: TPlace[], bounds: TBounds | undefined, zoom: number | undefined, isFetching: boolean): TUseMarkerListResponse {
   // convert TPlace to TMarker
-  const points: TMarker[] = data.map(
-    ({ id, name, thumbnail, longitude, latitude }): TMarker => ({
-      type: 'Feature',
-      properties: { id, cluster: false, name, thumbnail },
-      geometry: {
-        type: 'Point',
-        coordinates: [longitude, latitude]
-      }
-    })
+  const points: TMarker[] = useMemo(
+    () =>
+      data.map(
+        ({ name, thumbnail, lng, lat, id }): TMarker => ({
+          type: 'Feature',
+          properties: { id, cluster: false, name, thumbnail },
+          geometry: {
+            type: 'Point',
+            coordinates: [lng, lat]
+          }
+        })
+      ),
+    [data]
   )
 
   // transform data list to clusters
   const { clusters, supercluster } = useSupercluster({
     points,
     bounds,
-    zoom: zoom ?? DEFAULT_ZOOM,
-    options: { radius: 105, maxZoom: 20 }
+    zoom: zoom || DEFAULT_ZOOM,
+    options: { radius: 100, disableRefresh: isFetching }
   })
 
   // filter TPlace[] by point ids (not cluster)
-  const pointIdList = clusters.filter((point) => !point?.properties?.cluster).map((point) => point.properties.id)
-  const filteredData = data.filter((place) => pointIdList.includes(place.id))
+  const pointIdList: string[] = clusters.filter((point) => !point?.properties?.cluster).map((point) => point.properties.id)
+  const filteredData: TPlace[] = data.filter((place) => pointIdList.includes(place.id))
 
   // fire event LOAD_NEW_PLACES to update data in right panel
   useEffect(() => {
-    eventEmitter.dispatch(Events.LOAD_NEW_PLACES, { data: filteredData })
+    // eventEmitter.dispatch(Events.LOAD_NEW_PLACES, { data: filteredData })
+    // const timeout = setTimeout(() => {
+    placeListSignal.value = filteredData
+    // }, DEBOUNCE_TIMER_MOVE_VIEWPORT)
+
+    // return () => {
+    //   timeout && clearTimeout(timeout)
+    // }
   }, [filteredData])
 
-  return { points, clusters, supercluster }
+  return { clusters, supercluster }
 }
 
 export default useMarkerList

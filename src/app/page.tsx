@@ -1,4 +1,5 @@
-import { InfoPanel, Map, NavBar } from '@/components'
+import { InfoPanel, NavBar } from '@/components'
+import MapContainer from '@/components/Map/MapContainer'
 
 export default async function Home({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
   const { latitude, longitude } = searchParams
@@ -13,7 +14,7 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
         <InfoPanel />
 
         {/* Map */}
-        <Map />
+        <MapContainer />
       </div>
     </main>
   )

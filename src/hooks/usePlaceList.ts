@@ -1,6 +1,5 @@
-'use client'
 import { API_TYPES, DEBOUNCE_TIMER_MOVE_VIEWPORT } from '@/constants/enum'
-import { TPlace } from '@/constants/types'
+import { TBounds, TPlace } from '@/constants/types'
 import { Events, eventEmitter } from '@/services/eventEmitter'
 import { useQueryState } from 'next-usequerystate'
 import { useCallback, useEffect, useState } from 'react'
@@ -15,26 +14,28 @@ type TUsePlaceListResponse = {
  * Fetch places data from on receiving new bounds
  * - debounce on changing map viewport
  * - abort concurrent request before dispatching new request
- * @param  {number[]} bounds  //  [trlng, trlat, bllng, bllat]
+ * @param  {TBounds} bounds  //  [swLng, swLat, neLng, neLat]
  */
 
-function usePlaceList(bounds: number[]): TUsePlaceListResponse {
+function usePlaceList(bounds: TBounds | undefined): TUsePlaceListResponse {
   const [paramType] = useQueryState('type')
   const [places, setPlaces] = useState<TPlace[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [trlng, trlat, bllng, bllat] = bounds || [null, null, null, null]
+  const [swLng, swLat, neLng, neLat] = bounds || []
 
   const fetchPlaces = useCallback(
     async (signal: AbortSignal) => {
+      if (!swLng) return
+
       setIsLoading(true)
       const res = await fetch(`/api/places/${paramType || API_TYPES.attractions}`, {
         method: 'POST',
         body: JSON.stringify({
-          trlng,
-          trlat,
-          bllng,
-          bllat
+          tr_lng: neLng,
+          tr_lat: neLat,
+          bl_lng: swLng,
+          bl_lat: swLat
         }),
         signal
       })
@@ -52,9 +53,15 @@ function usePlaceList(bounds: number[]): TUsePlaceListResponse {
 
       setIsLoading(false)
     },
-    [trlng, paramType]
+    [swLng, paramType]
   )
 
+  /**
+   * on receiving new input
+   * - clear debounce timer
+   * - abort prev request
+   * - request data "fetchPlaces"
+   */
   useEffect(() => {
     const abortCtrl = new AbortController()
 
@@ -62,16 +69,11 @@ function usePlaceList(bounds: number[]): TUsePlaceListResponse {
       fetchPlaces(abortCtrl.signal)
     }, DEBOUNCE_TIMER_MOVE_VIEWPORT)
 
-    /**
-     * on receiving new input
-     * - clear debounce timer
-     * - abort prev request
-     */
     return () => {
       timeout && clearTimeout(timeout)
       abortCtrl && abortCtrl.abort()
     }
-  }, [trlng, paramType]) // only need 1 of 4 coords to trigger
+  }, [swLng, paramType]) // only need 1 of 4 coords to trigger
 
   return { places, isLoading, error }
 }

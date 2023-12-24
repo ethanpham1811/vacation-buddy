@@ -48,3 +48,9 @@ body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
+
+/* leaflet marker overrides */
+.leaflet-div-icon {
+  border: none !important;
+  background-color: transparent !important;
+}

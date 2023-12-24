@@ -1,4 +1,5 @@
 import { TPlace, TPlacesAPIResponse } from '@/constants/types'
+import { v4 as rid } from 'uuid'
 
 type TGetPlacesParams = {
   params: {
@@ -18,10 +19,16 @@ type TGetPlacesParams = {
 
 export async function POST(request: Request, { params: { type } }: TGetPlacesParams) {
   const body = await request.json()
-  const { trlng, trlat, bllng, bllat } = body
+  const { tr_lng, tr_lat, bl_lng, bl_lat } = body
+  console.log(tr_lng, tr_lat, bl_lng, bl_lat)
+  console.log(
+    `${process.env.RAPID_API_ENDPOINT}/${type}/list-in-boundary?tr_longitude=${tr_lng}&tr_latitude=${tr_lat}&bl_longitude=${bl_lng}&bl_latitude=${bl_lat}`
+  )
+  console.log(process.env.RAPID_API_KEY)
+  console.log(process.env.RAPID_API_DOMAIN)
 
   const res = await fetch(
-    `${process.env.RAPID_API_ENDPOINT}/${type}/list-in-boundary?tr_longitude=${trlng}&tr_latitude=${trlat}&bl_longitude=${bllng}&bl_latitude=${bllat}`,
+    `${process.env.RAPID_API_ENDPOINT}/${type}/list-in-boundary?tr_longitude=${tr_lng}&tr_latitude=${tr_lat}&bl_longitude=${bl_lng}&bl_latitude=${bl_lat}`,
     {
       method: 'GET',
       headers: {
@@ -31,23 +38,23 @@ export async function POST(request: Request, { params: { type } }: TGetPlacesPar
       signal: request.signal
     }
   )
+  console.log('>>>>', res)
 
   // TODO: map error message
-  if (!res.ok) {
-    throw new Error('Failed to fetch places')
-  }
+  // if (!res.ok) {
+  //   throw new Error('Failed to fetch places')
+  // }
 
   const result = await res.json()
-
   const rawList = result.data
   /* data mapping */
   const placeList = (rawList as TPlacesAPIResponse[])
     .filter((place: TPlacesAPIResponse) => place?.name)
     .map(
       (place: TPlacesAPIResponse): TPlace => ({
-        latitude: parseFloat(place?.latitude),
-        longitude: parseFloat(place?.longitude),
-        location_id: place?.location_id,
+        id: rid(),
+        lat: parseFloat(place?.latitude),
+        lng: parseFloat(place?.longitude),
         name: place?.name || 'unknown',
         thumbnail: place?.photo?.images?.thumbnail?.url,
         photo: place?.photo?.images?.medium?.url,
