@@ -6,7 +6,7 @@ function Logo() {
   return (
     <div className="flex flex-shrink-0 items-center">
       <Link href="/">
-        <Image width={40} height={40} src={logo} alt="Vacation Buddy Logo" />
+        <Image priority width={40} height={40} src={logo} alt="Vacation Buddy Logo" />
       </Link>
     </div>
   )

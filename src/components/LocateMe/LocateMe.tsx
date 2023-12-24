@@ -1,3 +1,4 @@
+'use client'
 import { MapPinIcon } from '@/constants/icons'
 import { useQueryState } from 'next-usequerystate'
 
@@ -7,8 +8,8 @@ import { useQueryState } from 'next-usequerystate'
  * - move map to user's current location
  */
 function LocateMe() {
-  const [_paramLat, setParamLat] = useQueryState('latitude')
-  const [_paramLng, setParamLng] = useQueryState('longitude')
+  const [_paramLat, setParamLat] = useQueryState('lat')
+  const [_paramLng, setParamLng] = useQueryState('lng')
 
   function onClick() {
     setParamLat(null)
