@@ -32,7 +32,7 @@ function PlaceList({ data, isLoading, error }: TPlaceListProps) {
   return (
     <ul className="flex flex-col gap-4 flex-1 h-full overflow-y-scroll pr-2">
       {data &&
-        data.map((place: TPlace) => {
+        data?.map((place: TPlace) => {
           return <PlaceItem key={place.id} place={place} />
         })}
     </ul>
