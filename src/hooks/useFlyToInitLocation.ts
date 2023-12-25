@@ -1,4 +1,3 @@
-'use client'
 import { locateMe } from '@/services/utilities'
 import { Map } from 'leaflet'
 import { useQueryState } from 'next-usequerystate'

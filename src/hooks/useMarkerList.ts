@@ -44,16 +44,9 @@ function useMarkerList(data: TPlace[], bounds: TBounds | undefined, zoom: number
   const pointIdList: string[] = clusters.filter((point) => !point?.properties?.cluster).map((point) => point.properties.id)
   const filteredData: TPlace[] = data.filter((place) => pointIdList.includes(place.id))
 
-  // fire event LOAD_NEW_PLACES to update data in right panel
+  // update placeListSignal
   useEffect(() => {
-    // eventEmitter.dispatch(Events.LOAD_NEW_PLACES, { data: filteredData })
-    // const timeout = setTimeout(() => {
     placeListSignal.value = filteredData
-    // }, DEBOUNCE_TIMER_MOVE_VIEWPORT)
-
-    // return () => {
-    //   timeout && clearTimeout(timeout)
-    // }
   }, [filteredData])
 
   return { clusters, supercluster }

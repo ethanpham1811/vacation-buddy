@@ -1,12 +1,8 @@
 'use client'
 import { TPlace } from '@/constants/types'
-import { placeListSignal } from '@/signals/placeListSignal'
 import PlaceItem from './PlaceItem'
 
-/**
- * Subscribe to LOAD_NEW_PLACES events
- */
-function PlaceList() {
+function PlaceList({ data }: { data: TPlace[] | undefined }) {
   // const [paramType] = useQueryState('type')
   // const [placeList, setPlaceList] = useState<TPlace[] | null>(null)
   // const [isLoading, setIsLoading] = useState(true)
@@ -44,8 +40,8 @@ function PlaceList() {
 
   return (
     <ul className="flex flex-col gap-4 flex-1">
-      {placeListSignal &&
-        placeListSignal.value.map((place: TPlace) => {
+      {data &&
+        data.map((place: TPlace) => {
           return <PlaceItem key={place.id} place={place} />
         })}
     </ul>

@@ -1,8 +1,19 @@
 'use client'
+import { TPlace } from '@/constants/types'
+import { placeListSignal } from '@/signals/placeListSignal'
+import { useSignalEffect } from '@preact/signals-react'
+import { useState } from 'react'
 import PlaceList from './components/PlaceList'
 import TopController from './components/TopController'
 
 function InfoPanel() {
+  const [placeList, setPlaceList] = useState<TPlace[]>()
+
+  /* FIXME: remove this workaround (unknown bug of signal not updating itself) */
+  useSignalEffect(() => {
+    setPlaceList(placeListSignal.value)
+  })
+
   return (
     <section className="flex flex-col h-full overflow-y-scroll p-2 w-96 bg-white gap-2">
       {/* search type switcher */}
@@ -11,7 +22,7 @@ function InfoPanel() {
       </header>
 
       {/* place list */}
-      <PlaceList />
+      <PlaceList data={placeList} />
     </section>
   )
 }

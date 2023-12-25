@@ -1,9 +1,10 @@
 import { InfoPanel, NavBar } from '@/components'
-import MapContainer from '@/components/Map/MapContainer'
+import dynamic from 'next/dynamic'
 
-export default async function Home({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
-  const { latitude, longitude } = searchParams
+/* dynamically load Map since leaflet doesn't wait for the page to load before instantiating itself */
+const MapContainer = dynamic(() => import('@/components/Map/MapContainer'), { ssr: false })
 
+export default async function Home() {
   return (
     <main className="flex h-[100dvh] flex-col">
       {/* Top Navigation */}
