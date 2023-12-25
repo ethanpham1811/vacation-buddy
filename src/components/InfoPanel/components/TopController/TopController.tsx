@@ -2,10 +2,13 @@
 import { API_TYPES } from '@/constants/enum'
 import { useQueryState } from 'next-usequerystate'
 import { createElement } from 'react'
-import { controllers } from '../data/controllerData'
+import { controllers } from '../../data/controllerData'
 
 /**
  * active state base on search param "type"
+ * - Attractions (default)
+ * - Hotels
+ * - Restaurants
  */
 function TopController() {
   const [paramType, setParamType] = useQueryState('type')

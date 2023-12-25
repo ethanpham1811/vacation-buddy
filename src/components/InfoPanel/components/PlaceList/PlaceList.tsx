@@ -2,8 +2,8 @@
 import { Skeleton } from '@/components'
 import { TPlace } from '@/constants/types'
 import { MdError } from 'react-icons/md'
-import Message from './Message'
-import PlaceItem from './PlaceItem'
+import PlaceItem from '../PlaceItem/PlaceItem'
+import Message from '../TopController/Message'
 
 type TPlaceListProps = {
   data: TPlace[] | undefined

@@ -1,7 +1,7 @@
 'use client'
 import { useAppSelector } from '@/lib/hooks'
-import PlaceList from './components/PlaceList'
-import TopController from './components/TopController'
+import PlaceList from './components/PlaceList/PlaceList'
+import TopController from './components/TopController/TopController'
 
 function InfoPanel() {
   const placeList = useAppSelector((state) => state.placeList.points)
