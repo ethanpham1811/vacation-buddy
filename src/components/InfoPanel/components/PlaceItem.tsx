@@ -13,11 +13,11 @@ function PlaceItem({ place }: { place: TPlace }) {
   const { photo, name, web_url, website, address, description, phone, rating, num_reviews, open_now_text, price } = place
 
   return (
-    <div className="group flex flex-col bg-white shadow-card">
+    <div className="group flex flex-col shadow-card">
       {/* photo */}
       <Photo photo={photo} name={name} />
 
-      <div className="rounded-b-md bg-gray-100 p-2 flex flex-col gap-1 group-hover:bg-blue-50">
+      <div className="rounded-b-md bg-white p-2 flex flex-col gap-1 group-hover:bg-blue-50">
         {/* title */}
         <h1 className="font-semibold text-lg">{name}</h1>
 

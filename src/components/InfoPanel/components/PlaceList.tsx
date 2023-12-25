@@ -39,7 +39,7 @@ function PlaceList({ data }: { data: TPlace[] | undefined }) {
   // if (error) return <p className="text-red-600 text-center text-sm py-2">{error}</p>
 
   return (
-    <ul className="flex flex-col gap-4 flex-1">
+    <ul className="flex flex-col gap-4 flex-1 h-full overflow-y-scroll pr-2">
       {data &&
         data.map((place: TPlace) => {
           return <PlaceItem key={place.id} place={place} />

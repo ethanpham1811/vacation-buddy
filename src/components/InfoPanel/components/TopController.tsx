@@ -12,17 +12,22 @@ function TopController() {
 
   return (
     <section>
-      <ul className="flex gap-4 justify-end">
+      <ul className="flex gap-2 justify-end bg-gray-800 p-2 rounded-md">
         {controllers.map(({ name, icon }) => {
           const isActive = name === API_TYPES.attractions ? !paramType || paramType === name : paramType === name
 
           return (
             <li
               key={`ctrl_${name}`}
-              className={`rounded-full p-1 group shadow-button ${isActive ? 'bg-blue-600 text-white' : 'cursor-pointer '}`}
+              className={`flex overflow-hidden rounded-full py-1 items-center group shadow-button ${
+                isActive ? 'bg-blue-600 text-white px-3 gap-2 mx-1' : 'cursor-pointer px-2'
+              }`}
               onClick={() => !isActive && setParamType(name)}
             >
-              {createElement(icon, { className: !isActive ? 'group-hover:text-blue-600' : '', size: '25' })}
+              <div className={`text-sm rounded-sm transition-all duration-700 ${isActive ? 'max-w-[100px] text-white' : 'max-w-0 text-transparent'}`}>
+                {name.toLocaleUpperCase()}
+              </div>
+              {createElement(icon, { className: !isActive ? 'text-white group-hover:text-blue-600' : '', size: '25' })}
             </li>
           )
         })}

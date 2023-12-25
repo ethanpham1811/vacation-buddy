@@ -15,7 +15,7 @@ function InfoPanel() {
   })
 
   return (
-    <section className="flex flex-col h-full overflow-y-scroll p-2 w-96 bg-white gap-2">
+    <section className="flex flex-col h-full  p-2 w-96  gap-2  bg-gray-700">
       {/* search type switcher */}
       <header>
         <TopController />
