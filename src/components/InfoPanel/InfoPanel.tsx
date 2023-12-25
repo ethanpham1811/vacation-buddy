@@ -4,8 +4,8 @@ import PlaceList from './components/PlaceList'
 import TopController from './components/TopController'
 
 function InfoPanel() {
-  const placeList = useAppSelector((state) => state.placeList.data)
-  const isLoading = useAppSelector((state) => state.placeList.loading)
+  const placeList = useAppSelector((state) => state.placeList.points)
+  const isLoading = useAppSelector((state) => state.placeList.clusterizing)
   const error = useAppSelector((state) => state.placeList.error)
   return (
     <section className="flex flex-col h-full  p-2 w-96  gap-2  bg-gray-700">
