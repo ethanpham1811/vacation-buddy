@@ -6,7 +6,6 @@ function Rating({ rating, num_reviews }: { rating: string; num_reviews: string |
   return (
     <div className="flex gap-1 items-center text-sm">
       <label className="flex gap-1">
-        <span className="font-semibold">Rating:</span>
         <MdOutlineStar className="text-yellow-400" size={20} />
         {rating}
       </label>

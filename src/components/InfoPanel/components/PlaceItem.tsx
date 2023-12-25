@@ -21,6 +21,9 @@ function PlaceItem({ place }: { place: TPlace }) {
         {/* title */}
         <h1 className="font-semibold text-lg">{name}</h1>
 
+        {/* rating count */}
+        {rating && <Rating rating={rating} num_reviews={num_reviews} />}
+
         {/* external links */}
         {(web_url || website) && <ExternalLinks web_url={web_url} website={website} />}
 
@@ -38,9 +41,6 @@ function PlaceItem({ place }: { place: TPlace }) {
 
         {/* phone */}
         {phone && <Phone phone={phone} />}
-
-        {/* rating count */}
-        {rating && <Rating rating={rating} num_reviews={num_reviews} />}
       </div>
     </div>
   )
