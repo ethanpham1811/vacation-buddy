@@ -24,7 +24,7 @@ function usePlaceList(bounds: TBounds | undefined) {
    * - fire "fetchPlaceList" Action
    */
   useEffect(() => {
-    if (!bounds || !paramType) return
+    if (!bounds) return
 
     const abortCtrl = new AbortController()
 
@@ -32,6 +32,7 @@ function usePlaceList(bounds: TBounds | undefined) {
       dispatch(fetchPlaceList({ signal: abortCtrl.signal, paramType: paramType || API_TYPES.attractions, bounds: bounds! }))
     }, DEBOUNCE_TIMER_MOVE_VIEWPORT)
 
+    // clear timeout & abort request
     return () => {
       timeout && clearTimeout(timeout)
       abortCtrl && abortCtrl.abort()
