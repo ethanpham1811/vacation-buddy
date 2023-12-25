@@ -1,5 +1,4 @@
 import { TPlace, TPlacesAPIResponse } from '@/constants/types'
-import { v4 as rid } from 'uuid'
 
 type TGetPlacesParams = {
   params: {
@@ -38,28 +37,42 @@ export async function POST(request: Request, { params: { type } }: TGetPlacesPar
   }
 
   const result = await res.json()
-  const rawList = result.data
+  const rawList = result?.data
 
   /* data mapping */
   const placeList = (rawList as TPlacesAPIResponse[])
     .filter((place: TPlacesAPIResponse) => place?.name)
     .map(
-      (place: TPlacesAPIResponse): TPlace => ({
-        id: rid(),
-        lat: parseFloat(place?.latitude),
-        lng: parseFloat(place?.longitude),
-        name: place?.name || 'unknown',
-        thumbnail: place?.photo?.images?.thumbnail?.url,
-        photo: place?.photo?.images?.medium?.url,
-        description: place?.description,
-        website: place?.website,
-        web_url: place?.web_url,
-        address: place?.address,
-        phone: place?.phone,
-        rating: place?.rating,
-        num_reviews: place?.num_reviews,
-        price: place?.price,
-        open_now_text: place?.open_now_text
+      ({
+        latitude,
+        longitude,
+        name,
+        photo,
+        description,
+        website,
+        web_url,
+        address,
+        phone,
+        rating,
+        num_reviews,
+        price,
+        open_now_text
+      }: TPlacesAPIResponse): TPlace => ({
+        id: `${name}_${latitude}_${longitude}`,
+        name,
+        lat: parseFloat(latitude),
+        lng: parseFloat(longitude),
+        thumbnail: photo?.images?.thumbnail?.url,
+        photo: photo?.images?.medium?.url,
+        description,
+        website,
+        web_url,
+        address,
+        phone,
+        rating,
+        num_reviews,
+        price,
+        open_now_text
       })
     )
 
