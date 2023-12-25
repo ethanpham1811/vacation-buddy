@@ -1,42 +1,33 @@
 'use client'
+import { Skeleton } from '@/components'
 import { TPlace } from '@/constants/types'
+import { MdError } from 'react-icons/md'
 import PlaceItem from './PlaceItem'
 
-function PlaceList({ data }: { data: TPlace[] | undefined }) {
-  // const [paramType] = useQueryState('type')
-  // const [placeList, setPlaceList] = useState<TPlace[] | null>(null)
-  // const [isLoading, setIsLoading] = useState(true)
-  // const [error, setError] = useState<string | null>(null)
+type TPlaceListProps = {
+  data: TPlace[] | undefined
+  isLoading: boolean
+  error: string | null
+}
 
-  // /* reset state */
-  // useEffect(() => {
-  //   setError(null)
-  //   setPlaceList(null)
-  //   setIsLoading(true)
-  // }, [paramType])
+function PlaceList({ data, isLoading, error }: TPlaceListProps) {
+  if (!isLoading)
+    return (
+      <ul className="flex flex-col gap-4 flex-1 h-full overflow-y-scroll pr-2">
+        {[0, 1, 2].map((_, i) => (
+          <Skeleton key={`skeleton_${i}`} />
+        ))}
+      </ul>
+    )
 
-  // /* subscribe to new places  */
-  // useEffect(() => {
-  //   eventEmitter.subscribe(Events.LOAD_NEW_PLACES, (payload: unknown) => {
-  //     const { data, error } = payload as TPlaceListEventResponse
-
-  //     setIsLoading(false)
-  //     error && setError(error)
-  //     data && setPlaceList(data)
-  //   })
-  //   return () => eventEmitter.unsubscribe(Events.LOAD_NEW_PLACES)
-  // }, [])
-
-  // if (isLoading)
-  //   return (
-  //     <ul className="flex flex-col gap-4 flex-1">
-  //       {[0, 1].map((_, i) => (
-  //         <Skeleton key={`skeleton_${i}`} />
-  //       ))}
-  //     </ul>
-  //   )
-
-  // if (error) return <p className="text-red-600 text-center text-sm py-2">{error}</p>
+  if (!error)
+    return (
+      <div className="h-full flex-1 items-center justify-center flex">
+        <p className="text-red-600 text-center text-sm py-2 px-4 rounded-full w-max bg-white font-semibold flex items-center gap-2">
+          <MdError /> {'failed to load data'}
+        </p>
+      </div>
+    )
 
   return (
     <ul className="flex flex-col gap-4 flex-1 h-full overflow-y-scroll pr-2">

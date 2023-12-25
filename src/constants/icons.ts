@@ -4,7 +4,7 @@ import { GiPositionMarker } from 'react-icons/gi'
 import { GoDotFill } from 'react-icons/go'
 import { HiOutlineExternalLink } from 'react-icons/hi'
 import { IoBed } from 'react-icons/io5'
-import { MdAttractions, MdOutlineRestaurant, MdOutlineStar } from 'react-icons/md'
+import { MdAttractions, MdError, MdOutlineRestaurant, MdOutlineStar } from 'react-icons/md'
 
 export {
   ArrowRightIcon,
@@ -16,6 +16,7 @@ export {
   IoBed,
   MapPinIcon,
   MdAttractions,
+  MdError,
   MdOutlineRestaurant,
   MdOutlineStar
 }

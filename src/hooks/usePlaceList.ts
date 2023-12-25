@@ -35,7 +35,8 @@ function usePlaceList(bounds: TBounds | undefined): TUsePlaceListResponse {
           tr_lng: neLng,
           tr_lat: neLat,
           bl_lng: swLng,
-          bl_lat: swLat
+          bl_lat: swLat,
+          isParis: neLng?.toString().startsWith('2.4')
         }),
         signal
       })

@@ -8,6 +8,8 @@ import TopController from './components/TopController'
 
 function InfoPanel() {
   const [placeList, setPlaceList] = useState<TPlace[]>()
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [error, setError] = useState<string | null>(null)
 
   /* FIXME: remove this workaround (unknown bug of signal not updating itself) */
   useSignalEffect(() => {
@@ -22,7 +24,7 @@ function InfoPanel() {
       </header>
 
       {/* place list */}
-      <PlaceList data={placeList} />
+      <PlaceList data={placeList} isLoading={isLoading} error={error} />
     </section>
   )
 }
