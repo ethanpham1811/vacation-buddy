@@ -1,11 +1,10 @@
 'use client'
 import { TBounds, TCluster } from '@/constants/types'
 import { useFlyToInitLocation, useMarkerList, usePlaceList } from '@/hooks'
-
 import { useState } from 'react'
 import { TileLayer } from 'react-leaflet/TileLayer'
 import { useMapEvents } from 'react-leaflet/hooks'
-import { Cluster, Pin } from '..'
+import { Cluster, LocateMe, Pin } from '..'
 
 /**
  * Leaflet Map component https://react-leaflet.js.org/docs
@@ -59,6 +58,7 @@ function Map() {
         }
         return <Pin key={`place_${id}`} lat={lat} lng={lng} name={name} thumbnail={thumbnail} />
       })}
+      <LocateMe />
     </>
   )
 }

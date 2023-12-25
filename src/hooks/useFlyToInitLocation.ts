@@ -1,4 +1,3 @@
-import { locateMe } from '@/services/utilities'
 import { Map } from 'leaflet'
 import { useQueryState } from 'next-usequerystate'
 import { useEffect } from 'react'
@@ -12,17 +11,22 @@ function useFlyToInitLocation(map: Map) {
   const [lat] = useQueryState('lat')
   const [lng] = useQueryState('lng')
 
+  /* update viewState with current user location */
+  useEffect(() => {
+    map.locate().on('locationfound', function (e) {
+      map.setView(e.latlng, map.getZoom())
+    })
+    return () => {
+      map.stopLocate()
+    }
+  }, [])
+
   /**
    * On receiving new lat & lng from SEARCH PARAMS:
-   * - Search params is not null:   update viewState with search params lat & long
-   * - Search params is null:       update viewState with current user location
+   * update viewState with search params lat & long
    */
   useEffect(() => {
-    if (lat && lng) {
-      map.setView([parseFloat(lat), parseFloat(lng)], map.getZoom())
-    } else {
-      locateMe((lat: number, lng: number) => map.setView([lat, lng], map.getZoom()))
-    }
+    lat && lng && map.setView([parseFloat(lat), parseFloat(lng)], map.getZoom())
   }, [lat])
 }
 
