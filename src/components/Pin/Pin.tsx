@@ -10,6 +10,7 @@ import ReactDom from 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.b
 
 type TPinProps = TCoords & {
   name: string
+  isActive: boolean
   thumbnail: string | undefined
 }
 
@@ -18,13 +19,17 @@ type TPinProps = TCoords & {
  * - thumbnail
  * - name
  */
-const Pin = ({ lng, lat, name, thumbnail }: TPinProps) => {
+const Pin = ({ lng, lat, name, thumbnail, isActive }: TPinProps) => {
   function onClick() {
     // show detail
   }
 
   const MarkerCard = () => (
-    <div className="relative top-[-100%] left-[-50%] group flex flex-col p-2 shadow-card bg-white gap-2 w-20 cursor-pointer hover:bg-blue-500 hover:text-white">
+    <div
+      className={`${
+        isActive ? 'bg-blue-500 text-white' : 'bg-white'
+      } relative top-[-100%] left-[-50%] group flex flex-col p-2 shadow-card gap-2 w-20 cursor-pointer hover:bg-blue-500 hover:text-white`}
+    >
       <div className="relative h-16">
         <Image
           fill

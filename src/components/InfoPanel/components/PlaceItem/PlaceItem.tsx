@@ -1,5 +1,6 @@
 'use client'
-import { TPlace } from '@/constants/types'
+import { TActivePoint, TPlace } from '@/constants/types'
+import { Dispatch, SetStateAction } from 'react'
 import Address from './Address'
 import Description from './Description'
 import ExternalLinks from './ExternalLinks'
@@ -9,11 +10,11 @@ import Photo from './Photo'
 import Price from './Price'
 import Rating from './Rating'
 
-function PlaceItem({ place }: { place: TPlace }) {
-  const { photo, name, web_url, website, address, description, phone, rating, num_reviews, open_now_text, price } = place
+function PlaceItem({ place, setActivePoint }: { place: TPlace; setActivePoint: Dispatch<SetStateAction<TActivePoint | null>> }) {
+  const { id, photo, name, web_url, website, address, description, phone, rating, num_reviews, open_now_text, price, lat, lng } = place
 
   return (
-    <div className="group flex flex-col shadow-card">
+    <div className="group flex flex-col shadow-card" onClick={() => setActivePoint({ lat, lng, id })}>
       {/* photo */}
       <Photo photo={photo} name={name} />
 

@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
+import activePointReducer from './features/activePoint/activePointSlice'
 import placeListReducer from './features/placeList/placeListSlice'
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      placeList: placeListReducer
+      placeList: placeListReducer,
+      activePoint: activePointReducer
     }
   })
 }

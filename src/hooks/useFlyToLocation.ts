@@ -3,11 +3,12 @@ import { useQueryState } from 'next-usequerystate'
 import { useEffect } from 'react'
 
 /**
- * Transform list items to marker (TMarker) for cluster
- * @param  {NextPageContext} ctx
+ * Fly to:
+ * - current user's location on initial load
+ * - lat & ln (search params)
  */
 
-function useFlyToInitLocation(map: Map) {
+function useFlyToLocation(map: Map) {
   const [lat] = useQueryState('lat')
   const [lng] = useQueryState('lng')
 
@@ -32,4 +33,4 @@ function useFlyToInitLocation(map: Map) {
   }, [lat, map])
 }
 
-export default useFlyToInitLocation
+export default useFlyToLocation

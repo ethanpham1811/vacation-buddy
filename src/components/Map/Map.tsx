@@ -1,11 +1,13 @@
 'use client'
-import { TBounds, TCluster } from '@/constants/types'
-import { useFlyToInitLocation, useMarkerList, usePlaceList } from '@/hooks'
-import { useAppSelector } from '@/lib/hooks'
+import { TBounds } from '@/constants/types'
+import { useFlyToLocation, usePlaceList } from '@/hooks'
+import useFlyToActivePoint from '@/hooks/useFlyToActivePoint'
+import { useAppDispatch } from '@/lib/hooks'
 import { useState } from 'react'
 import { TileLayer } from 'react-leaflet/TileLayer'
 import { useMapEvents } from 'react-leaflet/hooks'
-import { Cluster, LocateMe, Pin } from '..'
+import { LocateMe } from '..'
+import MarkerGrid from './MarkerGrid'
 
 /**
  * Leaflet Map component https://react-leaflet.js.org/docs
@@ -14,8 +16,7 @@ import { Cluster, LocateMe, Pin } from '..'
  */
 function Map() {
   const [bounds, setBounds] = useState<TBounds>()
-  const places = useAppSelector((state) => state.placeList.data)
-  const isLoading = useAppSelector((state) => state.placeList.loading)
+  const dispatch = useAppDispatch()
 
   const myMap = useMapEvents({
     moveend: () => {
@@ -26,13 +27,13 @@ function Map() {
   })
 
   /* fly to init location with searchParams "lat" & "lng"  */
-  useFlyToInitLocation(myMap)
+  useFlyToLocation(myMap)
+
+  /* fly to active point on hovering place (right panel)  */
+  useFlyToActivePoint(myMap)
 
   /* fetch place list with updated bounds */
   usePlaceList(bounds)
-
-  /* build cluster with data list & bounds */
-  const { clusters, supercluster } = useMarkerList(places, bounds, myMap?.getZoom(), isLoading)
 
   return (
     <>
@@ -40,27 +41,7 @@ function Map() {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {clusters.map((cluster: TCluster) => {
-        const [lng, lat] = cluster.geometry.coordinates
-        const { cluster: isCluster, point_count, id, name, thumbnail } = cluster.properties
-        const expansionZoom = Math.min(supercluster.getClusterExpansionZoom(cluster.id), 20)
-        if (isCluster) {
-          return (
-            <Cluster
-              setMapViewState={(coords: [number, number], zoom: number) => myMap.setView(coords, zoom)}
-              key={`cluster-${cluster.id}`}
-              lat={lat}
-              lng={lng}
-              pointCount={point_count}
-              dataLength={places.length || 0}
-              zoom={expansionZoom}
-            >
-              {point_count}
-            </Cluster>
-          )
-        }
-        return <Pin key={`place_${id}`} lat={lat} lng={lng} name={name} thumbnail={thumbnail} />
-      })}
+      <MarkerGrid bounds={bounds} myMap={myMap} />
       <LocateMe />
     </>
   )

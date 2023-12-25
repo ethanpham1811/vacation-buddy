@@ -1,5 +1,5 @@
-import useFlyToInitLocation from './useFlyToInitLocation'
+import useFlyToLocation from './useFlyToLocation'
 import useMarkerList from './useMarkerList'
 import usePlaceList from './usePlaceList'
 
-export { useFlyToInitLocation, useMarkerList, usePlaceList }
+export { useFlyToLocation, useMarkerList, usePlaceList }
