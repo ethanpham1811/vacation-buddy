@@ -40,26 +40,12 @@ const Cluster = ({ lng, lat, pointCount, dataLength, zoom, children, setMapViewS
     iconSize: [40, 40]
   })
 
-  function onClick() {
-    setMapViewState([lat, lng], zoom)
-
-    // seTViewState({
-    // longitude: lng,
-    // latitude: lat,
-    // zoom
-    // transitionInterpolator: new FlyToInterpolator({
-    //   speed: 2
-    // }),
-    // transitionDuration: 'auto'
-    // })
-  }
-
   return (
     <Marker
       position={[lat, lng]}
       icon={customMarker}
       eventHandlers={{
-        click: onClick
+        click: () => setMapViewState([lat, lng], zoom)
       }}
     />
   )
