@@ -2,6 +2,7 @@
 import { Skeleton } from '@/components'
 import { TPlace } from '@/constants/types'
 import { MdError } from 'react-icons/md'
+import Message from './Message'
 import PlaceItem from './PlaceItem'
 
 type TPlaceListProps = {
@@ -20,21 +21,17 @@ function PlaceList({ data, isLoading, error }: TPlaceListProps) {
       </ul>
     )
 
-  if (error)
-    return (
-      <div className="h-full flex-1 items-center justify-center flex">
-        <p className="text-red-600 text-center text-sm py-2 px-4 rounded-full w-max bg-white font-semibold flex items-center gap-2">
-          <MdError /> {'failed to load data'}
-        </p>
-      </div>
-    )
+  if (error) return <Message icon={MdError} message="failed to load data" color="red" />
 
   return (
     <ul className="flex flex-col gap-4 flex-1 h-full overflow-y-scroll pr-2">
-      {data &&
+      {!data || data.length === 0 ? (
+        <Message message="No places found" color="gray" />
+      ) : (
         data?.map((place: TPlace) => {
           return <PlaceItem key={place.id} place={place} />
-        })}
+        })
+      )}
     </ul>
   )
 }
