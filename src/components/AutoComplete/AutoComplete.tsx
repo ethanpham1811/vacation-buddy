@@ -39,7 +39,7 @@ function AutoComplete<T extends { name: string }>({ onSubmit, onSelect, name, ch
       timeout && clearTimeout(timeout)
       abortCtrl && abortCtrl.abort()
     }
-  }, [inputValue])
+  }, [inputValue, onSubmit])
 
   return (
     <Combobox onChange={(val: T) => onSelect(val)}>

@@ -38,7 +38,7 @@ export type TMarker = {
 export type TCluster = TMarker & {
   id: number
   properties: Pick<TPlaceInfo, 'name' | 'thumbnail'> & {
-    cluster: true
+    cluster: boolean
     point_count: number
   }
 }

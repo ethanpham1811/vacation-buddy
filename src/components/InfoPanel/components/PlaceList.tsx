@@ -11,7 +11,7 @@ type TPlaceListProps = {
 }
 
 function PlaceList({ data, isLoading, error }: TPlaceListProps) {
-  if (!isLoading)
+  if (isLoading)
     return (
       <ul className="flex flex-col gap-4 flex-1 h-full overflow-y-scroll pr-2">
         {[0, 1, 2].map((_, i) => (
@@ -20,7 +20,7 @@ function PlaceList({ data, isLoading, error }: TPlaceListProps) {
       </ul>
     )
 
-  if (!error)
+  if (error)
     return (
       <div className="h-full flex-1 items-center justify-center flex">
         <p className="text-red-600 text-center text-sm py-2 px-4 rounded-full w-max bg-white font-semibold flex items-center gap-2">

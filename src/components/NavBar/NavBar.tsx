@@ -9,6 +9,8 @@ import Logo from './components/Logo'
  * - Logo
  * - Geocoder (location autocomplete)
  * - History button (open search history)
+ *
+ * Discloser: client side component from headlessui
  */
 function NavBar() {
   return (

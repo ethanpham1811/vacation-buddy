@@ -1,21 +1,12 @@
 'use client'
-import { TPlace } from '@/constants/types'
-import { placeListSignal } from '@/signals/placeListSignal'
-import { useSignalEffect } from '@preact/signals-react'
-import { useState } from 'react'
+import { useAppSelector } from '@/lib/hooks'
 import PlaceList from './components/PlaceList'
 import TopController from './components/TopController'
 
 function InfoPanel() {
-  const [placeList, setPlaceList] = useState<TPlace[]>()
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [error, setError] = useState<string | null>(null)
-
-  /* FIXME: remove this workaround (unknown bug of signal not updating itself) */
-  useSignalEffect(() => {
-    setPlaceList(placeListSignal.value)
-  })
-
+  const placeList = useAppSelector((state) => state.placeList.data)
+  const isLoading = useAppSelector((state) => state.placeList.loading)
+  const error = useAppSelector((state) => state.placeList.error)
   return (
     <section className="flex flex-col h-full  p-2 w-96  gap-2  bg-gray-700">
       {/* search type switcher */}

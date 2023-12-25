@@ -19,15 +19,17 @@ function useFlyToInitLocation(map: Map) {
     return () => {
       map.stopLocate()
     }
-  }, [])
+  }, [map])
 
   /**
    * On receiving new lat & lng from SEARCH PARAMS:
    * update viewState with search params lat & long
+   * (only need one of the two lat or lng)
    */
   useEffect(() => {
     lat && lng && map.setView([parseFloat(lat), parseFloat(lng)], map.getZoom())
-  }, [lat])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lat, map])
 }
 
 export default useFlyToInitLocation

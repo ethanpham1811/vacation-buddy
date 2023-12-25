@@ -1,6 +1,7 @@
 'use client'
 import { TBounds, TCluster } from '@/constants/types'
 import { useFlyToInitLocation, useMarkerList, usePlaceList } from '@/hooks'
+import { useAppSelector } from '@/lib/hooks'
 import { useState } from 'react'
 import { TileLayer } from 'react-leaflet/TileLayer'
 import { useMapEvents } from 'react-leaflet/hooks'
@@ -13,6 +14,8 @@ import { Cluster, LocateMe, Pin } from '..'
  */
 function Map() {
   const [bounds, setBounds] = useState<TBounds>()
+  const places = useAppSelector((state) => state.placeList.data)
+  const isLoading = useAppSelector((state) => state.placeList.loading)
 
   const myMap = useMapEvents({
     moveend: () => {
@@ -26,7 +29,7 @@ function Map() {
   useFlyToInitLocation(myMap)
 
   /* fetch place list with updated bounds */
-  const { places, isLoading, error } = usePlaceList(bounds)
+  usePlaceList(bounds)
 
   /* build cluster with data list & bounds */
   const { clusters, supercluster } = useMarkerList(places, bounds, myMap?.getZoom(), isLoading)
@@ -39,13 +42,13 @@ function Map() {
       />
       {clusters.map((cluster: TCluster) => {
         const [lng, lat] = cluster.geometry.coordinates
-        const { cluster: isCluster, point_count, id, cluster_id, name, thumbnail } = cluster.properties
+        const { cluster: isCluster, point_count, id, name, thumbnail } = cluster.properties
         const expansionZoom = Math.min(supercluster.getClusterExpansionZoom(cluster.id), 20)
         if (isCluster) {
           return (
             <Cluster
               setMapViewState={(coords: [number, number], zoom: number) => myMap.setView(coords, zoom)}
-              key={`cluster-${cluster_id}`}
+              key={`cluster-${cluster.id}`}
               lat={lat}
               lng={lng}
               pointCount={point_count}

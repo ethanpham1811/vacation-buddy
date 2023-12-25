@@ -1,7 +1,8 @@
-import { InfoPanel, NavBar } from '@/components'
 import dynamic from 'next/dynamic'
 
-/* dynamically load Map since leaflet doesn't wait for the page to load before instantiating itself */
+/* dynamically load all the client side components */
+const NavBar = dynamic(() => import('@/components/NavBar/NavBar'), { ssr: false })
+const InfoPanel = dynamic(() => import('@/components/InfoPanel/InfoPanel'), { ssr: false })
 const MapContainer = dynamic(() => import('@/components/Map/MapContainer'), { ssr: false })
 
 export default async function Home() {

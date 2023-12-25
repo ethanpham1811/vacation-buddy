@@ -1,6 +1,7 @@
 import { DEFAULT_ZOOM } from '@/constants/enum'
 import { TBounds, TCluster, TMarker, TPlace, TSuperCluster } from '@/constants/types'
-import { placeListSignal } from '@/signals/placeListSignal'
+import { filterBycluster } from '@/lib/features/placeList/placeListSlice'
+import { useAppDispatch } from '@/lib/hooks'
 import { useEffect, useMemo } from 'react'
 import useSupercluster from 'use-supercluster'
 
@@ -16,6 +17,7 @@ type TUseMarkerListResponse = {
  */
 
 function useMarkerList(data: TPlace[], bounds: TBounds | undefined, zoom: number | undefined, isFetching: boolean): TUseMarkerListResponse {
+  const dispatch = useAppDispatch()
   // convert TPlace to TMarker
   const points: TMarker[] = useMemo(
     () =>
@@ -40,14 +42,10 @@ function useMarkerList(data: TPlace[], bounds: TBounds | undefined, zoom: number
     options: { radius: 100, disableRefresh: isFetching }
   })
 
-  // filter TPlace[] by point ids (not cluster)
-  const pointIdList: string[] = clusters.filter((point) => !point?.properties?.cluster).map((point) => point.properties.id)
-  const filteredData: TPlace[] = data.filter((place) => pointIdList.includes(place.id))
-
-  // update placeListSignal
+  // fire filterByCluster Action
   useEffect(() => {
-    placeListSignal.value = filteredData
-  }, [filteredData])
+    clusters && dispatch(filterBycluster({ clusters }))
+  }, [clusters, dispatch])
 
   return { clusters, supercluster }
 }

@@ -1,3 +1,4 @@
+'use client'
 const Skeleton = () => {
   return (
     <div role="status" className="max-w-sm rounded animate-pulse">
