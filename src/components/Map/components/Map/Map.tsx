@@ -18,12 +18,22 @@ import MarkerGrid from '../MarkerGrid/MarkerGrid'
 function Map() {
   const dispatch = useAppDispatch()
   const [bounds, setBounds] = useState<TBounds>()
+  const { requestData } = usePlaceList()
 
   const myMap = useMapEvents({
+    // retrieve new bounds on move to build clusters
     moveend: () => {
       const ne = myMap.getBounds().getNorthEast()
       const sw = myMap.getBounds().getSouthWest()
       setBounds([sw.lng, sw.lat, ne.lng, ne.lat])
+    },
+
+    // only fetch data on drag (exclude zoom)
+    // reduce request counts which consumes free account quotas
+    dragend: () => {
+      const ne = myMap.getBounds().getNorthEast()
+      const sw = myMap.getBounds().getSouthWest()
+      requestData([sw.lng, sw.lat, ne.lng, ne.lat])
     },
 
     // clear active state of point on clicking map
@@ -37,9 +47,6 @@ function Map() {
 
   /* fly to active point on hovering place (right panel)  */
   useFlyToActivePoint(myMap)
-
-  /* fetch place list with updated bounds */
-  usePlaceList(bounds)
 
   return (
     <>

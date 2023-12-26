@@ -3,16 +3,14 @@ import { TBounds } from '@/constants/types'
 import { fetchPlaceList } from '@/lib/features/placeList/placeListSlice'
 import { useAppDispatch } from '@/lib/hooks'
 import { useQueryState } from 'next-usequerystate'
-import { useEffect } from 'react'
 
 /**
  * Fetch places data from on receiving new bounds
  * - debounce on changing map viewport
  * - abort concurrent request before dispatching new request
- * @param  {TBounds} bounds  //  [swLng, swLat, neLng, neLat]
  */
 
-function usePlaceList(bounds: TBounds | undefined) {
+function usePlaceList(): { requestData: (bounds: TBounds | undefined) => void } {
   const dispatch = useAppDispatch()
 
   const [paramType] = useQueryState('type')
@@ -23,7 +21,8 @@ function usePlaceList(bounds: TBounds | undefined) {
    * - abort prev request
    * - fire "fetchPlaceList" Action
    */
-  useEffect(() => {
+
+  const requestData = (bounds: TBounds | undefined) => {
     if (!bounds) return
 
     const abortCtrl = new AbortController()
@@ -37,7 +36,8 @@ function usePlaceList(bounds: TBounds | undefined) {
       timeout && clearTimeout(timeout)
       abortCtrl && abortCtrl.abort()
     }
-  }, [bounds, paramType, dispatch])
+  }
+  return { requestData }
 }
 
 export default usePlaceList
