@@ -22,12 +22,22 @@ export type TPlaceInfo = {
   num_reviews?: string
   open_now_text?: string
   price?: string
+  ranking?: string
+  offer_group?: {
+    offer_list?: {
+      price?: string
+      url?: string
+      title?: string
+      image_url?: string
+    }[]
+  }
 }
 export type TPlace = TCoords & TPlaceInfo
 
 export type TMarker = {
   type: 'Feature'
-  properties: Pick<TPlaceInfo, 'id' | 'name' | 'thumbnail'> & {
+  properties: {
+    data: TPlaceInfo
     cluster: false
   }
   geometry: {
@@ -37,7 +47,7 @@ export type TMarker = {
 }
 export type TCluster = TMarker & {
   id: number
-  properties: Pick<TPlaceInfo, 'name' | 'thumbnail'> & {
+  properties: {
     cluster: boolean
     point_count: number
   }
@@ -90,6 +100,15 @@ export type TPlacesAPIResponse = {
   phone?: string
   open_now_text?: string
   price?: string
+  ranking?: string
+  offer_group?: {
+    offer_list?: {
+      price?: string
+      url?: string
+      title?: string
+      image_url?: string
+    }[]
+  }
 }
 export type TPlaceListEventResponse = {
   data?: TPlace[]

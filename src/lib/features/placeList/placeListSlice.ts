@@ -49,7 +49,7 @@ export const placeListSlice = createSlice({
     // filter TPlace[] by point type (exclude cluster type)
     filterBycluster: (state, action) => {
       const clusters: TCluster[] = action.payload?.clusters
-      const pointIdList: string[] = clusters?.filter((point) => !point?.properties?.cluster).map((point) => point.properties.id)
+      const pointIdList: string[] = clusters?.filter((point) => !point?.properties?.cluster).map((point) => point?.properties?.data?.id)
       const filteredData: TPlace[] = state.data?.filter((place) => pointIdList.includes(place.id))
       state.points = filteredData
       state.clusterizing = false

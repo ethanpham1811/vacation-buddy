@@ -1,18 +1,21 @@
 'use client'
 import { BLURRED_DATA_URL } from '@/constants/enum'
-import { TCoords } from '@/constants/types'
+import { TCoords, TPlaceInfo } from '@/constants/types'
 import { DivIcon } from 'leaflet'
 import Image from 'next/image'
 import { Marker } from 'react-leaflet/Marker'
 import LinesEllipsis from 'react-lines-ellipsis'
 
+import { Modal } from '@/components'
+import { setActivePoint } from '@/lib/features/activePoint/activePointSlice'
+import { useAppDispatch } from '@/lib/hooks'
 import ReactDom from 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser.development'
+import { useState } from 'react'
+import PlaceDetail from '../PlaceDetail/PlaceDetail'
 
 type TPinProps = TCoords & {
-  name: string
   isActive: boolean
-  onClick: () => void
-  thumbnail: string | undefined
+  data: TPlaceInfo
 }
 
 /**
@@ -20,7 +23,17 @@ type TPinProps = TCoords & {
  * - thumbnail
  * - name
  */
-const Pin = ({ onClick, lng, lat, name, thumbnail, isActive }: TPinProps) => {
+const Pin = ({ data, lng, lat, isActive }: TPinProps) => {
+  const dispatch = useAppDispatch()
+  const [isModalOpen, setIsModalOpen] = useState(true)
+  const { id, name, thumbnail } = data
+
+  /* highlight clicked pin in right panel */
+  function onClick() {
+    dispatch(setActivePoint({ id, lat, lng }))
+    setIsModalOpen(true)
+  }
+
   const MarkerCard = () => (
     <div
       onClick={onClick}
@@ -50,13 +63,22 @@ const Pin = ({ onClick, lng, lat, name, thumbnail, isActive }: TPinProps) => {
   })
 
   return (
-    <Marker
-      position={[lat, lng]}
-      icon={customMarker}
-      eventHandlers={{
-        click: onClick
-      }}
-    />
+    <>
+      <Marker
+        position={[lat, lng]}
+        icon={customMarker}
+        eventHandlers={{
+          click: onClick
+        }}
+      />
+
+      {/* place's detail modal */}
+      {isActive && (
+        <Modal open={isModalOpen} hasPadding={false}>
+          <PlaceDetail place={data} />
+        </Modal>
+      )}
+    </>
   )
 }
 

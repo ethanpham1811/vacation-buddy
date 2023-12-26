@@ -24,12 +24,12 @@ function useMarkerList(data: TPlace[], bounds: TBounds | undefined, zoom: number
   const points: TMarker[] = useMemo(
     () =>
       data.map(
-        ({ name, thumbnail, lng, lat, id }): TMarker => ({
+        (item): TMarker => ({
           type: 'Feature',
-          properties: { id, cluster: false, name, thumbnail },
+          properties: { cluster: false, data: item },
           geometry: {
             type: 'Point',
-            coordinates: [lng, lat]
+            coordinates: [item?.lng, item?.lat]
           }
         })
       ),

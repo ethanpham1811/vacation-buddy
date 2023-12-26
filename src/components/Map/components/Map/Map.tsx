@@ -2,7 +2,6 @@
 import { TBounds } from '@/constants/types'
 import { useFlyToLocation, usePlaceList } from '@/hooks'
 import useFlyToActivePoint from '@/hooks/useFlyToActivePoint'
-import { useAppDispatch } from '@/lib/hooks'
 import { useState } from 'react'
 import { TileLayer } from 'react-leaflet/TileLayer'
 import { useMapEvents } from 'react-leaflet/hooks'
@@ -16,7 +15,6 @@ import MarkerGrid from '../MarkerGrid/MarkerGrid'
  */
 function Map() {
   const [bounds, setBounds] = useState<TBounds>()
-  const dispatch = useAppDispatch()
 
   const myMap = useMapEvents({
     moveend: () => {
