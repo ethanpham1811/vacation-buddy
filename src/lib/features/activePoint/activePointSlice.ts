@@ -4,11 +4,11 @@ import { createSlice } from '@reduxjs/toolkit'
 /**
  *
  */
-export interface HighlightState {
+export interface ActivePointState {
   data: TActivePoint
 }
 
-const initialState: HighlightState = {
+const initialState: ActivePointState = {
   data: null
 }
 
@@ -16,12 +16,12 @@ export const activePointSlice = createSlice({
   name: 'activePoint',
   initialState,
   reducers: {
-    locatePoint: (state, action) => {
+    setActivePoint: (state, action) => {
       state.data = action.payload
     }
   }
 })
 
-export const { locatePoint } = activePointSlice.actions
+export const { setActivePoint } = activePointSlice.actions
 
 export default activePointSlice.reducer

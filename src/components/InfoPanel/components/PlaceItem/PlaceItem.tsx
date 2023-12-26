@@ -1,6 +1,7 @@
 'use client'
-import { TActivePoint, TPlace } from '@/constants/types'
-import { Dispatch, SetStateAction } from 'react'
+import { TPlace } from '@/constants/types'
+import { setActivePoint } from '@/lib/features/activePoint/activePointSlice'
+import { useAppDispatch } from '@/lib/hooks'
 import Address from './Address'
 import Description from './Description'
 import ExternalLinks from './ExternalLinks'
@@ -10,11 +11,17 @@ import Photo from './Photo'
 import Price from './Price'
 import Rating from './Rating'
 
-function PlaceItem({ place, setActivePoint }: { place: TPlace; setActivePoint: Dispatch<SetStateAction<TActivePoint | null>> }) {
+function PlaceItem({ place }: { place: TPlace }) {
+  const dispatch = useAppDispatch()
   const { id, photo, name, web_url, website, address, description, phone, rating, num_reviews, open_now_text, price, lat, lng } = place
 
+  /* set active point => move map to the selected point */
+  function onClick() {
+    dispatch(setActivePoint({ id, lat, lng }))
+  }
+
   return (
-    <div className="group flex flex-col shadow-card" onClick={() => setActivePoint({ lat, lng, id })}>
+    <div className="group flex flex-col shadow-card" onClick={onClick}>
       {/* photo */}
       <Photo photo={photo} name={name} />
 
