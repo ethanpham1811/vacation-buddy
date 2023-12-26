@@ -31,8 +31,7 @@ export const fetchPlaceList = createAsyncThunk<TPlace[], { signal: AbortSignal; 
         tr_lng: neLng,
         tr_lat: neLat,
         bl_lng: swLng,
-        bl_lat: swLat,
-        isParis: neLng?.toString().startsWith('2.4')
+        bl_lat: swLat
       }),
       signal
     })
