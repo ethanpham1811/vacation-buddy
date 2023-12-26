@@ -74,7 +74,7 @@ const Pin = ({ data, lng, lat, isActive }: TPinProps) => {
 
       {/* place's detail modal */}
       {isActive && (
-        <Modal open={isModalOpen} hasPadding={false}>
+        <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} hasPadding={false}>
           <PlaceDetail place={data} />
         </Modal>
       )}

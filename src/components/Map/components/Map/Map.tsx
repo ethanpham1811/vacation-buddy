@@ -2,6 +2,8 @@
 import { TBounds } from '@/constants/types'
 import { useFlyToLocation, usePlaceList } from '@/hooks'
 import useFlyToActivePoint from '@/hooks/useFlyToActivePoint'
+import { setActivePoint } from '@/lib/features/activePoint/activePointSlice'
+import { useAppDispatch } from '@/lib/hooks'
 import { useState } from 'react'
 import { TileLayer } from 'react-leaflet/TileLayer'
 import { useMapEvents } from 'react-leaflet/hooks'
@@ -14,6 +16,7 @@ import MarkerGrid from '../MarkerGrid/MarkerGrid'
  * - move map center on init with searchParams "lat" & "lng" (ref.current.flyTo)
  */
 function Map() {
+  const dispatch = useAppDispatch()
   const [bounds, setBounds] = useState<TBounds>()
 
   const myMap = useMapEvents({
@@ -21,6 +24,11 @@ function Map() {
       const ne = myMap.getBounds().getNorthEast()
       const sw = myMap.getBounds().getSouthWest()
       setBounds([sw.lng, sw.lat, ne.lng, ne.lat])
+    },
+
+    // clear active state of point on clicking map
+    click: () => {
+      dispatch(setActivePoint(null))
     }
   })
 
