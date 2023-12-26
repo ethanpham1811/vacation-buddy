@@ -6,8 +6,8 @@ import { useAppDispatch } from '@/lib/hooks'
 import { useState } from 'react'
 import { TileLayer } from 'react-leaflet/TileLayer'
 import { useMapEvents } from 'react-leaflet/hooks'
-import { LocateMe } from '..'
-import MarkerGrid from './MarkerGrid'
+import LocateMe from '../LocateMe'
+import MarkerGrid from '../MarkerGrid/MarkerGrid'
 
 /**
  * Leaflet Map component https://react-leaflet.js.org/docs

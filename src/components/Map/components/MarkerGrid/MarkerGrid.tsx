@@ -1,9 +1,11 @@
 'use client'
-import { TBounds, TCluster } from '@/constants/types'
+import { TActivePoint, TBounds, TCluster } from '@/constants/types'
 import { useMarkerList } from '@/hooks'
-import { useAppSelector } from '@/lib/hooks'
+import { setActivePoint } from '@/lib/features/activePoint/activePointSlice'
+import { useAppDispatch, useAppSelector } from '@/lib/hooks'
 import { Map } from 'leaflet'
-import { Cluster, Pin } from '..'
+import Cluster from '../Marker/Cluster'
+import Pin from '../Pin/Pin'
 
 type TMarkerGridProps = {
   bounds: TBounds | undefined
@@ -11,12 +13,18 @@ type TMarkerGridProps = {
 }
 
 function MarkerGrid({ bounds, myMap }: TMarkerGridProps) {
+  const dispatch = useAppDispatch()
   const places = useAppSelector((state) => state.placeList.data)
   const isLoading = useAppSelector((state) => state.placeList.loading)
   const activePoint = useAppSelector((state) => state.activePoint.data)
 
   /* build cluster with data list & bounds */
   const { clusters, supercluster } = useMarkerList(places, bounds, myMap?.getZoom(), isLoading)
+
+  /* highlight clicked pin in right panel */
+  function onPinClick(activePoint: TActivePoint) {
+    dispatch(setActivePoint(activePoint))
+  }
 
   return (
     <>
@@ -39,7 +47,17 @@ function MarkerGrid({ bounds, myMap }: TMarkerGridProps) {
             </Cluster>
           )
         }
-        return <Pin isActive={id === activePoint?.id} key={`place_${id}`} lat={lat} lng={lng} name={name} thumbnail={thumbnail} />
+        return (
+          <Pin
+            onClick={() => onPinClick({ id, lat, lng })}
+            isActive={id === activePoint?.id}
+            key={`place_${id}`}
+            lat={lat}
+            lng={lng}
+            name={name}
+            thumbnail={thumbnail}
+          />
+        )
       })}
     </>
   )

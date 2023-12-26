@@ -1,16 +1,7 @@
-import AutoComplete from './AutoComplete/AutoComplete'
-import Container from './Container/Container'
-import Drawer from './Drawer/Drawer'
-import Geocoder from './Geocoder/Geocoder'
-import InfoPanel from './InfoPanel/InfoPanel'
-import LocateMe from './LocateMe/LocateMe'
-import Map from './Map/Map'
-import Cluster from './Marker/Cluster'
-import Marker from './Marker/Marker'
-import NavBar from './NavBar/NavBar'
-import Pin from './Pin/Pin'
-import Toggler from './Toggler/Toggler'
+import AutoComplete from './utilities/AutoComplete'
+import Drawer from './utilities/Drawer'
 import Skeleton from './utilities/Skeleton'
 import Spacer from './utilities/Spacer'
+import Toggler from './utilities/Toggler'
 
-export { AutoComplete, Cluster, Container, Drawer, Geocoder, InfoPanel, LocateMe, Map, Marker, NavBar, Pin, Skeleton, Spacer, Toggler }
+export { AutoComplete, Drawer, Skeleton, Spacer, Toggler }
