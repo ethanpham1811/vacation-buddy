@@ -1,8 +1,10 @@
 'use client'
+import { Spinner } from '@/components'
 import { TBounds, TCluster } from '@/constants/types'
 import { useMarkerList } from '@/hooks'
 import { useAppSelector } from '@/lib/hooks'
 import { Map } from 'leaflet'
+import LocateMe from '../LocateMe'
 import Cluster from '../Marker/Cluster'
 import Pin from '../Marker/Pin'
 
@@ -40,6 +42,11 @@ function MarkerGrid({ bounds, myMap }: TMarkerGridProps) {
         }
         return <Pin key={`place_${data?.id}`} isActive={data?.id === activePoint?.id} lat={lat} lng={lng} data={data} />
       })}
+
+      {/* locate current position button */}
+      <div className="absolute bottom-10 right-10">
+        <div className="leaflet-control leaflet-bar !border-0">{isLoading ? <Spinner /> : <LocateMe />}</div>
+      </div>
     </>
   )
 }

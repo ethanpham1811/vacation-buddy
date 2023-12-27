@@ -18,12 +18,8 @@ export default function LocateMe() {
   }
 
   return (
-    <div className="leaflet-bottom leaflet-right" onClick={onClick}>
-      <div className="leaflet-control leaflet-bar">
-        <div className="z-10 group absolute bottom-10 right-10 bg-gray-800 rounded-full p-2 cursor-pointer hover:bg-blue-600" onClick={onClick}>
-          <MapPinIcon className="h-5 w-5 text-white group-hover:text-black" />
-        </div>
-      </div>
+    <div onClick={onClick} className="z-10 group bg-gray-800 rounded-full p-2 cursor-pointer hover:bg-blue-600">
+      <MapPinIcon className="h-5 w-5 text-white group-hover:text-black" />
     </div>
   )
 }

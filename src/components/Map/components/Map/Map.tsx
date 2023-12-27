@@ -8,7 +8,6 @@ import { Map as LeafLetMap } from 'leaflet'
 import { useState } from 'react'
 import { TileLayer } from 'react-leaflet/TileLayer'
 import { useMapEvents } from 'react-leaflet/hooks'
-import LocateMe from '../LocateMe'
 import MarkerGrid from '../MarkerGrid/MarkerGrid'
 
 /**
@@ -61,7 +60,6 @@ function Map() {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <MarkerGrid bounds={bounds} myMap={myMap} />
-      <LocateMe />
     </>
   )
 }

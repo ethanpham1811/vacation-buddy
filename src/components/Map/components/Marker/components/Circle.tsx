@@ -9,7 +9,7 @@ type TCircleProps = {
 function Circle({ content, width, height }: TCircleProps) {
   return (
     <div
-      className="text-white bg-gray-600 rounded-full p-5 flex justify-center items-center cursor-pointer hover:bg-cyan-400"
+      className="text-white bg-gray-600 rounded-full p-5 flex justify-center items-center cursor-pointer hover:bg-blue-600"
       style={{ width, height }}
     >
       {content}
