@@ -21,7 +21,7 @@ function PlaceList({ data, isLoading, error }: TPlaceListProps) {
       </ul>
     )
 
-  if (error) return <Message icon={MdError} message="failed to load data" color="red" />
+  if ((!data || data?.length === 0) && error) return <Message icon={MdError} message="failed to load data" color="red" />
 
   return (
     <ul className="flex flex-col gap-4 flex-1 h-full overflow-y-scroll pr-2">

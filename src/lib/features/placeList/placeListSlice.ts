@@ -16,7 +16,7 @@ export interface PlaceListState {
 const initialState: PlaceListState = {
   data: [],
   points: [],
-  loading: true,
+  loading: false,
   clusterizing: true,
   error: null
 }
