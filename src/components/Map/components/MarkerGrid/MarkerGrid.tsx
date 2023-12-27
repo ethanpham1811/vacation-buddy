@@ -4,6 +4,7 @@ import { TBounds, TCluster } from '@/constants/types'
 import { useMarkerList } from '@/hooks'
 import { useAppSelector } from '@/lib/hooks'
 import { Map } from 'leaflet'
+import LoadingMsg from '../LoadingMsg/LoadingMsg'
 import LocateMe from '../LocateMe'
 import Cluster from '../Marker/Cluster'
 import Pin from '../Marker/Pin'
@@ -23,6 +24,9 @@ function MarkerGrid({ bounds, myMap }: TMarkerGridProps) {
 
   return (
     <>
+      {/* loading message */}
+      <LoadingMsg isLoading={isLoading} />
+
       {clusters.map((cluster: TCluster) => {
         const [lng, lat] = cluster.geometry.coordinates
         const { cluster: isCluster, point_count, data } = cluster.properties
