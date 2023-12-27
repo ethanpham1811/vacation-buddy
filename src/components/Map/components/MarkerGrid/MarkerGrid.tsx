@@ -4,7 +4,7 @@ import { useMarkerList } from '@/hooks'
 import { useAppSelector } from '@/lib/hooks'
 import { Map } from 'leaflet'
 import Cluster from '../Marker/Cluster'
-import Pin from '../Pin/Pin'
+import Pin from '../Marker/Pin'
 
 type TMarkerGridProps = {
   bounds: TBounds | undefined
@@ -35,9 +35,7 @@ function MarkerGrid({ bounds, myMap }: TMarkerGridProps) {
               pointCount={point_count}
               dataLength={places.length || 0}
               zoom={expansionZoom}
-            >
-              {point_count}
-            </Cluster>
+            />
           )
         }
         return <Pin key={`place_${data?.id}`} isActive={data?.id === activePoint?.id} lat={lat} lng={lng} data={data} />

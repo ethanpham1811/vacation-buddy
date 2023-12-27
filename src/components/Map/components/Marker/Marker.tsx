@@ -4,18 +4,11 @@ import { GiPositionMarker } from 'react-icons/gi'
 import { Marker as LeafletMarker } from 'react-leaflet/Marker'
 
 /**
- * Marker
+ * Atom element Marker
  */
 const Marker = ({ lng, lat }: TCoords) => {
   return (
-    <LeafletMarker
-      position={[lat, lng]}
-      // eventHandlers={{
-      //   click: () => {
-      //     console.log('marker clicked')
-      //   }
-      // }}
-    >
+    <LeafletMarker position={[lat, lng]}>
       <GiPositionMarker size="40" className="text-blue-600" />
     </LeafletMarker>
   )
