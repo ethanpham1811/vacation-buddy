@@ -4,6 +4,7 @@ import { useFlyToLocation, usePlaceList } from '@/hooks'
 import useFlyToActivePoint from '@/hooks/useFlyToActivePoint'
 import { setActivePoint } from '@/lib/features/activePoint/activePointSlice'
 import { useAppDispatch } from '@/lib/hooks'
+import { Map as LeafLetMap } from 'leaflet'
 import { useState } from 'react'
 import { TileLayer } from 'react-leaflet/TileLayer'
 import { useMapEvents } from 'react-leaflet/hooks'
@@ -23,17 +24,16 @@ function Map() {
   const myMap = useMapEvents({
     // retrieve new bounds on move to build clusters
     moveend: () => {
-      const ne = myMap.getBounds().getNorthEast()
-      const sw = myMap.getBounds().getSouthWest()
-      setBounds([sw.lng, sw.lat, ne.lng, ne.lat])
+      setBounds(getBounds(myMap))
     },
 
-    // only fetch data on drag (exclude zoom)
-    // reduce request counts which consumes free account quotas
+    // only fetch data on init load & drag (exclude zoom)
+    // => reduce request counts which consumes free account quotas
     dragend: () => {
-      const ne = myMap.getBounds().getNorthEast()
-      const sw = myMap.getBounds().getSouthWest()
-      requestData([sw.lng, sw.lat, ne.lng, ne.lat])
+      requestData(getBounds(myMap))
+    },
+    locationfound: () => {
+      requestData(getBounds(myMap))
     },
 
     // clear active state of point on clicking map
@@ -47,6 +47,12 @@ function Map() {
 
   /* fly to active point on hovering place (right panel)  */
   useFlyToActivePoint(myMap)
+
+  function getBounds(myMap: LeafLetMap): TBounds {
+    const ne = myMap.getBounds().getNorthEast()
+    const sw = myMap.getBounds().getSouthWest()
+    return [sw.lng, sw.lat, ne.lng, ne.lat]
+  }
 
   return (
     <>
