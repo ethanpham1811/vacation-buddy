@@ -21,9 +21,9 @@ const initialState: PlaceListState = {
   error: null
 }
 
-export const fetchPlaceList = createAsyncThunk<TPlace[], { signal: AbortSignal; paramType: string; bounds: TBounds }>(
+export const fetchPlaceList = createAsyncThunk<TPlace[], { paramType: string; bounds: TBounds }>(
   'placeList/fetchPlaceList',
-  async ({ signal, paramType, bounds }) => {
+  async ({ paramType, bounds }) => {
     const [swLng, swLat, neLng, neLat] = bounds || []
     const res = await fetch(`/api/places/${paramType || API_TYPES.attractions}`, {
       method: 'POST',
@@ -32,8 +32,7 @@ export const fetchPlaceList = createAsyncThunk<TPlace[], { signal: AbortSignal; 
         tr_lat: neLat,
         bl_lng: swLng,
         bl_lat: swLat
-      }),
-      signal
+      })
     })
 
     const data = await res.json()
