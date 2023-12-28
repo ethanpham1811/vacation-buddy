@@ -1,20 +1,17 @@
 'use client'
+import { DEFAULT_ZOOM } from '@/constants/enum'
 import { MapPinIcon } from '@/constants/icons'
-import { LocationEvent } from 'leaflet'
 import { useMap } from 'react-leaflet'
 
 /**
- * on click:
- * - move map to user's current location
+ * on click: move map to user's current location
  */
 
 export default function LocateMe() {
   const map = useMap()
 
   function onClick() {
-    map.locate().on('locationfound', function (e: LocationEvent) {
-      map.setView(e.latlng, map.getZoom())
-    })
+    map.locate({ setView: true, maxZoom: DEFAULT_ZOOM })
   }
 
   return (
