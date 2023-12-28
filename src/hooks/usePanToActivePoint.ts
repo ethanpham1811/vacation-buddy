@@ -3,16 +3,16 @@ import { Map } from 'leaflet'
 import { useEffect } from 'react'
 
 /**
- * Fly to active point
+ * move viewport to active point on clicking pin's card
  */
 
-function useFlyToActivePoint(map: Map) {
+function usePanToActivePoint(map: Map) {
   const activePoint = useAppSelector((state) => state.activePoint.data)
 
   useEffect(() => {
-    activePoint && map.setView([activePoint.lat, activePoint.lng], map.getZoom())
+    map && activePoint && map.setView([activePoint.lat, activePoint.lng], map.getZoom())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activePoint])
 }
 
-export default useFlyToActivePoint
+export default usePanToActivePoint
