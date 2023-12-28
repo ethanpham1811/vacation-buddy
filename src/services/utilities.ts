@@ -1,12 +1,11 @@
-/* locate user current coords */
-export function locateMe(cb: (lat: number, lng: number) => void) {
-  navigator.geolocation.getCurrentPosition(
-    ({ coords: { longitude: lng, latitude: lat } }) => {
-      cb(lat, lng)
-    },
-    null,
-    { enableHighAccuracy: true }
-  )
+import { TBounds } from '@/constants/types'
+import { Map } from 'leaflet'
+
+/* retrive bounds from leaflet map */
+export function getBounds(myMap: Map): TBounds {
+  const ne = myMap.getBounds().getNorthEast()
+  const sw = myMap.getBounds().getSouthWest()
+  return [sw.lng, sw.lat, ne.lng, ne.lat]
 }
 
 /* join conditional styling classes */
