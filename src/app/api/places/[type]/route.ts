@@ -27,8 +27,7 @@ export async function POST(request: Request, { params: { type } }: TGetPlacesPar
       headers: {
         'X-RapidAPI-Key': process.env.RAPID_API_KEY!,
         'X-RapidAPI-Host': process.env.RAPID_API_DOMAIN!
-      },
-      signal: request.signal
+      }
     }
   )
 
@@ -56,7 +55,9 @@ export async function POST(request: Request, { params: { type } }: TGetPlacesPar
         rating,
         num_reviews,
         price,
-        open_now_text
+        open_now_text,
+        ranking,
+        offer_group
       }: TPlacesAPIResponse): TPlace => ({
         id: `${name}_${latitude}_${longitude}`,
         name,
@@ -72,7 +73,9 @@ export async function POST(request: Request, { params: { type } }: TGetPlacesPar
         rating,
         num_reviews,
         price,
-        open_now_text
+        open_now_text,
+        ranking,
+        offer_group
       })
     )
 
