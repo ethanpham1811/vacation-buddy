@@ -22,8 +22,8 @@ function TopController() {
           return (
             <li
               key={`ctrl_${name}`}
-              className={`flex overflow-hidden rounded-full p-0 lg:py-1 items-center group shadow-button ${
-                isActive ? 'bg-blue-600 text-white p-0 lg:px-3 gap-2 mx-1' : 'cursor-pointer p-0 lg:px-2'
+              className={`p-1 lg:p-0 flex overflow-hidden rounded-full p-0 lg:py-1 items-center group shadow-button ${
+                isActive ? 'bg-blue-600 text-white p-0 lg:px-3 gap-0 lg:gap-2 mx-0 lg:mx-1' : 'cursor-pointer p-0 lg:px-2'
               }`}
               onClick={() => !isActive && setParamType(name)}
             >
