@@ -1,7 +1,7 @@
 'use client'
 import { Disclosure } from '@headlessui/react'
 import Geocoder from './components/Geocoder/Geocoder'
-import HistoryToggler from './components/HistoryToggler'
+import HistoryToggler from './components/HistoryToggler/HistoryToggler'
 import Logo from './components/Logo'
 
 /**

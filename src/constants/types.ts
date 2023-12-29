@@ -37,7 +37,7 @@ export type TPlace = TCoords & TPlaceInfo
 export type TMarker = {
   type: 'Feature'
   properties: {
-    data: TPlaceInfo
+    data: TPlace
     cluster: false
   }
   geometry: {
@@ -58,6 +58,11 @@ export type TAutoCompleteData = TCoords & {
 }
 
 export type TActivePoint = (TCoords & { id: string }) | null
+
+export type TFavorite = TActivePoint & {
+  photo: string
+  name: string
+}
 
 /* ---------------------------------------------Props Types--------------------------------------------- */
 /* ----------------------------------------------Form Types---------------------------------------------- */

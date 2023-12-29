@@ -1,12 +1,22 @@
 'use client'
+import { XMarkIcon } from '@/constants/icons'
 import { Dialog, Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { Dispatch, Fragment, SetStateAction } from 'react'
+import { Dispatch, Fragment, ReactElement, SetStateAction } from 'react'
 
-function Drawer({ open, setOpen }: { open: boolean; setOpen: Dispatch<SetStateAction<boolean>> }) {
+function Drawer({
+  title,
+  open,
+  setOpen,
+  children
+}: {
+  title: string
+  open: boolean
+  setOpen: Dispatch<SetStateAction<boolean>>
+  children: ReactElement
+}) {
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+      <Dialog as="div" className="relative z-[1000]" onClose={setOpen}>
         <Transition.Child
           as={Fragment}
           enter="ease-in-out duration-200"
@@ -53,11 +63,11 @@ function Drawer({ open, setOpen }: { open: boolean; setOpen: Dispatch<SetStateAc
                       </button>
                     </div>
                   </Transition.Child>
-                  <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
+                  <div className="flex h-full flex-col overflow-y-scroll bg-gray-700 py-6 shadow-xl">
                     <div className="px-4 sm:px-6">
-                      <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">Panel title</Dialog.Title>
+                      <Dialog.Title className="text-base leading-6 text-white">{title}</Dialog.Title>
                     </div>
-                    <div className="relative mt-6 flex-1 px-4 sm:px-6">{/* Your content */}</div>
+                    <div className="relative mt-6 flex-1 px-4 sm:px-6">{children}</div>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

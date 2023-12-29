@@ -5,6 +5,7 @@ export const MAPBOX_MAP_GL_STYLE = 'mapbox://styles/mapbox/streets-v9'
 export const QUERY_LIMIT = 10
 export const DEFAULT_ZOOM = 14
 export const MIN_ZOOM = 13
+export const FAVORITE_COOKIE = 'vacation-buddy-favorite-list'
 
 /* data */
 export enum API_TYPES {

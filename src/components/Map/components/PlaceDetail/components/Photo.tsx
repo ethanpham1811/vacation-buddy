@@ -3,7 +3,7 @@ import { BLURRED_DATA_URL } from '@/constants/enum'
 import { IoHeart } from '@/constants/icons'
 import Image from 'next/image'
 
-function Photo({ photo, name }: { photo: string | undefined; name: string }) {
+function Photo({ photo, name, addFavorite }: { photo: string | undefined; name: string; addFavorite: () => void }) {
   return (
     <div className="relative h-60 flex items-stretch relative">
       {photo ? (
@@ -12,8 +12,11 @@ function Photo({ photo, name }: { photo: string | undefined; name: string }) {
         <NoImgPlaceholder />
       )}
 
-      {/* favorite */}
-      <div className="absolute right-7 bottom-0 translate-y-1/2 shadow-card text-red-400 p-3 rounded-full bg-white cursor-pointer hover:bg-red-400 hover:text-white">
+      {/* favorite btn */}
+      <div
+        onClick={addFavorite}
+        className="absolute right-7 bottom-0 translate-y-1/2 shadow-card text-red-400 p-3 rounded-full bg-white cursor-pointer hover:bg-red-400 hover:text-white"
+      >
         <IoHeart size={25} />
       </div>
     </div>

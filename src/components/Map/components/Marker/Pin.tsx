@@ -1,5 +1,5 @@
 'use client'
-import { TCoords, TPlaceInfo } from '@/constants/types'
+import { TCoords, TPlace } from '@/constants/types'
 import { DivIcon } from 'leaflet'
 import { useState } from 'react'
 import { renderToString } from 'react-dom/server'
@@ -13,7 +13,7 @@ import MarkerCard from './components/MarkerCard'
 
 type TPinProps = TCoords & {
   isActive: boolean
-  data: TPlaceInfo
+  data: TPlace
 }
 
 /**
