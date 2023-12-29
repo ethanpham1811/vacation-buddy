@@ -7,7 +7,9 @@ import { Combobox } from '@headlessui/react'
 function SelectOption({ place }: { place: TAutoCompleteData }) {
   return (
     <Combobox.Option
-      className={({ active }) => `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-blue-500 text-white' : 'text-gray-900'}`}
+      className={({ active }) =>
+        `relative cursor-default rounded-full select-none py-2 pl-10 pr-4 ${active ? 'bg-blue-500 text-white' : 'text-gray-900'}`
+      }
       value={place}
     >
       {({ selected, active }) => (
