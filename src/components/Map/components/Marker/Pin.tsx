@@ -14,6 +14,7 @@ import MarkerCard from './components/MarkerCard'
 type TPinProps = TCoords & {
   isActive: boolean
   data: TPlace
+  isFavorite: boolean
 }
 
 /**
@@ -21,7 +22,7 @@ type TPinProps = TCoords & {
  * - thumbnail
  * - name
  */
-const Pin = ({ data, lng, lat, isActive }: TPinProps) => {
+const Pin = ({ isFavorite, data, lng, lat, isActive }: TPinProps) => {
   const dispatch = useAppDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { id, name, thumbnail } = data
@@ -34,7 +35,7 @@ const Pin = ({ data, lng, lat, isActive }: TPinProps) => {
 
   // build marker icon
   const customMarker = new DivIcon({
-    html: renderToString(<MarkerCard onClick={onClick} isActive={isActive} name={name} thumbnail={thumbnail} />),
+    html: renderToString(<MarkerCard isFavorite={isFavorite} onClick={onClick} isActive={isActive} name={name} thumbnail={thumbnail} />),
     iconSize: [40, 40],
     iconAnchor: [18, 30]
   })

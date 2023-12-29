@@ -18,6 +18,7 @@ function MarkerGrid({ bounds, myMap }: TMarkerGridProps) {
   const places = useAppSelector((state) => state.placeList.data)
   const isLoading = useAppSelector((state) => state.placeList.loading)
   const activePoint = useAppSelector((state) => state.activePoint.data)
+  const favoriteList = useAppSelector((state) => state.favoriteList.data)
 
   /* build cluster with data list & bounds */
   const { clusters, supercluster } = useMarkerList(places, bounds, myMap?.getZoom(), isLoading)
@@ -31,6 +32,7 @@ function MarkerGrid({ bounds, myMap }: TMarkerGridProps) {
         const [lng, lat] = cluster.geometry.coordinates
         const { cluster: isCluster, point_count, data } = cluster.properties
         const expansionZoom = Math.min(supercluster.getClusterExpansionZoom(cluster.id), 20)
+        const isFavorite = favoriteList.some((favorite) => favorite.id === data?.id)
         if (isCluster) {
           return (
             <Cluster
@@ -44,7 +46,7 @@ function MarkerGrid({ bounds, myMap }: TMarkerGridProps) {
             />
           )
         }
-        return <Pin key={`place_${data?.id}`} isActive={data?.id === activePoint?.id} lat={lat} lng={lng} data={data} />
+        return <Pin isFavorite={isFavorite} key={`place_${data?.id}`} isActive={data?.id === activePoint?.id} lat={lat} lng={lng} data={data} />
       })}
 
       {/* locate current position button */}

@@ -1,4 +1,5 @@
 import { BLURRED_DATA_URL } from '@/constants/enum'
+import { IoHeart } from '@/constants/icons'
 import Image from 'next/image'
 import LinesEllipsis from 'react-lines-ellipsis'
 
@@ -7,9 +8,10 @@ type TCircleProps = {
   isActive: boolean
   thumbnail: string | undefined
   name: string
+  isFavorite: boolean
 }
 
-function MarkerCard({ onClick, isActive, thumbnail, name }: TCircleProps) {
+function MarkerCard({ isFavorite, onClick, isActive, thumbnail, name }: TCircleProps) {
   return (
     <div
       onClick={onClick}
@@ -27,6 +29,11 @@ function MarkerCard({ onClick, isActive, thumbnail, name }: TCircleProps) {
           src={thumbnail || '/'}
         />
       </div>
+
+      {/* favorite icon */}
+      {isFavorite && <IoHeart className="h-4 w-4 text-red-400" />}
+
+      {/* description */}
       <LinesEllipsis text={name} maxLine="2" ellipsis="..." trimRight basedOn="letters" className="text-xs" />
     </div>
   )
