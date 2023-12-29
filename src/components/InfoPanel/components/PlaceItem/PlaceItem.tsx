@@ -21,11 +21,11 @@ function PlaceItem({ place }: { place: TPlace }) {
   }
 
   return (
-    <div className="group flex flex-col shadow-card" onClick={onClick}>
+    <div className="group flex flex-col shadow-card w-[30dvw] lg:w-auto" onClick={onClick}>
       {/* photo */}
       <Photo photo={photo} name={name} />
 
-      <div className="rounded-b-md bg-white p-2 flex flex-col gap-1 group-hover:bg-blue-50">
+      <div className=" overflow-hidden lg:overflow-visible rounded-t-md lg:rounded-none rounded-b-md bg-white p-2 flex flex-1 lg:flex-auto flex-col gap-1 group-hover:bg-blue-50">
         {/* title */}
         <h1 className="font-semibold text-lg">{name}</h1>
 

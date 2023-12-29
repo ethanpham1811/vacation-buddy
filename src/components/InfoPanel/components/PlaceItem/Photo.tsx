@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 function Photo({ photo, name }: { photo: string | undefined; name: string }) {
   return (
-    <div className="relative h-60 rounded-t-md overflow-hidden flex items-stretch">
+    <div className="hidden lg:flex relative h-60 rounded-t-md overflow-hidden items-stretch">
       {photo ? (
         <Image layout="fill" style={{ objectFit: 'cover' }} placeholder="blur" blurDataURL={BLURRED_DATA_URL} alt={`photo of ${name}`} src={photo} />
       ) : (

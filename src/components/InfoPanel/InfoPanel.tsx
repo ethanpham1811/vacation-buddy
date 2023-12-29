@@ -8,7 +8,7 @@ function InfoPanel() {
   const isLoading = useAppSelector((state) => state.placeList.clusterizing)
   const error = useAppSelector((state) => state.placeList.error)
   return (
-    <section className="flex flex-col h-full p-2 w-96  gap-2 bg-gray-700">
+    <section className="flex flex-row lg:flex-col h-auto lg:h-full p-2 w-auto lg:w-96 gap-2 bg-gray-700">
       {/* search type switcher */}
       <header>
         <TopController />

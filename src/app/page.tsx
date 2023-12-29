@@ -12,7 +12,7 @@ export default function Home() {
       {/* Top Navigation */}
       <NavBar />
 
-      <div className="flex flex-1 items-stretch overflow-y-scroll">
+      <div className="flex flex-1 overflow-y-scroll flex-col lg:flex-row items-stretch lg:items-start">
         {/* Right Panel */}
         <InfoPanel />
 

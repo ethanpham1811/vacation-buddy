@@ -6,6 +6,7 @@
 /* Customize the scrollbar track */
 ::-webkit-scrollbar {
   width: 5px !important;
+  height: 5px !important;
 }
 
 /* Customize the scrollbar thumb (scrolling handle) */

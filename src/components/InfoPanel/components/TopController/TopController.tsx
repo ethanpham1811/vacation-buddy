@@ -15,19 +15,23 @@ function TopController() {
 
   return (
     <section>
-      <ul className="flex gap-2 justify-end bg-gray-800 p-2 rounded-md">
+      <ul className="flex flex-col lg:flex-row gap-2 justify-end bg-gray-800 p-2 rounded-md">
         {controllers.map(({ name, icon }) => {
           const isActive = name === API_TYPES.attractions ? !paramType || paramType === name : paramType === name
 
           return (
             <li
               key={`ctrl_${name}`}
-              className={`flex overflow-hidden rounded-full py-1 items-center group shadow-button ${
-                isActive ? 'bg-blue-600 text-white px-3 gap-2 mx-1' : 'cursor-pointer px-2'
+              className={`flex overflow-hidden rounded-full p-0 lg:py-1 items-center group shadow-button ${
+                isActive ? 'bg-blue-600 text-white p-0 lg:px-3 gap-2 mx-1' : 'cursor-pointer p-0 lg:px-2'
               }`}
               onClick={() => !isActive && setParamType(name)}
             >
-              <div className={`text-sm rounded-sm transition-all duration-700 ${isActive ? 'max-w-[100px] text-white' : 'max-w-0 text-transparent'}`}>
+              <div
+                className={`hidden lg:block text-sm rounded-sm transition-all duration-700 ${
+                  isActive ? 'max-w-[100px] text-white' : 'max-w-0 text-transparent'
+                }`}
+              >
                 {name.toLocaleUpperCase()}
               </div>
               {createElement(icon, { className: !isActive ? 'text-white group-hover:text-blue-600' : '', size: '25' })}

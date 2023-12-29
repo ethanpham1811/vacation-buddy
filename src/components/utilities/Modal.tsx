@@ -21,7 +21,7 @@ export default function Modal({ isOpen, setIsOpen, children, hasPadding }: TModa
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/40" />
+          <div className="fixed inset-0 bg-black/90 lg:bg-black/40" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
