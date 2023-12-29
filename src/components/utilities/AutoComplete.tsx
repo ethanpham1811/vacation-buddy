@@ -8,7 +8,6 @@ type TAutoCompleteProps<T> = {
   onSubmit: (val: string, signal?: AbortSignal) => void
   onSelect: (val: T) => void
   children: ReactNode
-  width?: string
   name: string
   isLoading: boolean
   setIsLoading: Dispatch<SetStateAction<boolean>>
@@ -19,15 +18,7 @@ type TAutoCompleteProps<T> = {
  * @param  {Function} onSubmit // callback fn (data request) fire on user typing
  * @param  {Function} onSelect // callback fn fire on selection
  */
-function AutoComplete<T extends { name: string }>({
-  onSubmit,
-  onSelect,
-  setIsLoading,
-  isLoading,
-  name,
-  children,
-  width = '100%'
-}: TAutoCompleteProps<T>) {
+function AutoComplete<T extends { name: string }>({ onSubmit, onSelect, setIsLoading, isLoading, name, children }: TAutoCompleteProps<T>) {
   const [inputValue, setInputValue] = useState('')
   const [isFocusing, setIsFocusing] = useState(false)
 
@@ -54,7 +45,7 @@ function AutoComplete<T extends { name: string }>({
 
   return (
     <Combobox onChange={(val: T) => onSelect(val)}>
-      <div className="relative z-10" style={{ width }}>
+      <div className="relative z-10 w-[60dvw] lg:w-[30dvw]">
         {/* text input */}
         <div className="relative w-full cursor-default overflow-hidden rounded-full bg-white text-left shadow-md focus:outline-none sm:text-sm">
           <Combobox.Input

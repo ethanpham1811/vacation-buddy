@@ -39,14 +39,7 @@ function Geocoder() {
   }
 
   return (
-    <AutoComplete<TAutoCompleteData>
-      name="city"
-      onSubmit={onSubmit}
-      onSelect={onSelect}
-      width="30dvw"
-      setIsLoading={setIsLoading}
-      isLoading={isLoading}
-    >
+    <AutoComplete<TAutoCompleteData> name="city" onSubmit={onSubmit} onSelect={onSelect} setIsLoading={setIsLoading} isLoading={isLoading}>
       {cityList?.length === 0 || error ? (
         <div className="relative cursor-default select-none px-4 py-2 text-gray-700">{error ?? 'Nothing found.'}</div>
       ) : (
