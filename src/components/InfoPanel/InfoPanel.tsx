@@ -1,6 +1,6 @@
 'use client'
 import { useAppSelector } from '@/lib/hooks'
-import PlaceList from './components/PlaceList/PlaceList'
+import PlaceListWrapper from './components/PlaceList/PlaceListWrapper'
 import TopController from './components/TopController/TopController'
 
 function InfoPanel() {
@@ -15,7 +15,7 @@ function InfoPanel() {
       </header>
 
       {/* place list */}
-      <PlaceList data={placeList} isLoading={isLoading} error={error} />
+      <PlaceListWrapper data={placeList} isLoading={isLoading} error={error} />
     </section>
   )
 }

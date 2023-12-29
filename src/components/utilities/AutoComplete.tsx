@@ -57,7 +57,7 @@ function AutoComplete<T extends { name: string }>({ onSubmit, onSelect, setIsLoa
             placeholder={`Search ${name}`}
             autoComplete="off"
           />
-          <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-3">
+          <Combobox.Button aria-label="toggle dropdown" className="absolute inset-y-0 right-0 flex items-center pr-3">
             {isLoading ? (
               <GoDotFill size="25" className="text-blue-500 animate-bounce relative -bottom-1" />
             ) : (
