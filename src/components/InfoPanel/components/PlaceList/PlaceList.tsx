@@ -1,12 +1,12 @@
 'use client'
 import { Skeleton } from '@/components'
-import { TPlace } from '@/constants/types'
+import { TPoint } from '@/constants/types'
 import { MdError } from 'react-icons/md'
 import PlaceItem from '../PlaceItem/PlaceItem'
 import Message from '../TopController/Message'
 
 type TPlaceListProps = {
-  data: TPlace[] | undefined
+  data: TPoint[] | undefined
   isLoading: boolean
   error: string | null
 }
@@ -28,7 +28,7 @@ function PlaceList({ data, isLoading, error }: TPlaceListProps) {
       {!data || data.length === 0 ? (
         <Message message="No places found" color="gray" />
       ) : (
-        data?.map((place: TPlace) => {
+        data?.map((place: TPoint) => {
           return <PlaceItem key={place.id} place={place} />
         })
       )}

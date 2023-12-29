@@ -1,4 +1,5 @@
 'use client'
+import { DEFAULT_ZOOM } from '@/constants/enum'
 import { TBounds } from '@/constants/types'
 import { useInitLoad, usePanToActivePoint, usePlaceList, useReceivingLatLng, useSwitchType } from '@/hooks'
 import { setActivePoint } from '@/lib/features/activePoint/activePointSlice'
@@ -22,6 +23,7 @@ function Map() {
   const dispatch = useAppDispatch()
   const [_paramLat, setParamLat] = useQueryState('lat')
   const [_paramLng, setParamLng] = useQueryState('lng')
+  const [_paramZoom, setParamZoom] = useQueryState('zoom')
   const [bounds, setBounds] = useState<TBounds>()
   const { requestData } = usePlaceList()
 
@@ -40,10 +42,16 @@ function Map() {
       requestData(getBounds(myMap))
     },
 
+    // set zoom param on zoom
+    zoom: () => {
+      setParamZoom(myMap.getZoom().toString())
+    },
+
     // update lat lng params triggered by map.locate()
     locationfound: () => {
       setParamLat(myMap.getCenter().lat.toString())
       setParamLng(myMap.getCenter().lng.toString())
+      setParamZoom(DEFAULT_ZOOM.toString())
     },
 
     // clear active state of point on clicking map

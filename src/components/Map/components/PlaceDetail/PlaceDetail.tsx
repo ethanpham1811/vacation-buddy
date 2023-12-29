@@ -7,16 +7,17 @@ import RatingAddress from './components/RatingAddress'
 
 type TPlaceDetailProps = {
   place: TPlace
+  zoom: number
 }
 
-function PlaceDetail({ place }: TPlaceDetailProps) {
+function PlaceDetail({ place, zoom }: TPlaceDetailProps) {
   const favoriteList = useAppSelector((state) => state.favoriteList.data)
   const dispatch = useAppDispatch()
   const { id, photo, name, lat, lng, web_url, website, address, description, phone, rating, num_reviews, open_now_text, price } = place
   const isFavorite = favoriteList.some((item) => item.id === id)
 
   function handleAddFavorite() {
-    dispatch(addFavorite({ id, lat, lng, photo, name }))
+    dispatch(addFavorite({ id, lat, lng, photo, zoom, name }))
   }
   function handleRemoveFavorite(id: string) {
     dispatch(removeFavorite(id))

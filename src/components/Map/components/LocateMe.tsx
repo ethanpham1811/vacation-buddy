@@ -11,7 +11,7 @@ export default function LocateMe() {
   const map = useMap()
 
   function onClick() {
-    map.locate({ setView: true, maxZoom: DEFAULT_ZOOM })
+    map.locate({ setView: true, maxZoom: map.getZoom() || DEFAULT_ZOOM })
   }
 
   return (

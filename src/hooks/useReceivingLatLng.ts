@@ -13,12 +13,13 @@ import { useEffect } from 'react'
 function useReceivingLatLng(map: Map, requestData: (bounds: TBounds, type: string) => void) {
   const [lat] = useQueryState('lat')
   const [lng] = useQueryState('lng')
+  const [zoom] = useQueryState('zoom')
   const [type] = useQueryState('type')
 
   /* on receiving lat lng search params */
   useEffect(() => {
     if (!lat || !lng || !map) return
-    map.setView({ lat: parseFloat(lat), lng: parseFloat(lng) }, DEFAULT_ZOOM)
+    map.setView({ lat: parseFloat(lat), lng: parseFloat(lng) }, zoom ? parseInt(zoom) : DEFAULT_ZOOM)
 
     requestData(getBounds(map), type || API_TYPES.attractions)
     // eslint-disable-next-line react-hooks/exhaustive-deps

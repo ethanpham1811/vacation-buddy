@@ -15,6 +15,7 @@ type TPinProps = TCoords & {
   isActive: boolean
   data: TPlace
   isFavorite: boolean
+  zoom: number
 }
 
 /**
@@ -22,14 +23,14 @@ type TPinProps = TCoords & {
  * - thumbnail
  * - name
  */
-const Pin = ({ isFavorite, data, lng, lat, isActive }: TPinProps) => {
+const Pin = ({ isFavorite, data, lng, lat, zoom, isActive }: TPinProps) => {
   const dispatch = useAppDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { id, name, thumbnail } = data
 
   /* highlight clicked pin in right panel */
   function onClick() {
-    dispatch(setActivePoint({ id, lat, lng }))
+    dispatch(setActivePoint({ id, lat, lng, zoom }))
     setIsModalOpen(true)
   }
 
@@ -53,7 +54,7 @@ const Pin = ({ isFavorite, data, lng, lat, isActive }: TPinProps) => {
       {/* place's detail modal */}
       {isActive && (
         <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} hasPadding={false}>
-          <PlaceDetail place={data} />
+          <PlaceDetail zoom={zoom} place={data} />
         </Modal>
       )}
     </>

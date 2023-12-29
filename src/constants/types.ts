@@ -33,6 +33,7 @@ export type TPlaceInfo = {
   }
 }
 export type TPlace = TCoords & TPlaceInfo
+export type TPoint = TPlace & { zoom: number }
 
 export type TMarker = {
   type: 'Feature'
@@ -48,6 +49,7 @@ export type TMarker = {
 export type TCluster = TMarker & {
   id: number
   properties: {
+    data: TPoint
     cluster: boolean
     point_count: number
   }
@@ -57,7 +59,7 @@ export type TAutoCompleteData = TCoords & {
   name: string
 }
 
-export type TActivePoint = (TCoords & { id: string }) | null
+export type TActivePoint = TCoords & { id: string; zoom: number }
 
 export type TFavorite = TActivePoint & {
   photo: string

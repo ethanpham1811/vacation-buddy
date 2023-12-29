@@ -1,4 +1,5 @@
 import { XMarkIcon } from '@/constants/icons'
+import { TActivePoint } from '@/constants/types'
 import { setActivePoint } from '@/lib/features/activePoint/activePointSlice'
 import { removeFavorite } from '@/lib/features/favoriteList/favoriteListSlice'
 import { useAppDispatch, useAppSelector } from '@/lib/hooks'
@@ -17,13 +18,13 @@ function HistoryList({ setOpen }: THistoryListProps) {
   const dispatch = useAppDispatch()
   const favoriteList = useAppSelector((state) => state.favoriteList.data)
 
-  function handleLocatePlace({ id, lat, lng }: { id: string; lat: number; lng: number }) {
+  function handleLocatePlace(activePoint: TActivePoint) {
     // set lat lng search params => trigger map move & data fetching
-    setParamLat(lat.toString())
-    setParamLng(lng.toString())
+    setParamLat(activePoint.lat.toString())
+    setParamLng(activePoint.lng.toString())
 
     // set active point
-    dispatch(setActivePoint({ id, lat, lng }))
+    dispatch(setActivePoint(activePoint))
 
     // close drawer
     setOpen(false)
@@ -34,11 +35,11 @@ function HistoryList({ setOpen }: THistoryListProps) {
 
   return (
     <div className="grid gap-5 grid-cols-2">
-      {favoriteList.map(({ id, name, photo, lat, lng }) => (
+      {favoriteList.map(({ id, name, photo, lat, lng, zoom }) => (
         <div
           key={`favorite_${id}`}
           className="text-xs p-1 shadow-card flex items-center overflow-hidden cursor-pointer bg-white rounded-md min-h-[50px] hover:bg-gray-800 hover:text-white"
-          onClick={() => handleLocatePlace({ id, lat, lng })}
+          onClick={() => handleLocatePlace({ id, lat, lng, zoom })}
         >
           {/* photo */}
           <div className="px-2">

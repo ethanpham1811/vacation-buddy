@@ -46,7 +46,7 @@ function useMarkerList(data: TPlace[], bounds: TBounds | undefined, zoom: number
 
   // fire filterByCluster Action
   useEffect(() => {
-    isFetchingData === false && dispatch(filterBycluster({ clusters }))
+    isFetchingData === false && dispatch(filterBycluster({ clusters, zoom }))
   }, [isFetchingData, dispatch, clusters])
 
   return { clusters, supercluster }

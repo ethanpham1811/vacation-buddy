@@ -1,5 +1,5 @@
 import { API_TYPES } from '@/constants/enum'
-import { TBounds, TCluster, TPlace } from '@/constants/types'
+import { TBounds, TCluster, TPlace, TPoint } from '@/constants/types'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 /**
@@ -8,7 +8,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 export interface PlaceListState {
   data: TPlace[]
   loading: boolean
-  points: TPlace[]
+  points: TPoint[]
   clusterizing: boolean
   error: string | null
 }
@@ -47,9 +47,12 @@ export const placeListSlice = createSlice({
     // filter TPlace[] by point type (exclude cluster type)
     filterBycluster: (state, action) => {
       const clusters: TCluster[] = action.payload?.clusters
+      const zoom: number = action.payload?.zoom
+
+      // filter place list to get points list, then add zoom to the points list
       const pointIdList: string[] = clusters?.filter((point) => !point?.properties?.cluster).map((point) => point?.properties?.data?.id)
-      const filteredData: TPlace[] = state.data?.filter((place) => pointIdList.includes(place.id))
-      state.points = filteredData
+      const pointList: TPoint[] = state.data?.filter((place) => pointIdList.includes(place.id)).map((place) => ({ ...place, zoom }))
+      state.points = pointList
       state.clusterizing = false
     }
   },

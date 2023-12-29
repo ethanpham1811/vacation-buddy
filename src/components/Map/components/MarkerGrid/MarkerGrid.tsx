@@ -46,7 +46,17 @@ function MarkerGrid({ bounds, myMap }: TMarkerGridProps) {
             />
           )
         }
-        return <Pin isFavorite={isFavorite} key={`place_${data?.id}`} isActive={data?.id === activePoint?.id} lat={lat} lng={lng} data={data} />
+        return (
+          <Pin
+            zoom={myMap?.getZoom()}
+            isFavorite={isFavorite}
+            key={`place_${data?.id}`}
+            isActive={data?.id === activePoint?.id}
+            lat={lat}
+            lng={lng}
+            data={data}
+          />
+        )
       })}
 
       {/* locate current position button */}

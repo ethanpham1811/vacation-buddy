@@ -1,5 +1,5 @@
 'use client'
-import { TPlace } from '@/constants/types'
+import { TPoint } from '@/constants/types'
 import { setActivePoint } from '@/lib/features/activePoint/activePointSlice'
 import { useAppDispatch } from '@/lib/hooks'
 import Address from './Address'
@@ -11,13 +11,13 @@ import Photo from './Photo'
 import Price from './Price'
 import Rating from './Rating'
 
-function PlaceItem({ place }: { place: TPlace }) {
+function PlaceItem({ place }: { place: TPoint }) {
   const dispatch = useAppDispatch()
-  const { id, photo, name, web_url, website, address, description, phone, rating, num_reviews, open_now_text, price, lat, lng } = place
+  const { id, photo, zoom, name, web_url, website, address, description, phone, rating, num_reviews, open_now_text, price, lat, lng } = place
 
   /* set active point => move map to the selected point */
   function onClick() {
-    dispatch(setActivePoint({ id, lat, lng }))
+    dispatch(setActivePoint({ id, lat, lng, zoom }))
   }
 
   return (

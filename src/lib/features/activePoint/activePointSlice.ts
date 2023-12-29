@@ -5,7 +5,7 @@ import { createSlice } from '@reduxjs/toolkit'
  *
  */
 export interface ActivePointState {
-  data: TActivePoint
+  data: TActivePoint | null
 }
 
 const initialState: ActivePointState = {
