@@ -10,11 +10,11 @@ You can find the [live demo](https://vacation-buddy.vercel.app/) here
 
 ## Technical recap
 
-> 100% [TailwindCss](https://tailwindcss.com/docs).
-> NextJS [App router](https://nextjs.org/docs/app).
-> Leaflet Map provider [Leaflet React](https://react-leaflet.js.org/).
-> Core FE framework [ReactJS 18](https://react.dev/learn).
-> Production is deployed on [Vercel](https://vercel.com/).
+- 100% [TailwindCss](https://tailwindcss.com/docs).
+- NextJS [App router](https://nextjs.org/docs/app).
+- Leaflet Map provider [Leaflet React](https://react-leaflet.js.org/).
+- Core FE framework [ReactJS 18](https://react.dev/learn).
+- Production is deployed on [Vercel](https://vercel.com/).
 
 ## Getting Started
 
@@ -61,11 +61,11 @@ Private (server only):
 RAPID_API_KEY
 ```
 
-## Typescript & linting
+## Type check & linting
 
 ### Compile typescript
 
-> Typescript validation won't be triggered on dev mode, please build before pushing to repository.
+Typescript validation won't be triggered on dev mode, please build before pushing to repository.
 
 ```bash
 npm run build
@@ -75,14 +75,20 @@ yarn build
 
 ### Linting
 
-> Add this comment on top of the next line you want ignore eslint just in case
-> `// eslint-disable-next-line <lint>`
+1. **Prettier** is triggered on editor (VS code) saving
+
+2. Linting is automatically run against staged files with **Staged Lint** & **Husky** upon committing
+
+3. Manually trigger lint
 
 ```bash
 npm run lint
 # or
 yarn lint
 ```
+
+4. Bypass linting on single line by adding this comment on top of the line
+   > `// eslint-disable-next-line <lint>`
 
 ### Unit tests (Jest/Testing library)
 
