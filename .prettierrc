@@ -3,5 +3,6 @@
   "tailwindFunctions": ["tw"],
   "semi": false,
   "singleQuote": true,
-  "printWidth": 150
+  "printWidth": 150,
+  "trailingComma": false
 }
