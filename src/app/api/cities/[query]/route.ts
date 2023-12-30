@@ -1,4 +1,4 @@
-import { TAutoCompleteData, TCityAPIResponse, TPlace } from '@/constants/types'
+import { TAutoCompleteData, TCityAPIResponse } from '@/constants/types'
 
 /**
  * Fetch city data from Rapic api
@@ -28,7 +28,7 @@ export async function GET(request: Request, { params: { query } }: { params: { q
   /* data mapping */
   const rawList = data?.filter((item: { detailsV2?: { placeType: string } }) => item.detailsV2?.placeType === 'CITY')
   const citiesList: TAutoCompleteData[] = (rawList as TCityAPIResponse[]).map(
-    (place: TCityAPIResponse): Omit<TPlace, 'id'> => ({
+    (place: TCityAPIResponse):TAutoCompleteData => ({
       name: `${place?.detailsV2?.names?.name}. ${place?.detailsV2?.names?.longOnlyHierarchyTypeaheadV2}` || 'unknown',
       lat: place?.detailsV2?.geocode?.latitude,
       lng: place?.detailsV2?.geocode?.longitude

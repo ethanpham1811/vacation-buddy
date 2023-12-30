@@ -8,11 +8,11 @@ import Image from 'next/image'
 import { Dispatch, SetStateAction } from 'react'
 import LinesEllipsis from 'react-lines-ellipsis'
 
-type THistoryListProps = {
+type TFavoriteListProps = {
   setOpen: Dispatch<SetStateAction<boolean>>
 }
 
-function HistoryList({ setOpen }: THistoryListProps) {
+function FavoriteList({ setOpen }: TFavoriteListProps) {
   const [_paramLat, setParamLat] = useQueryState('lat')
   const [_paramLng, setParamLng] = useQueryState('lng')
   const [_paramType, setParamType] = useQueryState('type')
@@ -69,4 +69,4 @@ function HistoryList({ setOpen }: THistoryListProps) {
   )
 }
 
-export default HistoryList
+export default FavoriteList

@@ -75,7 +75,8 @@ export async function POST(request: Request, { params: { type } }: TGetPlacesPar
         price,
         open_now_text,
         ranking,
-        offer_group
+        offer_group,
+        type
       })
     )
 

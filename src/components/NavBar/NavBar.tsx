@@ -1,7 +1,7 @@
 'use client'
 import { Disclosure } from '@headlessui/react'
+import FavoriteToggler from './components/FavoriteToggler/FavoriteToggler'
 import Geocoder from './components/Geocoder/Geocoder'
-import HistoryToggler from './components/HistoryToggler/HistoryToggler'
 import Logo from './components/Logo'
 
 /**
@@ -15,20 +15,20 @@ import Logo from './components/Logo'
 function NavBar() {
   return (
     <Disclosure as="nav" className="bg-gray-800 py-2 px-2 lg:px-4 z-[1000]">
-      <div className="mx-auto relative flex items-center justify-between">
+      <div className="relative flex items-center justify-between mx-auto">
         {/* logo */}
         <div className="flex items-stretch justify-start">
           <Logo />
         </div>
 
         {/* geocoder */}
-        <div className="flex flex-1 items-stretch justify-center">
+        <div className="flex items-stretch justify-center flex-1">
           <Geocoder />
         </div>
 
         {/* History btn */}
         <div className="flex items-center ">
-          <HistoryToggler />
+          <FavoriteToggler />
         </div>
       </div>
     </Disclosure>

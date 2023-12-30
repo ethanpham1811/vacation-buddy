@@ -2,19 +2,19 @@
 import { Drawer, Toggler } from '@/components'
 import { IoHeart } from '@/constants/icons'
 import { useState } from 'react'
-import HistoryList from './HistoryList'
+import FavoriteList from './FavoriteList'
 
-function HistoryToggler() {
+function FavoriteToggler() {
   const [open, setOpen] = useState(false)
 
   return (
     <div>
-      <Toggler onClick={() => setOpen(true)} title="history" icon={<IoHeart className="h-6 w-6 text-red-500" />} />
+      <Toggler onClick={() => setOpen(true)} title="favorite toggler" icon={<IoHeart className="w-6 h-6 text-red-500" />} />
       <Drawer title="Your saved locations" open={open} setOpen={setOpen}>
-        <HistoryList setOpen={setOpen} />
+        <FavoriteList setOpen={setOpen} />
       </Drawer>
     </div>
   )
 }
 
-export default HistoryToggler
+export default FavoriteToggler
