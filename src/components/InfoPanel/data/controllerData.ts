@@ -13,6 +13,7 @@ export const controllers: TTopControllerData[] = [
   },
   {
     name: API_TYPES.hotels,
-    icon: IoBed
+    icon: IoBed,
+    disabled: true
   }
 ]

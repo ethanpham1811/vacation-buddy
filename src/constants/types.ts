@@ -72,6 +72,7 @@ export type TFavorite = TActivePoint & {
 export type TTopControllerData = {
   name: API_TYPES
   icon: IconType
+  disabled?: boolean
 }
 /* --------------------------------------------- Query Types---------------------------------------------- */
 export type TCityAPIResponse = {

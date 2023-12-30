@@ -119,6 +119,7 @@ yarn lint
 | @headlessui/react    | 1.7.17 |
 | @heroicons/react     |  2.1.1 |
 | @reduxjs/toolkit     |  2.0.1 |
+| clsx                 |  2.1.0 |
 | leaflet              |  1.9.4 |
 | next                 | 13.5.6 |
 | next-usequerystate   | 1.13.2 |
@@ -135,11 +136,18 @@ yarn lint
 
 ### Dev dependencies
 
-|             |       |
-| ----------- | ----: |
-| eslint      | 8.0.0 |
-| typescript  | 5.0.0 |
-| tailwindcss | 3.3.0 |
+|                             |        |
+| --------------------------- | -----: |
+| eslint                      |  8.0.0 |
+| typescript                  |  5.0.0 |
+| tailwindcss                 |  3.3.0 |
+| eslint-config-prettier      |  9.1.0 |
+| eslint-plugin-prettier      |  5.1.2 |
+| husky                       |  8.0.3 |
+| lint-staged                 | 15.2.0 |
+| postcss                     |      8 |
+| prettier                    |  3.1.1 |
+| prettier-plugin-tailwindcss | 0.5.10 |
 
 ## Maintenance
 
