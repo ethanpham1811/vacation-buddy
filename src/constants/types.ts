@@ -31,6 +31,7 @@ export type TPlaceInfo = {
       image_url?: string
     }[]
   }
+  type: string
 }
 export type TPlace = TCoords & TPlaceInfo
 export type TPoint = TPlace & { zoom: number }
@@ -59,7 +60,11 @@ export type TAutoCompleteData = TCoords & {
   name: string
 }
 
-export type TActivePoint = TCoords & { id: string; zoom: number }
+export type TActivePoint = TCoords & {
+  id: string
+  zoom: number
+  type: string
+}
 
 export type TFavorite = TActivePoint & {
   photo: string

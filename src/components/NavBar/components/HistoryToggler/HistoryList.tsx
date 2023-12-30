@@ -15,6 +15,7 @@ type THistoryListProps = {
 function HistoryList({ setOpen }: THistoryListProps) {
   const [_paramLat, setParamLat] = useQueryState('lat')
   const [_paramLng, setParamLng] = useQueryState('lng')
+  const [_paramType, setParamType] = useQueryState('type')
   const dispatch = useAppDispatch()
   const favoriteList = useAppSelector((state) => state.favoriteList.data)
 
@@ -22,6 +23,7 @@ function HistoryList({ setOpen }: THistoryListProps) {
     // set lat lng search params => trigger map move & data fetching
     setParamLat(activePoint.lat.toString())
     setParamLng(activePoint.lng.toString())
+    setParamType(activePoint.type)
 
     // set active point
     dispatch(setActivePoint(activePoint))
@@ -34,12 +36,12 @@ function HistoryList({ setOpen }: THistoryListProps) {
   }
 
   return (
-    <div className="grid gap-5 grid-cols-2">
-      {favoriteList.map(({ id, name, photo, lat, lng, zoom }) => (
+    <div className="grid grid-cols-2 gap-5">
+      {favoriteList.map(({ id, type, name, photo, lat, lng, zoom }) => (
         <div
           key={`favorite_${id}`}
-          className="text-xs p-1 shadow-card flex items-center overflow-hidden cursor-pointer bg-white rounded-md min-h-[50px] hover:bg-gray-800 hover:text-white"
-          onClick={() => handleLocatePlace({ id, lat, lng, zoom })}
+          className="flex min-h-[50px] cursor-pointer items-center overflow-hidden rounded-md bg-white p-1 text-xs shadow-card hover:bg-gray-800 hover:text-white"
+          onClick={() => handleLocatePlace({ id, lat, lng, zoom, type })}
         >
           {/* photo */}
           <div className="px-2">
@@ -47,7 +49,7 @@ function HistoryList({ setOpen }: THistoryListProps) {
           </div>
 
           {/* place name */}
-          <div className="p-1 flex-1">
+          <div className="flex-1 p-1">
             <LinesEllipsis text={name} maxLine="2" ellipsis="..." trimRight basedOn="letters" />
           </div>
 
@@ -57,9 +59,9 @@ function HistoryList({ setOpen }: THistoryListProps) {
               e.stopPropagation()
               handleRemoveFavorite(id)
             }}
-            className="remove-btn cursor-pointer transition-all self-stretch rounded-md bg-gray-600 hover:bg-red-500 text-white flex items-center px-1"
+            className="flex items-center self-stretch px-1 text-white transition-all bg-gray-600 rounded-md cursor-pointer remove-btn hover:bg-red-500"
           >
-            <XMarkIcon className="h-4 w-4 font-semibold" />
+            <XMarkIcon className="w-4 h-4 font-semibold" />
           </div>
         </div>
       ))}

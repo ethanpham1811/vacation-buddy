@@ -13,21 +13,21 @@ import Rating from './Rating'
 
 function PlaceItem({ place }: { place: TPoint }) {
   const dispatch = useAppDispatch()
-  const { id, photo, zoom, name, web_url, website, address, description, phone, rating, num_reviews, open_now_text, price, lat, lng } = place
+  const { id, type, photo, zoom, name, web_url, website, address, description, phone, rating, num_reviews, open_now_text, price, lat, lng } = place
 
   /* set active point => move map to the selected point */
   function onClick() {
-    dispatch(setActivePoint({ id, lat, lng, zoom }))
+    dispatch(setActivePoint({ id, lat, lng, zoom, type }))
   }
 
   return (
-    <div className="group flex flex-col shadow-card w-[30dvw] lg:w-auto" onClick={onClick}>
+    <div className="group flex w-[30dvw] flex-col shadow-card lg:w-auto" onClick={onClick}>
       {/* photo */}
       <Photo photo={photo} name={name} />
 
-      <div className=" overflow-hidden lg:overflow-visible rounded-t-md lg:rounded-none rounded-b-md bg-white p-2 flex flex-1 lg:flex-auto flex-col gap-1 group-hover:bg-blue-50">
+      <div className="flex flex-1 flex-col gap-1 overflow-hidden rounded-b-md rounded-t-md  bg-white p-2 group-hover:bg-blue-50 lg:flex-auto lg:overflow-visible lg:rounded-none">
         {/* title */}
-        <h1 className="font-semibold text-lg">{name}</h1>
+        <h1 className="text-lg font-semibold">{name}</h1>
 
         {/* rating count */}
         {rating && <Rating rating={rating} num_reviews={num_reviews} />}
