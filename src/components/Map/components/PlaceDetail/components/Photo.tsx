@@ -15,9 +15,9 @@ type TPhotoProps = {
 
 function Photo({ id, photo, name, addFavorite, removeFavorite, isFavorite }: TPhotoProps) {
   return (
-    <div className="relative h-60 flex items-stretch">
+    <div className="relative flex h-60 items-stretch">
       {photo ? (
-        <Image layout="fill" style={{ objectFit: 'cover' }} placeholder="blur" blurDataURL={BLURRED_DATA_URL} alt={`photo of ${name}`} src={photo} />
+        <Image fill style={{ objectFit: 'cover' }} placeholder="blur" blurDataURL={BLURRED_DATA_URL} alt={`photo of ${name}`} src={photo} />
       ) : (
         <NoImgPlaceholder />
       )}
@@ -27,7 +27,7 @@ function Photo({ id, photo, name, addFavorite, removeFavorite, isFavorite }: TPh
         onClick={() => (isFavorite ? removeFavorite(id) : addFavorite())}
         className={`${
           isFavorite ? 'bg-red-400 text-white' : 'bg-white'
-        } group/favorite absolute right-7 bottom-0 translate-y-1/2 shadow-card text-red-400 p-3 rounded-full cursor-pointer hover:bg-red-400 hover:text-white`}
+        } group/favorite absolute bottom-0 right-7 translate-y-1/2 cursor-pointer rounded-full p-3 text-red-400 shadow-card hover:bg-red-400 hover:text-white`}
       >
         <IoHeart size={25} />
 
