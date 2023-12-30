@@ -26,6 +26,7 @@
     "react-redux": "^9.0.4",
     "react-spinners": "^0.13.8",
     "supercluster": "^7.0.0",
+    "tailwind-merge": "^2.2.0",
     "use-supercluster": "^0.2.0"
   },
   "devDependencies": {

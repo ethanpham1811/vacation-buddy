@@ -1,40 +1,53 @@
 'use client'
 import { API_TYPES } from '@/constants/enum'
+import clsx from 'clsx'
 import { useQueryState } from 'next-usequerystate'
 import { createElement } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { controllers } from '../../data/controllerData'
 
 /**
  * active state base on search param "type"
  * - Attractions (default)
- * - Hotels
  * - Restaurants
+ * - Hotels (api currently not working)
  */
 function TopController() {
   const [paramType, setParamType] = useQueryState('type')
 
   return (
     <section>
-      <ul className="flex flex-col lg:flex-row gap-2 justify-end bg-gray-800 p-2 rounded-md">
-        {controllers.map(({ name, icon }) => {
+      <ul className="flex flex-col justify-end gap-2 rounded-md bg-gray-800 p-2 lg:flex-row">
+        {controllers.map(({ name, icon, disabled }) => {
           const isActive = name === API_TYPES.attractions ? !paramType || paramType === name : paramType === name
 
           return (
             <li
               key={`ctrl_${name}`}
-              className={`p-1 lg:p-0 flex overflow-hidden rounded-full p-0 lg:py-1 items-center group shadow-button ${
-                isActive ? 'bg-blue-600 text-white p-0 lg:px-3 gap-0 lg:gap-2 mx-0 lg:mx-1' : 'cursor-pointer p-0 lg:px-2'
-              }`}
+              className={clsx(
+                'group flex items-center overflow-hidden rounded-full p-0 p-1 shadow-button lg:p-0 lg:py-1',
+                disabled ? 'pointer-events-none' : '',
+                isActive ? 'mx-0 gap-0 bg-blue-600 p-0 text-white lg:mx-1 lg:gap-2 lg:px-3' : 'cursor-pointer p-0 lg:px-2',
+              )}
               onClick={() => !isActive && setParamType(name)}
             >
+              {/* label */}
               <div
-                className={`hidden lg:block text-sm rounded-sm transition-all duration-700 ${
-                  isActive ? 'max-w-[100px] text-white' : 'max-w-0 text-transparent'
-                }`}
+                className={clsx(
+                  'hidden rounded-sm text-sm transition-all duration-700 lg:block',
+                  isActive ? 'max-w-[100px] text-white' : 'max-w-0 text-transparent',
+                )}
               >
                 {name.toLocaleUpperCase()}
               </div>
-              {createElement(icon, { className: !isActive ? 'text-white group-hover:text-blue-600' : '', size: '25' })}
+
+              {/* icon */}
+              {createElement(icon, {
+                className: twMerge(
+                  clsx(!isActive ? 'text-white group-hover:text-blue-600' : '', disabled ? 'text-gray-600 pointer-events-none' : ''),
+                ),
+                size: '25',
+              })}
             </li>
           )
         })}
