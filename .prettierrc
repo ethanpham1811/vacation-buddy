@@ -4,5 +4,6 @@
   "semi": false,
   "singleQuote": true,
   "printWidth": 150,
-  "trailingComma": false
+  "trailingComma": "none",
+  "singleAttributePerLine": false
 }
