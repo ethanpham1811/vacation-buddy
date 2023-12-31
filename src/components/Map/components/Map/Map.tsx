@@ -1,7 +1,7 @@
 'use client'
 import { DEFAULT_ZOOM } from '@/constants/enum'
 import { TBounds } from '@/constants/types'
-import { useInitLoad, usePanToActivePoint, usePlaceList, useReceivingLatLng, useSwitchType } from '@/hooks'
+import { useInitLoad, usePanToActivePoint, usePlaceList, useReceivingParams, useSwitchType } from '@/hooks'
 import { setActivePoint } from '@/lib/features/activePoint/activePointSlice'
 import { useAppDispatch } from '@/lib/hooks'
 import { getBounds } from '@/services/utilities'
@@ -64,7 +64,7 @@ function Map() {
   useInitLoad(myMap)
 
   /* on receiving searchParams "lat" & "lng" =>  move map & fetch new data */
-  useReceivingLatLng(myMap, requestData)
+  useReceivingParams(myMap, requestData)
 
   /* on receiving "type" search params => fetch new data  */
   useSwitchType(myMap, requestData)
