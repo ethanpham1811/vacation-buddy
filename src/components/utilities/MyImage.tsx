@@ -11,5 +11,5 @@ type TMyImageProps = ImageProps & {
 export default function MyImage({ src, fallbackSrc, alt, ...rest }: TMyImageProps) {
   const [imgSrc, setImgSrc] = useState(src)
 
-  return <Image src={imgSrc} onError={() => setImgSrc(fallbackSrc ?? NoImgUrl.src)} alt={alt} {...rest} />
+  return <Image key={imgSrc} src={imgSrc} onError={() => setImgSrc(fallbackSrc ?? NoImgUrl.src)} alt={alt} {...rest} />
 }
