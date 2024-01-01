@@ -1,4 +1,7 @@
+import { DEFAULT_ZOOM, ZOOM_DELAY } from '@/constants/enum'
 import { TActivePin, TRequestDataFn, TUpdateParams } from '@/constants/types'
+import { setActivePin } from '@/lib/features/activePin/activePinSlice'
+import { useAppDispatch } from '@/lib/hooks'
 import { Events, eventEmitter } from '@/services/eventEmitter'
 import { getBounds } from '@/services/utilities'
 import { Map } from 'leaflet'
@@ -20,21 +23,27 @@ import { useEffect } from 'react'
  */
 
 function useTravelToPin(map: Map, requestData: TRequestDataFn, updateParams: TUpdateParams) {
+  const dispatch = useAppDispatch()
   useEffect(() => {
     eventEmitter.subscribe(Events.TRAVEL_TO_SAVED_PIN, (pin: unknown) => {
       const { lat, lng, zoom, type } = pin as TActivePin
 
-      // trigger PAN_TO_PIN with default zoom
-      eventEmitter.dispatch(Events.PAN_TO_PIN, { ...(pin as TActivePin), isTravel: true })
+      // move map viewport
+      map.setView([lat, lng], DEFAULT_ZOOM)
 
-      // request data
-      requestData(getBounds(map), type)
-
-      // now zoom into the pin's zoom
-      map.setZoom(zoom)
+      // activate pin
+      dispatch(setActivePin(pin))
 
       // update params
       updateParams({ lat, lng, zoom, type })
+
+      setTimeout(() => {
+        // request data
+        requestData(getBounds(map), type)
+
+        // now zoom into the pin's zoom
+        map.setZoom(zoom)
+      }, ZOOM_DELAY)
     })
 
     /* cleanup */

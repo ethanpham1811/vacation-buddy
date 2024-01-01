@@ -6,6 +6,7 @@ export const QUERY_LIMIT = 10
 export const DEFAULT_ZOOM = 13
 export const MIN_ZOOM = 13
 export const FAVORITE_COOKIE = 'vacation-buddy-favorite-list'
+export const ZOOM_DELAY = 500
 
 /* data */
 export enum API_TYPES {
