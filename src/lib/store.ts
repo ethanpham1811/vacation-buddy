@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import activePointReducer from './features/activePoint/activePointSlice'
+import activePinReducer from './features/activePin/activePinSlice'
 import favoriteListReducer from './features/favoriteList/favoriteListSlice'
 import placeListReducer from './features/placeList/placeListSlice'
 
@@ -7,7 +7,7 @@ export const makeStore = () => {
   return configureStore({
     reducer: {
       placeList: placeListReducer,
-      activePoint: activePointReducer,
+      activePin: activePinReducer,
       favoriteList: favoriteListReducer
     }
   })

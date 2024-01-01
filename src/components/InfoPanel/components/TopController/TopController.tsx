@@ -1,5 +1,6 @@
 'use client'
 import { API_TYPES } from '@/constants/enum'
+import { Events, eventEmitter } from '@/services/eventEmitter'
 import clsx from 'clsx'
 import { useQueryState } from 'next-usequerystate'
 import { createElement } from 'react'
@@ -13,7 +14,12 @@ import { controllers } from '../../data/controllerData'
  * - Hotels (api currently not working)
  */
 function TopController() {
-  const [paramType, setParamType] = useQueryState('type')
+  const [paramType] = useQueryState('type')
+
+  function onClick(type: string) {
+    // trigger SWITCH_TYPE => fetch data by type + update search params "type"
+    eventEmitter.dispatch(Events.SWITCH_TYPE, type)
+  }
 
   return (
     <section>
@@ -27,15 +33,15 @@ function TopController() {
               className={clsx(
                 'group flex items-center overflow-hidden rounded-full p-0 p-1 shadow-button lg:p-0 lg:py-1',
                 disabled ? 'pointer-events-none' : '',
-                isActive ? 'mx-0 gap-0 bg-blue-600 p-0 text-white lg:mx-1 lg:gap-2 lg:px-3' : 'cursor-pointer p-0 lg:px-2',
+                isActive ? 'mx-0 gap-0 bg-blue-600 p-0 text-white lg:mx-1 lg:gap-2 lg:px-3' : 'cursor-pointer p-0 lg:px-2'
               )}
-              onClick={() => !isActive && setParamType(name)}
+              onClick={() => !isActive && onClick(name)}
             >
               {/* label */}
               <div
                 className={clsx(
                   'hidden rounded-sm text-sm transition-all duration-700 lg:block',
-                  isActive ? 'max-w-[100px] text-white' : 'max-w-0 text-transparent',
+                  isActive ? 'max-w-[100px] text-white' : 'max-w-0 text-transparent'
                 )}
               >
                 {name.toLocaleUpperCase()}
@@ -44,9 +50,9 @@ function TopController() {
               {/* icon */}
               {createElement(icon, {
                 className: twMerge(
-                  clsx(!isActive ? 'text-white group-hover:text-blue-600' : '', disabled ? 'text-gray-600 pointer-events-none' : ''),
+                  clsx(!isActive ? 'text-white group-hover:text-blue-600' : '', disabled ? 'text-gray-600 pointer-events-none' : '')
                 ),
-                size: '25',
+                size: '25'
               })}
             </li>
           )

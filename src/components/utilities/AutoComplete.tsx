@@ -23,6 +23,7 @@ function AutoComplete<T extends { name: string }>({ onSubmit, onSelect, setIsLoa
   const [isFocusing, setIsFocusing] = useState(false)
 
   useEffect(() => {
+    console.log('object')
     if (!inputValue || inputValue === '') return
     setIsLoading(true)
 
@@ -59,7 +60,7 @@ function AutoComplete<T extends { name: string }>({ onSubmit, onSelect, setIsLoa
           />
           <Combobox.Button aria-label="toggle dropdown" className="absolute inset-y-0 right-0 flex items-center pr-3">
             {isLoading ? (
-              <GoDotFill size="25" className="text-blue-500 animate-bounce relative -bottom-1" />
+              <GoDotFill size="25" className="relative -bottom-1 animate-bounce text-blue-500" />
             ) : (
               <BarsArrowDownIcon className="h-5 w-5 text-blue-600" aria-hidden="true" />
             )}

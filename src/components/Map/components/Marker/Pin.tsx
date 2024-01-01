@@ -6,8 +6,8 @@ import { renderToString } from 'react-dom/server'
 import { Marker } from 'react-leaflet'
 
 import { Modal } from '@/components'
-import { setActivePoint } from '@/lib/features/activePoint/activePointSlice'
 import { useAppDispatch } from '@/lib/hooks'
+import { Events, eventEmitter } from '@/services/eventEmitter'
 import PlaceDetail from '../PlaceDetail/PlaceDetail'
 import MarkerCard from './components/MarkerCard'
 
@@ -30,8 +30,10 @@ const Pin = ({ isFavorite, data, lng, lat, zoom, isActive }: TPinProps) => {
 
   /* highlight clicked pin in right panel */
   function onClick() {
-    dispatch(setActivePoint({ id, lat, lng, zoom, type }))
     setIsModalOpen(true)
+
+    // trigger PAN_TO_PIN => move viewport & activate the pin
+    eventEmitter.dispatch(Events.PAN_TO_PIN, { id, lat, lng, zoom, type })
   }
 
   // build marker icon

@@ -1,5 +1,6 @@
 /* --------------------------------------------Model Types-------------------------------------------- */
 
+import { ParserBuilder, Values } from 'next-usequerystate'
 import { IconType } from 'react-icons'
 import { API_TYPES } from './enum'
 
@@ -60,13 +61,13 @@ export type TAutoCompleteData = TCoords & {
   name: string
 }
 
-export type TActivePoint = TCoords & {
+export type TActivePin = TCoords & {
   id: string
   zoom: number
   type: string
 }
 
-export type TFavorite = TActivePoint & {
+export type TFavorite = TActivePin & {
   photo: string
   name: string
 }
@@ -79,6 +80,19 @@ export type TTopControllerData = {
   icon: IconType
   disabled?: boolean
 }
+
+export type TParams = Values<{
+  lat: ParserBuilder<number>
+  lng: ParserBuilder<number>
+  zoom: ParserBuilder<number>
+  type: Omit<ParserBuilder<string>, 'parseServerSide'> & {
+    withDefault: (defaultValue: string) => ParserBuilder<string>
+  }
+}>
+
+export type TUpdateParams = (newParams: Partial<TParams>) => void
+export type TRequestDataFn = (bounds: TBounds | undefined, type: string | null | undefined) => void
+
 /* --------------------------------------------- Query Types---------------------------------------------- */
 export type TCityAPIResponse = {
   detailsV2: {

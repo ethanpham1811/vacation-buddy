@@ -1,18 +1,16 @@
 'use client'
 import { AutoComplete } from '@/components'
 import { TAutoCompleteData } from '@/constants/types'
-import { useQueryState } from 'next-usequerystate'
+import { Events, eventEmitter } from '@/services/eventEmitter'
 import { useState } from 'react'
 import SelectOption from './components/SelectOption'
 
 /**
  * Google places Autocomplete with MapBox api
- * - fetch places data on user typing
- * - update query params "lat" & "lng" on selection
+ * - on typing => fetch places data on user typing
+ * - on select (choose an option) => trigger TRAVEL_TO_CITY
  */
 function Geocoder() {
-  const [_paramLat, setParamLat] = useQueryState('lat')
-  const [_paramLng, setParamLng] = useQueryState('lng')
   const [cityList, setCityList] = useState<TAutoCompleteData[]>([])
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -32,10 +30,9 @@ function Geocoder() {
     setIsLoading(false)
   }
 
-  /* update search params "latitude" & "longitude" */
   function onSelect(place: TAutoCompleteData) {
-    setParamLat(place.lat.toString())
-    setParamLng(place.lng.toString())
+    // trigger TRAVEL_TO_CITY
+    eventEmitter.dispatch(Events.TRAVEL_TO_CITY, { lat: place.lat, lng: place.lng })
   }
 
   return (

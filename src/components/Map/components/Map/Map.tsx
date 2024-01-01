@@ -1,11 +1,11 @@
 'use client'
-import { DEFAULT_ZOOM } from '@/constants/enum'
+import { API_TYPES } from '@/constants/enum'
 import { TBounds } from '@/constants/types'
-import { useInitLoad, usePanToActivePoint, usePlaceList, useReceivingParams, useSwitchType } from '@/hooks'
-import { setActivePoint } from '@/lib/features/activePoint/activePointSlice'
+import { useInitLoad, usePanToPin, usePlaceList, useSwitchType, useTravelToCity, useTravelToPin } from '@/hooks'
+import { setActivePin } from '@/lib/features/activePin/activePinSlice'
 import { useAppDispatch } from '@/lib/hooks'
 import { getBounds } from '@/services/utilities'
-import { useQueryState } from 'next-usequerystate'
+import { parseAsFloat, parseAsInteger, parseAsString, useQueryStates } from 'next-usequerystate'
 import { useState } from 'react'
 import { TileLayer } from 'react-leaflet/TileLayer'
 import { useMapEvents } from 'react-leaflet/hooks'
@@ -13,23 +13,24 @@ import MarkerGrid from '../MarkerGrid/MarkerGrid'
 
 /**
  * Leaflet Map component https://react-leaflet.js.org/docs
- * Since rapid API free bandwidth is very limited, I request data only when:
- * - map dragging
- * - selecting places from "city list"
  *
- * Other operations (zoom, place's card clicking) will not trigger data fetching
+ * Note: Since rapid API free bandwidth is very limited:
+ * => These operations: (zoom, pin's card clicking) will not trigger data request
  */
 function Map() {
   const dispatch = useAppDispatch()
-  const [_paramLat, setParamLat] = useQueryState('lat')
-  const [_paramLng, setParamLng] = useQueryState('lng')
-  const [_paramZoom, setParamZoom] = useQueryState('zoom')
+  const [params, updateParams] = useQueryStates({
+    lat: parseAsFloat,
+    lng: parseAsFloat,
+    zoom: parseAsInteger,
+    type: parseAsString.withDefault(API_TYPES.attractions)
+  })
   const [bounds, setBounds] = useState<TBounds>()
   const { requestData } = usePlaceList()
 
   /**
    * Important: Since leaflet does not help discerning "drag & zoom" inside "moveend"
-   * So we split requestData trigger from "moveend" into "dragend" and "useReceivingLatLng"
+   * So we have to split logic between "moveend", "dragend" & "zoom"
    */
   const myMap = useMapEvents({
     // triggered by every map movements => update bounds for clusterizing
@@ -37,40 +38,36 @@ function Map() {
       setBounds(getBounds(myMap))
     },
 
-    // fetch data on drag to exclude zoom
+    // fetch data on dragging
     dragend: () => {
-      requestData(getBounds(myMap))
+      requestData(getBounds(myMap), params.type)
     },
 
-    // set zoom param on zoom
+    // update zoom search params
     zoom: () => {
-      setParamZoom(myMap.getZoom().toString())
-    },
-
-    // update lat lng params triggered by map.locate()
-    locationfound: () => {
-      setParamLat(myMap.getCenter().lat.toString())
-      setParamLng(myMap.getCenter().lng.toString())
-      setParamZoom(DEFAULT_ZOOM.toString())
+      updateParams({ zoom: myMap.getZoom() })
     },
 
     // clear active state of point on clicking map
     click: () => {
-      dispatch(setActivePoint(null))
+      dispatch(setActivePin(null))
     }
   })
 
   /* on receiving searchParams "lat" & "lng" =>  move map & fetch new data */
-  useInitLoad(myMap)
+  useInitLoad(myMap, requestData, params, updateParams)
 
   /* on receiving searchParams "lat" & "lng" =>  move map & fetch new data */
-  useReceivingParams(myMap, requestData)
+  useTravelToCity(myMap, requestData, params, updateParams)
 
-  /* on receiving "type" search params => fetch new data  */
-  useSwitchType(myMap, requestData)
+  /* on receiving searchParams "lat" & "lng" =>  move map & fetch new data */
+  useTravelToPin(myMap, requestData, updateParams)
 
   /* on clicking pin's card => move map to active point location */
-  usePanToActivePoint(myMap)
+  usePanToPin(myMap)
+
+  /* on receiving "type" search params => fetch new data  */
+  useSwitchType(myMap, requestData, updateParams)
 
   return (
     <>

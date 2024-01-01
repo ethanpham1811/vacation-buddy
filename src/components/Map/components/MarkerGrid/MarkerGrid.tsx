@@ -17,7 +17,7 @@ type TMarkerGridProps = {
 function MarkerGrid({ bounds, myMap }: TMarkerGridProps) {
   const places = useAppSelector((state) => state.placeList.data)
   const isLoading = useAppSelector((state) => state.placeList.loading)
-  const activePoint = useAppSelector((state) => state.activePoint.data)
+  const activePin = useAppSelector((state) => state.activePin.data)
   const favoriteList = useAppSelector((state) => state.favoriteList.data)
 
   /* build cluster with data list & bounds */
@@ -51,7 +51,7 @@ function MarkerGrid({ bounds, myMap }: TMarkerGridProps) {
             zoom={myMap?.getZoom()}
             isFavorite={isFavorite}
             key={`place_${data?.id}`}
-            isActive={data?.id === activePoint?.id}
+            isActive={data?.id === activePin?.id}
             lat={lat}
             lng={lng}
             data={data}

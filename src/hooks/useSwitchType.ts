@@ -1,22 +1,30 @@
-import { API_TYPES } from '@/constants/enum'
-import { TBounds } from '@/constants/types'
+import { TRequestDataFn, TUpdateParams } from '@/constants/types'
+import { Events, eventEmitter } from '@/services/eventEmitter'
 import { getBounds } from '@/services/utilities'
 import { Map } from 'leaflet'
-import { useQueryState } from 'next-usequerystate'
 import { useEffect } from 'react'
 
 /**
- * on receiving new input type search params:
- * - request new data base on the type
+ * SWITCH_TYPE event listener:
+ * - request data with corresponding type
+ * - update search params "type"
  */
 
-function useSwitchType(map: Map, requestData: (bounds: TBounds, type: string) => void) {
-  const [type] = useQueryState('type')
-
+function useSwitchType(map: Map, requestData: TRequestDataFn, updateParams: TUpdateParams) {
   useEffect(() => {
-    type && map && requestData(getBounds(map), type || API_TYPES.attractions)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type])
+    eventEmitter.subscribe(Events.SWITCH_TYPE, (type: unknown) => {
+      // request data
+      requestData(getBounds(map), type as string)
+
+      // update params
+      updateParams({ type: type as string })
+    })
+
+    /* cleanup */
+    return () => {
+      eventEmitter.unsubscribe(Events.SWITCH_TYPE)
+    }
+  }, [map, requestData, updateParams])
 }
 
 export default useSwitchType

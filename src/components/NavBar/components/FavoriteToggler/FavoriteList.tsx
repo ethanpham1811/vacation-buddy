@@ -1,9 +1,8 @@
 import { XMarkIcon } from '@/constants/icons'
-import { TActivePoint } from '@/constants/types'
-import { setActivePoint } from '@/lib/features/activePoint/activePointSlice'
+import { TActivePin } from '@/constants/types'
 import { removeFavorite } from '@/lib/features/favoriteList/favoriteListSlice'
 import { useAppDispatch, useAppSelector } from '@/lib/hooks'
-import { useQueryState } from 'next-usequerystate'
+import { Events, eventEmitter } from '@/services/eventEmitter'
 import Image from 'next/image'
 import { Dispatch, SetStateAction } from 'react'
 import LinesEllipsis from 'react-lines-ellipsis'
@@ -13,20 +12,12 @@ type TFavoriteListProps = {
 }
 
 function FavoriteList({ setOpen }: TFavoriteListProps) {
-  const [_paramLat, setParamLat] = useQueryState('lat')
-  const [_paramLng, setParamLng] = useQueryState('lng')
-  const [_paramType, setParamType] = useQueryState('type')
   const dispatch = useAppDispatch()
   const favoriteList = useAppSelector((state) => state.favoriteList.data)
 
-  function handleLocatePlace(activePoint: TActivePoint) {
-    // set lat lng search params => trigger map move & data fetching
-    setParamLat(activePoint.lat.toString())
-    setParamLng(activePoint.lng.toString())
-    setParamType(activePoint.type)
-
-    // set active point
-    dispatch(setActivePoint(activePoint))
+  function handleLocatePlace(activePin: TActivePin) {
+    // trigger TRAVEL_TO_SAVED_PIN => move viewport + set lat lng search params + data fetching
+    eventEmitter.dispatch(Events.TRAVEL_TO_SAVED_PIN, activePin)
 
     // close drawer
     setOpen(false)
@@ -43,6 +34,7 @@ function FavoriteList({ setOpen }: TFavoriteListProps) {
           className="flex min-h-[50px] cursor-pointer items-center overflow-hidden rounded-md bg-white p-1 text-xs shadow-card hover:bg-gray-800 hover:text-white"
           onClick={() => handleLocatePlace({ id, lat, lng, zoom, type })}
         >
+          {zoom}
           {/* photo */}
           <div className="px-2">
             <Image src={photo} width={30} height={30} alt={`favorite_photo_${id}`} />
@@ -59,9 +51,9 @@ function FavoriteList({ setOpen }: TFavoriteListProps) {
               e.stopPropagation()
               handleRemoveFavorite(id)
             }}
-            className="flex items-center self-stretch px-1 text-white transition-all bg-gray-600 rounded-md cursor-pointer remove-btn hover:bg-red-500"
+            className="remove-btn flex cursor-pointer items-center self-stretch rounded-md bg-gray-600 px-1 text-white transition-all hover:bg-red-500"
           >
-            <XMarkIcon className="w-4 h-4 font-semibold" />
+            <XMarkIcon className="h-4 w-4 font-semibold" />
           </div>
         </div>
       ))}

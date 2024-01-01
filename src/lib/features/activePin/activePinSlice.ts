@@ -1,27 +1,27 @@
-import { TActivePoint } from '@/constants/types'
+import { TActivePin } from '@/constants/types'
 import { createSlice } from '@reduxjs/toolkit'
 
 /**
  * Active point: update upon user clicking on pin's card (left panel or in the map)
  */
 export interface ActivePointState {
-  data: TActivePoint | null
+  data: TActivePin | null
 }
 
 const initialState: ActivePointState = {
   data: null
 }
 
-export const activePointSlice = createSlice({
-  name: 'activePoint',
+export const activePinSlice = createSlice({
+  name: 'activePin',
   initialState,
   reducers: {
-    setActivePoint: (state, action) => {
+    setActivePin: (state, action) => {
       state.data = action.payload
     }
   }
 })
 
-export const { setActivePoint } = activePointSlice.actions
+export const { setActivePin } = activePinSlice.actions
 
-export default activePointSlice.reducer
+export default activePinSlice.reducer
