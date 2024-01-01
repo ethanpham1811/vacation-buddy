@@ -4,20 +4,18 @@ import Image from 'next/image'
 import LinesEllipsis from 'react-lines-ellipsis'
 
 type TCircleProps = {
-  onClick: () => void
   isActive: boolean
   thumbnail: string | undefined
   name: string
   isFavorite: boolean
 }
 
-function MarkerCard({ isFavorite, onClick, isActive, thumbnail, name }: TCircleProps) {
+function MarkerCard({ isFavorite, isActive, thumbnail, name }: TCircleProps) {
   return (
     <div
-      onClick={onClick}
       className={`${
         isActive ? 'bg-blue-500 text-white' : 'bg-white'
-      } relative top-[-100%] left-[-50%] group flex flex-col p-2 shadow-card gap-2 w-20 cursor-pointer hover:bg-blue-500 hover:text-white`}
+      } group relative left-[-50%] top-[-100%] flex w-20 cursor-pointer flex-col gap-2 p-2 shadow-card hover:bg-blue-500 hover:text-white`}
     >
       <div className="relative h-16">
         <Image

@@ -1,5 +1,4 @@
 'use client'
-import { API_TYPES } from '@/constants/enum'
 import { TBounds } from '@/constants/types'
 import { useInitLoad, usePanToPin, usePlaceList, useSwitchType, useTravelToCity, useTravelToPin } from '@/hooks'
 import { setActivePin } from '@/lib/features/activePin/activePinSlice'
@@ -23,7 +22,7 @@ function Map() {
     lat: parseAsFloat,
     lng: parseAsFloat,
     zoom: parseAsInteger,
-    type: parseAsString.withDefault(API_TYPES.attractions)
+    type: parseAsString
   })
   const [bounds, setBounds] = useState<TBounds>()
   const { requestData } = usePlaceList()
@@ -53,12 +52,11 @@ function Map() {
       dispatch(setActivePin(null))
     }
   })
+  /* on receiving searchParams "lat" & "lng" =>  move map & fetch new data */
+  useTravelToCity(myMap, requestData, params, updateParams)
 
   /* on receiving searchParams "lat" & "lng" =>  move map & fetch new data */
   useInitLoad(myMap, requestData, params, updateParams)
-
-  /* on receiving searchParams "lat" & "lng" =>  move map & fetch new data */
-  useTravelToCity(myMap, requestData, params, updateParams)
 
   /* on receiving searchParams "lat" & "lng" =>  move map & fetch new data */
   useTravelToPin(myMap, requestData, updateParams)

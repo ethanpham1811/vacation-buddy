@@ -1,8 +1,7 @@
-import { Tooltip } from '@/components'
+import { MyImage, Tooltip } from '@/components'
 import NoImgPlaceholder from '@/components/utilities/NoImgPlaceholder'
 import { BLURRED_DATA_URL } from '@/constants/enum'
 import { IoHeart } from '@/constants/icons'
-import Image from 'next/image'
 
 type TPhotoProps = {
   photo: string | undefined
@@ -17,7 +16,7 @@ function Photo({ id, photo, name, addFavorite, removeFavorite, isFavorite }: TPh
   return (
     <div className="relative flex h-60 items-stretch">
       {photo ? (
-        <Image fill style={{ objectFit: 'cover' }} placeholder="blur" blurDataURL={BLURRED_DATA_URL} alt={`photo of ${name}`} src={photo} />
+        <MyImage fill style={{ objectFit: 'cover' }} placeholder="blur" blurDataURL={BLURRED_DATA_URL} alt={`photo of ${name}`} src={photo} />
       ) : (
         <NoImgPlaceholder />
       )}

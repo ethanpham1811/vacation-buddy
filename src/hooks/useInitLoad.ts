@@ -6,10 +6,10 @@ import { Map } from 'leaflet'
 import { useEffect } from 'react'
 
 /**
- * on initial load, search params provided:
- * - move map viewport to current user's location
+ * on initial load, if search params were provided:
+ * - move map viewport to location with lat & lng
  *
- * if search params not provided, trigger TRAVEL_TO_USER_LOCATION event:
+ * if search params were not provided, trigger TRAVEL_TO_USER_LOCATION event:
  *
  *  1. locate user location
  *  2. update lat and lng with (user's location), default type & zoom
@@ -42,7 +42,7 @@ function useInitLoad(map: Map, requestData: TRequestDataFn, params: TParams, upd
   /* initial load check */
   useEffect(() => {
     if (lat && lng && map) {
-      map.setView([lat, lng], zoom ?? DEFAULT_ZOOM)
+      eventEmitter.dispatch(Events.TRAVEL_TO_CITY, { lat, lng, zoom: zoom ?? DEFAULT_ZOOM })
     } else {
       eventEmitter.dispatch(Events.TRAVEL_TO_USER_LOCATION)
     }

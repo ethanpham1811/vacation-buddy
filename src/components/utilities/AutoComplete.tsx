@@ -23,7 +23,6 @@ function AutoComplete<T extends { name: string }>({ onSubmit, onSelect, setIsLoa
   const [isFocusing, setIsFocusing] = useState(false)
 
   useEffect(() => {
-    console.log('object')
     if (!inputValue || inputValue === '') return
     setIsLoading(true)
 

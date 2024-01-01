@@ -27,13 +27,19 @@ export async function GET(request: Request, { params: { query } }: { params: { q
 
   /* data mapping */
   const rawList = data?.filter((item: { detailsV2?: { placeType: string } }) => item.detailsV2?.placeType === 'CITY')
-  const citiesList: TAutoCompleteData[] = (rawList as TCityAPIResponse[]).map(
-    (place: TCityAPIResponse):TAutoCompleteData => ({
-      name: `${place?.detailsV2?.names?.name}. ${place?.detailsV2?.names?.longOnlyHierarchyTypeaheadV2}` || 'unknown',
-      lat: place?.detailsV2?.geocode?.latitude,
-      lng: place?.detailsV2?.geocode?.longitude
-    })
-  )
+  const citiesList: TAutoCompleteData[] = (rawList as TCityAPIResponse[]).map(({ detailsV2 }: TCityAPIResponse): TAutoCompleteData => {
+    const name = detailsV2?.names?.name
+    const fullName = detailsV2?.names?.longOnlyHierarchyTypeaheadV2
+    const lat = detailsV2?.geocode?.latitude
+    const lng = detailsV2?.geocode?.longitude
+
+    return {
+      id: `${name}_${lat}_${lng}`,
+      name: `${name}. ${fullName}` || 'unknown',
+      lat,
+      lng
+    }
+  })
 
   return Response.json({ data: citiesList })
 }

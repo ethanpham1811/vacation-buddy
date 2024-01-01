@@ -6,7 +6,6 @@ import { renderToString } from 'react-dom/server'
 import { Marker } from 'react-leaflet'
 
 import { Modal } from '@/components'
-import { useAppDispatch } from '@/lib/hooks'
 import { Events, eventEmitter } from '@/services/eventEmitter'
 import PlaceDetail from '../PlaceDetail/PlaceDetail'
 import MarkerCard from './components/MarkerCard'
@@ -24,7 +23,6 @@ type TPinProps = TCoords & {
  * - name
  */
 const Pin = ({ isFavorite, data, lng, lat, zoom, isActive }: TPinProps) => {
-  const dispatch = useAppDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { id, type, name, thumbnail } = data
 
@@ -38,7 +36,7 @@ const Pin = ({ isFavorite, data, lng, lat, zoom, isActive }: TPinProps) => {
 
   // build marker icon
   const customMarker = new DivIcon({
-    html: renderToString(<MarkerCard isFavorite={isFavorite} onClick={onClick} isActive={isActive} name={name} thumbnail={thumbnail} />),
+    html: renderToString(<MarkerCard isFavorite={isFavorite} isActive={isActive} name={name} thumbnail={thumbnail} />),
     iconSize: [40, 40],
     iconAnchor: [18, 30]
   })

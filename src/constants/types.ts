@@ -58,6 +58,7 @@ export type TCluster = TMarker & {
 }
 export type TSuperCluster = { getClusterExpansionZoom: (id: number) => number }
 export type TAutoCompleteData = TCoords & {
+  id: string
   name: string
 }
 

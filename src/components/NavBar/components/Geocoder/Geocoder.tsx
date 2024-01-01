@@ -40,7 +40,7 @@ function Geocoder() {
       {cityList?.length === 0 || error ? (
         <div className="relative cursor-default select-none px-4 py-2 text-gray-700">{error ?? 'Nothing found.'}</div>
       ) : (
-        cityList.map((place: TAutoCompleteData) => <SelectOption key={place.name} place={place} />)
+        cityList.map((place: TAutoCompleteData) => <SelectOption key={`option_${place.id}`} place={place} />)
       )}
     </AutoComplete>
   )

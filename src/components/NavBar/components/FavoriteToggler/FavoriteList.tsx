@@ -1,9 +1,10 @@
+import BrokenImgUrl from '@/assets/images/broken_img.png'
+import { MyImage } from '@/components'
 import { XMarkIcon } from '@/constants/icons'
 import { TActivePin } from '@/constants/types'
 import { removeFavorite } from '@/lib/features/favoriteList/favoriteListSlice'
 import { useAppDispatch, useAppSelector } from '@/lib/hooks'
 import { Events, eventEmitter } from '@/services/eventEmitter'
-import Image from 'next/image'
 import { Dispatch, SetStateAction } from 'react'
 import LinesEllipsis from 'react-lines-ellipsis'
 
@@ -31,13 +32,12 @@ function FavoriteList({ setOpen }: TFavoriteListProps) {
       {favoriteList.map(({ id, type, name, photo, lat, lng, zoom }) => (
         <div
           key={`favorite_${id}`}
-          className="flex min-h-[50px] cursor-pointer items-center overflow-hidden rounded-md bg-white p-1 text-xs shadow-card hover:bg-gray-800 hover:text-white"
+          className="flex min-h-[50px] cursor-pointer items-center overflow-hidden rounded-md bg-white p-1 text-xs shadow-card transition-all hover:bg-blue-600 hover:text-white"
           onClick={() => handleLocatePlace({ id, lat, lng, zoom, type })}
         >
-          {zoom}
           {/* photo */}
           <div className="px-2">
-            <Image src={photo} width={30} height={30} alt={`favorite_photo_${id}`} />
+            <MyImage src={photo} width={30} height={30} alt={`favorite_photo_${id}`} fallbackSrc={BrokenImgUrl.src} />
           </div>
 
           {/* place name */}
