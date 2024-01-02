@@ -1,5 +1,6 @@
 import { BLURRED_DATA_URL } from '@/constants/enum'
 import { IoHeart } from '@/constants/icons'
+import { imageKitLoader } from '@/services/utilities'
 import Image from 'next/image'
 import LinesEllipsis from 'react-lines-ellipsis'
 
@@ -20,6 +21,8 @@ function MarkerCard({ isFavorite, isActive, thumbnail, name }: TCircleProps) {
       <div className="relative h-16">
         <Image
           fill
+          sizes="80px"
+          loader={imageKitLoader}
           style={{ objectFit: 'cover' }}
           placeholder="blur"
           blurDataURL={BLURRED_DATA_URL}

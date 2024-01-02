@@ -7,6 +7,7 @@ export const DEFAULT_ZOOM = 13
 export const MIN_ZOOM = 13
 export const FAVORITE_COOKIE = 'vacation-buddy-favorite-list'
 export const ZOOM_DELAY = 500
+export const IMAGEKIT_ENDPOINT = 'https://ik.imagekit.io/ethanpham'
 
 /* data */
 export enum API_TYPES {

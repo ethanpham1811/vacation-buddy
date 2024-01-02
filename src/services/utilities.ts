@@ -1,5 +1,7 @@
+import { IMAGEKIT_ENDPOINT } from '@/constants/enum'
 import { TBounds } from '@/constants/types'
 import { Map } from 'leaflet'
+import { ImageLoaderProps } from 'next/image'
 
 /* retrive bounds from leaflet map */
 export function getBounds(myMap: Map): TBounds {
@@ -27,4 +29,23 @@ export function formatNumber(number: number): string {
   else {
     return new Intl.NumberFormat('en-US').format(number)
   }
+}
+
+/* loader for Next Image (from ik.imagekit.io) */
+export const imageKitLoader = ({ src, width, quality }: ImageLoaderProps) => {
+  const url = new URL(src)
+  const rawPath = url.pathname
+  const path = rawPath.startsWith('/') ? rawPath.slice(1) : rawPath
+  const params = [`w-${width}`]
+
+  if (quality) params.push(`q-${quality}`)
+
+  const paramsString = params.join(',')
+  let urlEndpoint = IMAGEKIT_ENDPOINT
+
+  if (urlEndpoint[urlEndpoint.length - 1] === '/') {
+    urlEndpoint = urlEndpoint.substring(0, urlEndpoint.length - 1)
+  }
+
+  return `${urlEndpoint}/${path}?tr=${paramsString}`
 }
