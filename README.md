@@ -6,7 +6,7 @@
 
 ## Demo
 
-You can find the [live demo](https://vacation-buddy.vercel.app/) here
+You can find the [live demo](https://vacation-buddy-ethan.vercel.app/) here
 
 ## Technical recap
 
