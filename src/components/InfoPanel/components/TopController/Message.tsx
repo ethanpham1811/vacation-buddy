@@ -4,14 +4,20 @@ import { IconType } from 'react-icons'
 type TMessageProps = {
   icon?: IconType
   message: string
-  color: string
+  color?: 'red' | 'blue' | 'gray'
 }
 
 function Message({ icon, message, color }: TMessageProps) {
+  const colorStyle = { red: 'text-red-600', blue: 'text-blue-600', gray: 'text-gray-600' }
+
   return (
-    <div className="h-full flex-1 items-center justify-center flex">
-      <p className={`text-${color}-600 text-center text-sm py-2 px-4 rounded-full w-max bg-white font-semibold flex items-center gap-2`}>
-        {icon && createElement(icon)} {message}
+    <div className="flex h-full flex-1 items-center justify-center">
+      <p className={`flex w-max items-center gap-2 rounded-full bg-white px-4 py-2 text-center text-sm font-semibold`}>
+        {/* icon (optional) */}
+        {icon && createElement(icon, { size: 20, className: color ? colorStyle[color] : '' })}
+
+        {/* main text */}
+        {message}
       </p>
     </div>
   )
