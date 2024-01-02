@@ -33,9 +33,19 @@ export function formatNumber(number: number): string {
 
 /* loader for Next Image (from ik.imagekit.io) */
 export const imageKitLoader = ({ src, width, quality }: ImageLoaderProps) => {
-  const url = new URL(src)
-  const rawPath = url.pathname
-  const path = rawPath.startsWith('/') ? rawPath.slice(1) : rawPath
+  let path
+
+  try {
+    // Check if the src is an absolute URL
+    const url = new URL(src)
+    path = url.pathname
+  } catch (error) {
+    // If parsing as URL fails, consider it as a relative path
+    path = src
+  }
+
+  path = path.startsWith('/') ? path.slice(1) : path
+
   const params = [`w-${width}`]
 
   if (quality) params.push(`q-${quality}`)
