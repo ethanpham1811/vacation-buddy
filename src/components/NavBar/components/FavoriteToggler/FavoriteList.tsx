@@ -37,7 +37,7 @@ function FavoriteList({ setOpen }: TFavoriteListProps) {
         >
           {/* photo */}
           <div className="px-2">
-            <MyImage src={photo} width={30} height={30} alt={`favorite_photo_${id}`} fallbackSrc={BrokenImgUrl.src} />
+            <MyImage src={photo ?? '/'} width={30} height={30} alt={`favorite_photo_${id}`} fallbackSrc={BrokenImgUrl.src} />
           </div>
 
           {/* place name */}

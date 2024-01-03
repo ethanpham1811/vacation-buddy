@@ -69,7 +69,7 @@ export type TActivePin = TCoords & {
 }
 
 export type TFavorite = TActivePin & {
-  photo: string
+  photo?: string
   name: string
 }
 

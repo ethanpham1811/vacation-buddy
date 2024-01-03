@@ -7,10 +7,10 @@ function Tooltip({ text }: TTooltipProps) {
   return (
     <div
       role="tooltip"
-      className="top-2/3 -translate-x-full -left-2 transition-all group-hover/favorite:opacity-100 opacity-0 absolute z-[100000] inline-block px-3 py-2 text-xs font-medium text-white bg-blue-600 rounded-lg shadow-sm tooltip dark:bg-gray-700"
+      className="tooltip absolute -left-2 top-2/3 z-[100000] inline-block hidden -translate-x-full rounded-lg bg-blue-600 px-3 py-2 text-xs font-medium text-white shadow-sm transition-all group-hover/favorite:block dark:bg-gray-700"
     >
       {text}
-      <div className="tooltip-arrow top-1/4 right-0" data-popper-arrow></div>
+      <div className="tooltip-arrow right-0 top-1/4" data-popper-arrow></div>
     </div>
   )
 }

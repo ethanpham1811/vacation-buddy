@@ -1,18 +1,18 @@
-import { MyImage, Tooltip } from '@/components'
+import { MyImage } from '@/components'
 import NoImgPlaceholder from '@/components/utilities/NoImgPlaceholder'
 import { BLURRED_DATA_URL } from '@/constants/enum'
-import { IoHeart } from '@/constants/icons'
+import { TFavorite } from '@/constants/types'
+import ExternalBtns from './ExternalBtns'
+import FavoriteBtn from './FavoriteBtn'
 
 type TPhotoProps = {
-  photo: string | undefined
-  name: string
-  id: string
-  addFavorite: () => void
-  removeFavorite: (id: string) => void
-  isFavorite: boolean
+  place: TFavorite
+  web_url: string | undefined
+  website: string | undefined
 }
 
-function Photo({ id, photo, name, addFavorite, removeFavorite, isFavorite }: TPhotoProps) {
+function Photo({ place, web_url, website }: TPhotoProps) {
+  const { photo, name } = place
   return (
     <div className="relative flex h-60 items-stretch">
       {photo ? (
@@ -21,18 +21,11 @@ function Photo({ id, photo, name, addFavorite, removeFavorite, isFavorite }: TPh
         <NoImgPlaceholder />
       )}
 
-      {/* favorite btn */}
-      <div
-        onClick={() => (isFavorite ? removeFavorite(id) : addFavorite())}
-        className={`${
-          isFavorite ? 'bg-red-400 text-white' : 'bg-white'
-        } group/favorite absolute bottom-0 right-7 translate-y-1/2 cursor-pointer rounded-full p-3 text-red-400 shadow-card hover:bg-red-400 hover:text-white`}
-      >
-        <IoHeart size={25} />
+      {/* external btn: trip advisor + location website */}
+      {web_url && website && <ExternalBtns web_url={web_url} website={website} />}
 
-        {/* tooltip */}
-        <Tooltip text={isFavorite ? 'Unfavorite' : 'Favorite'} />
-      </div>
+      {/* favorite btn */}
+      <FavoriteBtn place={place} />
     </div>
   )
 }
