@@ -16,6 +16,7 @@ const config: Config = {
         gradient: '-webkit-linear-gradient(left top, rgba(60, 64, 67, 0.3) 0%, rgb(37, 99, 235) 100%)'
       }
     }
-  }
+  },
+  plugins: [require('tailwindcss-animated')]
 }
 export default config

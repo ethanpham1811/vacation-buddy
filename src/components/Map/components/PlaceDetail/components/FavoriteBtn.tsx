@@ -1,8 +1,8 @@
-import { Tooltip } from '@/components'
 import { IoHeart } from '@/constants/icons'
 import { TFavorite } from '@/constants/types'
 import { addFavorite, removeFavorite } from '@/lib/features/favoriteList/favoriteListSlice'
 import { useAppDispatch, useAppSelector } from '@/lib/hooks'
+import clsx from 'clsx'
 
 type TFavoriteBtnProps = {
   place: TFavorite
@@ -23,14 +23,12 @@ function FavoriteBtn({ place }: TFavoriteBtnProps) {
   return (
     <div
       onClick={isFavorite ? handleRemoveFavorite : handleAddFavorite}
-      className={`${
+      className={clsx(
+        'absolute bottom-0 right-7 translate-y-1/2 cursor-pointer rounded-full p-3 text-red-400 shadow-card transition-all',
         isFavorite ? 'bg-red-400 text-white' : 'bg-white'
-      } group/favorite absolute bottom-0 right-7 translate-y-1/2 cursor-pointer rounded-full p-3 text-red-400 shadow-card transition-all hover:bg-red-400 hover:text-white`}
+      )}
     >
-      <IoHeart size={25} />
-
-      {/* tooltip */}
-      <Tooltip text={isFavorite ? 'Unfavorite' : 'Favorite'} />
+      <IoHeart className={clsx(!isFavorite ? 'animate-wiggle-more animate-infinite' : '', '')} size={25} />
     </div>
   )
 }
