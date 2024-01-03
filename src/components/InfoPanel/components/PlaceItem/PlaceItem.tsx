@@ -23,7 +23,7 @@ function PlaceItem({ place }: { place: TPoint }) {
       {/* photo */}
       <Photo photo={photo} name={name} />
 
-      <div className="absolute inset-2 flex h-auto w-auto flex-1 flex-col gap-1 overflow-hidden rounded-b-md rounded-t-md bg-white/50 p-2 backdrop-blur-sm group-hover:bg-blue-50 lg:relative lg:inset-0 lg:flex-auto lg:overflow-visible lg:rounded-none lg:bg-white lg:backdrop-blur-none">
+      <div className="absolute inset-2 flex h-auto w-auto flex-1 cursor-pointer flex-col gap-1 overflow-hidden rounded-b-md rounded-t-md bg-white/50 p-2 backdrop-blur-sm lg:relative lg:inset-0 lg:flex-auto lg:cursor-auto lg:overflow-visible lg:rounded-none lg:bg-white lg:backdrop-blur-none lg:group-hover:bg-blue-50">
         {/* title */}
         <h1 className="text-sm font-semibold lg:text-lg">{name}</h1>
 
