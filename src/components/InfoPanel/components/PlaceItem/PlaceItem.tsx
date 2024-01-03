@@ -19,13 +19,13 @@ function PlaceItem({ place }: { place: TPoint }) {
   }
 
   return (
-    <div className="group flex w-[30dvw] flex-col shadow-card lg:w-auto" onClick={onClick}>
+    <div className="group relative flex w-[50dvw] flex-none flex-col shadow-card xs:w-[40dvw] sm:w-[25dvw] lg:w-auto" onClick={onClick}>
       {/* photo */}
       <Photo photo={photo} name={name} />
 
-      <div className="flex flex-1 flex-col gap-1 overflow-hidden rounded-b-md rounded-t-md  bg-white p-2 group-hover:bg-blue-50 lg:flex-auto lg:overflow-visible lg:rounded-none">
+      <div className="absolute inset-2 flex h-auto w-auto flex-1 flex-col gap-1 overflow-hidden rounded-b-md rounded-t-md bg-white/50 p-2 backdrop-blur-sm group-hover:bg-blue-50 lg:relative lg:inset-0 lg:flex-auto lg:overflow-visible lg:rounded-none lg:bg-white lg:backdrop-blur-none">
         {/* title */}
-        <h1 className="text-lg font-semibold">{name}</h1>
+        <h1 className="text-sm font-semibold lg:text-lg">{name}</h1>
 
         {/* rating count */}
         {rating && <Rating rating={rating} num_reviews={num_reviews} />}

@@ -5,7 +5,7 @@ function Address({ address }: { address: string }) {
     <>
       {address && (
         <>
-          <address className="hidden lg:block text-sm not-italic">{address}</address>
+          <address className="hidden text-sm not-italic lg:block">{address}</address>
           <Spacer />
         </>
       )}

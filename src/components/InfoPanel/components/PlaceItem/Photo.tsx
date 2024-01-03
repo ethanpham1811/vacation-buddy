@@ -4,7 +4,7 @@ import { BLURRED_DATA_URL } from '@/constants/enum'
 
 function Photo({ photo, name }: { photo: string | undefined; name: string }) {
   return (
-    <div className="relative hidden h-60 items-stretch overflow-hidden rounded-t-md lg:flex">
+    <div className="relative flex h-60 items-stretch overflow-hidden rounded-t-md">
       {photo ? (
         <MyImage
           fill

@@ -10,8 +10,8 @@ function IsOpen({ open_now_text }: { open_now_text: string }) {
 
   return (
     <>
-      <div className="text-sm font-semibold">
-        <label className={`flex gap-1 float-left`}>Status:&nbsp;</label>
+      <div className="hidden text-sm font-semibold lg:block">
+        <label className={`float-left flex gap-1`}>Status:&nbsp;</label>
         <span className={textColor}>{open_now_text}</span>
       </div>
       <Spacer />

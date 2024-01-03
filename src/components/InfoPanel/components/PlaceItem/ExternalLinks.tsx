@@ -10,17 +10,17 @@ function ExternalLinks({ web_url, website }: { web_url: string | undefined; webs
     <>
       <div className="flex items-center gap-2">
         {web_url && (
-          <Link href={web_url} target="_blank" className="link text-lg mt-1">
+          <Link href={web_url} target="_blank" className="link mt-1 text-lg">
             <Image src={tripAdvisorLogo} alt="trip advisor logo" width={20} height={20} />
           </Link>
         )}
         {website && (
-          <Link href={website} target="_blank" className="link text-lg mt-1">
+          <Link href={website} target="_blank" className="link mt-1 text-lg">
             <HiOutlineExternalLink />
           </Link>
         )}
       </div>
-      <Spacer />
+      <Spacer className="hidden lg:block" />
     </>
   )
 }
